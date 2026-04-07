@@ -1,0 +1,330 @@
+{%- macro checkbox(content, checked, value="on") -%}
+    {%- if checked -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("checked", true) -%}
+    {%- endif %}
+    {{ ui.input(content, value=value or "on", type="checkbox", **kwargs) }}
+{%- endmacro %}
+
+{%- macro checkbox(content, name, id, checked, label, required, placeholder, type, value="on", errors=[], group_class="form-check") -%}
+    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set help_id = ui.util.id() if content -%}
+
+    {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
+    {%- if content %}{%- do aria_attrs.setdefault("describedby", help_id) -%}{%- endif -%}
+    {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
+    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
+    {%- do attrs.setdefault("class", "form-check-input") -%}
+    {%- if checked -%}{%- do attrs.update({"checked": true}) -%}{%- endif %}
+
+    <div class="{{ group_class }}">
+        {{ _input(name=name, value=value, placeholder=placeholder, type="checkbox", id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
+        {%- if label -%}
+            <label class="form-check-label checkbox" for="{{ field_id }}">{{ label }}</label>
+        {%- endif %}
+        {%- if content -%}
+            <div class="form-text" id="{{ help_id }}">{{ content }}</div>
+        {%- endif %}
+        {%- if errors %}
+            {{ ui.field_errors(errors) }}
+        {%- endif %}
+    </div>
+{%- endmacro %}
+
+
+
+{%- macro extra_field(index, data={}, errors={}, name_template='extras__{index}__') -%}
+    {%- set prefix = name_template.format(index=index) -%}
+    <fieldset {{ ui.util.attrs(kwargs) }}>
+        <legend>{{ _('Custom Field') }}</legend>
+        {{ ui.input(name=prefix ~ "key", label=_("Key"), value=data.key, errors=errors[prefix~"key"]) }}
+        {{ ui.input(name=prefix ~ "value", label=_("Value"), value=data.value, errors=errors[prefix~"value"]) }}
+        {{ ui.button(_("Remove"), style="danger", attrs={"onclick": "this.closest('fieldset').remove()"}) }}
+    </fieldset>
+{%- endmacro %}
+
+{%- macro extra_field_multiplicator(index, label=_("Add"), placeholder="TPL") -%}
+    <template id="custom-field-template">
+        {{ ui.extra_field(placeholder) }}
+    </template>
+    {{ ui.button(label, data={"index": index}, attrs={"onclick": "
+const tpl = document.getElementById('custom-field-template').content.cloneNode(true);
+tpl.querySelectorAll('input').forEach(el => {
+  el.name = el.name.replace('{{ placeholder }}', this.dataset.index);
+  el.id = el.id.replace('{{ placeholder }}', this.dataset.index);
+});
+tpl.querySelectorAll('label').forEach(el => {
+  el.setAttribute('for', el.getAttribute('for').replace('{{ placeholder }}', this.dataset.index));
+});
+++this.dataset.index;
+this.parentNode.insertBefore(tpl, this);
+        "}, **kwargs) }}
+{%- endmacro %}
+
+{%- macro extra_fields_collection(extras=[], errors={}, limit=3) -%}
+    <div {{ ui.util.attrs(kwargs) }} data-module="custom-fields">
+        {%- for extra in extras -%}
+            {{ ui.extra_field(index=loop.index0, data=extra, errors=errors) }}
+        {%- endfor %}
+        {%- set num_extras = extras|count %}
+        {%- set max_extras = [limit - num_extras, 1]|max + num_extras %}
+        {%- for index in range(num_extras, max_extras) -%}
+            {{ ui.extra_field(index=index) }}
+        {%- endfor %}
+        {{- ui.extra_field_multiplicator(max_extras) }}
+    </div>
+{%- endmacro %}
+
+{%- macro field_errors(errors) -%}
+    {%- for error in errors -%}
+        <div {{ ui.util.attrs(kwargs) }} class="invalid-feedback">{{ error }}</div>
+    {%- endfor %}
+{%- endmacro %}
+
+{%- macro file_input(content, accept, capture, multiple) -%}
+    {%- if multiple -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("multiple", true) -%}
+    {%- endif %}
+    {%- if accept -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("accept", accept) -%}
+    {%- endif %}
+    {%- if capture -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("capture", capture) -%}
+    {%- endif %}
+    {{ ui.input(content, type="file", **kwargs) }}
+{%- endmacro %}
+
+{%- macro form(content, method, action, enctype, include_csrf=true) -%}
+    {{ ui.form_start(method, action, enctype, **kwargs) }}
+    {{ h.csrf_input() if include_csrf and method and method|upper != "GET" }}
+    {{ content }}
+    {{ ui.form_end() }}
+{%- endmacro %}
+
+{%- macro form_actions(content) -%}
+    <div{{ ui.util.attrs(kwargs) }} class="form-actions">{{ content }}</div>
+{%- endmacro %}
+
+{%- macro form_end(content) -%}
+    {%- do kwargs -%}
+    {{ content }}
+    </form>
+{%- endmacro %}
+
+{%- macro form_errors(errors) -%}
+    {% if errors %}
+        <div {{ ui.util.attrs(kwargs) }}>
+            <p>{{ _('The form contains invalid entries:') }}</p>
+            <ul>
+                {% for key, error in errors.items() %}
+                    <li>{% if key %}{{ key }}: {% endif %}{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{%- endmacro %}
+
+{%- macro form_start(method, action, enctype) -%}
+    <form
+        {{ ui.util.attrs(kwargs) }}
+        {%- if method %} method="{{ method }}"{%- endif %}
+        {%- if action %} action="{{ action }}"{%- endif %}
+        {%- if enctype %} enctype="{{ enctype }}"{%- endif -%}
+    >
+{%- endmacro %}
+
+{%- macro hidden_input(name, value) -%}
+    <input {{ ui.util.attrs(kwargs) }} type="hidden" name="{{ name }}" value="{{ value|empty_and_escape or "" }}">
+{%- endmacro %}
+
+{%- macro input(content, name, id, label, value, required, placeholder, type, errors=[], group_class="form-group") -%}
+    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set help_id = ui.util.id() if content -%}
+
+    {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
+    {%- if content %}{%- do aria_attrs.setdefault("describedby", help_id) -%}{%- endif -%}
+    {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
+
+    <div class="{{ group_class }}">
+        {%- if label -%}
+            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
+        {%- endif %}
+        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
+        {%- if content -%}
+            <div class="form-text" id="{{ help_id }}">{{ content }}</div>
+        {%- endif %}
+
+        {%- if errors %}
+            {{ ui.field_errors(errors) }}
+        {%- endif %}
+    </div>
+{%- endmacro %}
+
+{%- macro _input(name, value, type, id, errors, placeholder, required) -%}
+    <input {{ ui.util.attrs(kwargs) }} type="{{ type or "text" }}" class="form-control {{ 'is-invalid' if errors }}"
+        {%- if name %} name="{{ name }}"{% endif %}
+        {%- if id %} id="{{ id }}"{%- endif %}
+        {%- if value %} value="{{ value|empty_and_escape }}"{% endif %}
+        {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
+        {%- if required %} required{% endif %}
+        {%- if help_id %} aria-describedby="{{ help_id }}"{% endif %}
+        {%- if errors %} aria-invalid="true"{% endif -%}
+    >
+{%- endmacro %}
+
+{%- macro markdown(content, name, id, label, value, placeholder, required, errors=[]) -%}
+    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set help_id = ui.util.id() if content -%}
+    {% set popover_id = ui.util.id() %}
+    {%- call ui.util.call(ui.popover, title=_("Markdown formatting"), id=popover_id) -%}
+        {%- trans -%}
+        <p>__Bold text__ or _italic text_</p>
+        <p># title
+            <br>## secondary title
+            <br>### etc
+        </p>
+        <p>* list
+            <br>* of
+            <br>* items
+        </p>
+        <p>http://auto.link.ed/</p>
+        <p>
+            <strong>
+                <a href='http://daringfireball.net/projects/markdown/syntax' target='_blank'>Full markdown syntax</a>
+            </strong>
+        </p>
+        <p>
+            <strong>Please note:</strong>
+            HTML tags are stripped out for security reasons
+        </p>
+            {%- endtrans %}
+    {%- endcall -%}
+
+    <div>
+        {%- if label -%}
+            <label for="{{ field_id }}">{{ label }}</label>
+        {%- endif %}
+        {%- if content -%}
+            <div class="input-help" id="{{ help_id }}">{{ content }}</div>
+        {%- endif %}
+        <div class="input-help">
+            <sub>
+                You can use <strong>{{ ui.popover_handle(_("Markdown formatting"), id=popover_id) }}</strong> here
+            </sub>
+        </div>
+        <textarea
+            {{ ui.util.attrs(kwargs) }}
+            {%- if field_id %} id="{{ field_id }}"{%- endif %}
+            {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
+            {%- if name %} name="{{ name }}"{% endif %}
+            {%- if required %} required{% endif %}
+            {%- if content %} aria-describedby="{{ help_id }}"{% endif %}
+            {%- if errors %} aria-invalid="true"{% endif %}
+        >{{ value or "" }}</textarea>
+
+        {%- if errors %}
+            <div>
+                {{ ui.field_errors(errors) }}
+            </div>
+        {%- endif %}
+    </div>
+{%- endmacro %}
+
+{%- macro radio(content, checked, value="on") -%}
+    {%- if checked -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("checked", true) -%}
+    {%- endif %}
+    {{ ui.input(content, value=value or "on", type="radio", **kwargs) }}
+{%- endmacro %}
+
+{%- macro range_input(content, min_value, max_value, step) -%}
+    {%- if min_value is defined -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("min", min_value) -%}
+    {%- endif %}
+    {%- if max_value is defined -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("max", max_value) -%}
+    {%- endif %}
+    {%- if step is defined -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("step", step) -%}
+    {%- endif %}
+    {{ ui.input(content, type="range", **kwargs) }}
+{%- endmacro %}
+
+{%- macro select(content, selected, options) -%}
+    {%- set selected_values = selected if selected is not string and selected is iterable else [selected or ""] %}
+    {%- call ui.util.call(ui.select_box, content, selected=selected, options=options or [], **kwargs) -%}
+        {%- for option in (options or []) %}
+            {%- if option is string %}
+                {% set value, text = option, option %}
+            {%- else -%}
+                {% set value = option.value %}
+                {% set text = option.text or option.value %}
+            {%- endif %}
+            {{ ui.select_option(text, value, selected=value in selected_values) }}
+        {%- endfor %}
+    {%- endcall %}
+{%- endmacro %}
+
+{%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[]) -%}
+    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set help_id = ui.util.id() if nested_content -%}
+    <div class="form-group">
+        {%- if label -%}
+            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
+        {%- endif %}
+        <select
+            {{ ui.util.attrs(kwargs) }}
+            class="form-select {%- if errors %} is-invalid{%- endif %}"
+            {%- if name %} name="{{ name }}"{%- endif %}
+            {%- if field_id %} id="{{ field_id }}"{%- endif %}
+            {%- if required %} required{%- endif %}
+            {%- if multiple %} multiple{%- endif %}
+            {%- if nested_content %} aria-describedby="{{ help_id }}"{% endif %}
+            {%- if errors %} aria-invalid="true"{% endif %}
+        >
+            {{ content }}
+        </select>
+        {%- if nested_content -%}
+            <small class="form-text" id="{{ help_id }}">{{ nested_content }}</small>
+        {%- endif %}
+        {{ ui.field_errors(errors) if errors }}
+    </div>
+{%- endmacro %}
+
+{%- macro select_option(content, value, selected) -%}
+    <option {{ ui.util.attrs(kwargs) }} value="{{ value }}" {{ "selected" if selected }}>{{ content }}</option>
+{%- endmacro %}
+
+{%- macro submit(content, value, name) -%}
+    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
+    {%- if value -%}{%- do attrs.update({"value": value}) -%}{%- endif %}
+    {%- if name -%}{%- do attrs.update({"name": name}) -%}{%- endif %}
+    {{- ui.button(content, type="submit", **kwargs) }}
+{%- endmacro %}
+
+{%- macro textarea(content, name, id, label, value, placeholder, required, errors=[]) -%}
+    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set help_id = ui.util.id() if content -%}
+
+    <div>
+        {%- if label -%}
+            <label for="{{ field_id }}">{{ label }}</label>
+        {%- endif %}
+        {%- if content -%}
+            <div class="input-help" id="{{ help_id }}">{{ content }}</div>
+        {%- endif %}
+        <textarea
+            {{ ui.util.attrs(kwargs) }}
+            {%- if field_id %} id="{{ field_id }}"{%- endif %}
+            {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
+            {%- if name %} name="{{ name }}"{% endif %}
+            {%- if required %} required{% endif %}
+            {%- if content %} aria-describedby="{{ help_id }}"{% endif %}
+            {%- if errors %} aria-invalid="true"{% endif %}
+        >{{ value or "" }}</textarea>
+        {%- if errors %}
+            <div>
+                {{ ui.field_errors(errors) }}
+            </div>
+        {%- endif %}
+    </div>
+{%- endmacro %}

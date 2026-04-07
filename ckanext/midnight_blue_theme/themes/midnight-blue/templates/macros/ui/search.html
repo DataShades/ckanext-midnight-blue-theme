@@ -1,0 +1,77 @@
+{%- macro search_input(content, name="q", value="", label=_("Search"), placeholder=_("Search...")) -%}
+    {{ ui.input(content, name=name, label=label, value=value, type="search", placeholder=placeholder, **kwargs) }}
+{%- endmacro %}
+
+{%- macro search_submit_button(content=ui.icon("search") ~ _("Search")) -%}
+    {{ ui.button(content, type="submit", **kwargs) }}
+{%- endmacro %}
+
+{%- macro search_sort_control(content, name="sort", selected="", options=[], label=_("Order by")) -%}
+    {{ ui.select(content, name=name, label=label, selected=selected, options=options, **kwargs) if options }}
+{%- endmacro %}
+
+{%- macro search_results_header(item_count, first_item_position, last_item_position, query_error) -%}
+    {%- call ui.util.call(ui.heading, level=2, **kwargs) -%}
+        {%- if query_error %}
+            {{ _('Error: {error}').format(error=query_error) }}
+
+        {%- else %}
+            {%- if item_count %}
+                {{ ui.search_pagination_info(item_count, first_item_position, last_item_position) }}
+            {%- else %}
+                {{ _('No results found') }}
+            {%- endif %}
+
+        {%- endif %}
+    {%- endcall %}
+{%- endmacro %}
+
+{%- macro search_pagination_info(total, first, last, template) -%}
+    {%- if not template and first is undefined or last is undefined -%}
+        {% set template = ungettext("Found {total} result", "Found {total} results", total) %}
+    {%- elif not template -%}
+        {% set template = _("Results {first} - {last} out of {total}")  %}
+    {%- endif -%}
+    <div {{ ui.util.attrs(kwargs) }}>
+        {{ template.format(first=first, last=last, total=total) }}
+    </div>
+{%- endmacro %}
+
+{%- macro search_active_filters(active_filters, facet_titles, facets, use_htmx) -%}
+    {%- if active_filters -%}
+        {%- call ui.util.call(ui.list, **kwargs) -%}
+            {%- for key, values in active_filters|groupby(0) -%}
+                {%- call ui.util.call(ui.list_item) -%}
+                    <strong>{{ facet_titles.get(key, key) }}:</strong>
+                    {%- for _, value in values %}
+                        <del>
+                            {%- with label=h.list_dict_filter(facets[key]["items"], 'name', 'display_name', value) -%}
+                                {{ ui.link(label, h.remove_url_param(key, value), hx={"boost": "true" if use_htmx else "false"}) }}
+                            {%- endwith %}
+                        </del>
+                    {% endfor %}
+                {%- endcall %}
+            {%- endfor %}
+        {%- endcall %}
+    {%- endif %}
+{%- endmacro %}
+
+{%- macro search_advanced_controls() -%}
+    {%- do kwargs -%}
+{%- endmacro %}
+
+{%- macro search_form_box(content, use_htmx) -%}
+    {%- if use_htmx -%}
+        {%- do kwargs.setdefault("hx", {"boost": "true", "disinherit": "hx-boost", "trigger": "change, submit"}) -%}
+    {%- endif %}
+    {%- call ui.util.call(ui.form, **kwargs) -%}
+        {{ content }}
+    {%- endcall %}
+{%- endmacro %}
+
+{%- macro search_form(query, sorting, sorting_options, query_error, item_count, first_item_position, last_item_position, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort") -%}
+
+    {%- do kwargs -%}
+    {%- include "macros/ui/snippets/search_form.html" -%}
+
+{%- endmacro %}

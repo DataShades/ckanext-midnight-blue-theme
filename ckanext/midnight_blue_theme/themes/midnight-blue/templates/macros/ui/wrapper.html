@@ -1,0 +1,95 @@
+{%- macro accordion_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} role="region" aria-label="{{ _('Accordion') }}">{{ content }}</div>
+{%- endmacro %}
+
+{%- macro activity_wrapper(content) -%}
+    {{ ui.list(content, **kwargs) }}
+{%- endmacro %}
+
+{%- macro facet_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="list-unstyled nav nav-simple nav-facet">{{ content }}</ul>
+{%- endmacro %}
+
+{%- macro group_wrapper(content) -%}{{ ui.grid(content, **kwargs) }}{%- endmacro %}
+
+{%- macro organization_wrapper(content) -%}{{ ui.group_wrapper(content, **kwargs) }}{%- endmacro %}
+
+{%- macro package_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
+
+{%- macro panel_wrapper(content) -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id())-%}
+    <script>
+        window.addEventListener("hashchange", event => {
+            const hash = window.location.hash.slice(1);
+            const wrapper = document.getElementById("{{ kwargs.attrs.id }}");
+            wrapper.querySelectorAll(`[data-panel]`).forEach(el => el.hidden = hash ? el.dataset.panel !== hash : !el.dataset.panelDefault);
+        })
+        document.addEventListener("DOMContentLoaded", () => window.dispatchEvent(new Event("hashchange")));
+    </script>
+    <div {{ ui.util.attrs(kwargs) }}>
+        {{ content }}
+    </div>
+{%- endmacro %}
+
+{%- macro resource_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
+
+{%- macro user_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
+
+{%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
+
+{%- macro breadcrumb_wrapper(content) -%}
+    <ol {{ ui.util.attrs(kwargs) }} class="breadcrumb">
+        {{ content }}
+    </ol>
+{%- endmacro %}
+
+{%- macro content_action_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="content_action gap-1 mb-md-3">
+        {{- content -}}
+    </div>
+{%- endmacro %}
+
+{%- macro content_nav_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="nav nav-pills">
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro main_nav_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="navbar-nav mb-2 mb-lg-0 col-md-10">
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro menu_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }}>{{ content }}</div>
+{%- endmacro %}
+
+{%- macro nav_wrapper(content) -%}
+    {{ ui.list(content, **kwargs) }}
+{%- endmacro %}
+
+{%- macro page_action_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="page_primary_action mb-3 mb-md-0 ms-3 pull-right">
+        {{- content -}}
+    </div>
+{%- endmacro %}
+
+{%- macro tab_nav_wrapper(content) -%}
+    <nav {{ ui.util.attrs(kwargs) }} class="tabs" role="tablist">{{ content }}</nav>
+{%- endmacro %}
+
+
+{%- macro sidebar_nav_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="nav nav-options">
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro pagination_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="pagination-wrapper">
+        <ul class="pagination justify-content-center">
+            {{- content -}}
+        </ul>
+    </div>
+{%- endmacro %}

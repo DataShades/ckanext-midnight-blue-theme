@@ -1,0 +1,4 @@
+{% set title = pkg.title or pkg.name  %}
+{% set body = h.markdown_extract(pkg.notes, 120)|urlize %}
+
+{{ ui.card(title=title, body=body, href=h.url_for(pkg.type ~ ".read", id=pkg.name), **kwargs) }}

@@ -1,0 +1,72 @@
+{%- macro alert(content, dismissible, style="info") -%}
+    {%- set style_class = style if style.startswith("alert-") else "alert-" ~ style -%}
+    <div {{ ui.util.attrs(kwargs) }} class="alert fade show {{ "alert-dismissible" if dismissible }} {{ style_class }}" role="alert">
+        {{ content }}
+        {%- if dismissible -%}
+            <button type="button" class="btn-close close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {%- endif %}
+    </div>
+{%- endmacro %}
+
+{%- macro confirm_modal(content, title, id, form_id, cancel_label, confirm_label, href) -%}
+    {%- if not form_id -%}
+        {% set form_id = ui.util.id() %}
+        {{ ui.form(method="POST", attrs={"id": form_id}, action=href) }}
+    {%- endif %}
+
+    {%- set close_button = ui.modal_close_handle(cancel_label or _("Close"), id=id) %}
+    {%- set confirm_button = ui.button(confirm_label or _("Confirm"), attrs={"onclick": "const form = window['{form_id}']; (form.getAttribute('hx-post')||form.getAttribute('hx-get')) ? form.dispatchEvent(new Event('submit')) : form.submit(); ckan.sandbox().ui.getModal('{id}').close();".format(form_id=form_id, id=id)}) %}
+
+    {%- call ui.util.call(ui.modal, title=title or _("Confirm"), id=id, footer=close_button ~ confirm_button, **kwargs) -%}
+        {{ content }}
+    {%- endcall %}
+{%- endmacro %}
+
+{%- macro modal(content, title, footer, dismissible, id) -%}
+    <dialog {{ ui.util.attrs(kwargs) }} id="{{ id }}" closedby="{{ 'any' if dismissible else 'closerequest' }}">
+        {%- if title %}
+            {{ ui.heading(title, level=2) }}
+        {%- endif %}
+
+        <div>
+            {{ content }}
+        </div>
+        {%- if footer -%}
+            <div>
+                {{ footer }}
+            </div>
+        {%- endif %}
+    </dialog>
+{%- endmacro %}
+
+
+{%- macro popover(content, title, id) -%}
+    <div {{ ui.util.attrs(kwargs) }} popover id="{{ id }}">
+        {{ ui.heading(title, level=4) if title }}
+        <div>{{ content }}</div>
+    </div>
+{%- endmacro %}
+
+{%- macro progress(content, value=0, max=100) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="progress">
+        <div class="progress-bar" style="width: {{ (value / max) * 100 }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="{{ max }}">
+            {%- if content %}{{ content }}{% else %}{{ value }} / {{ max }}{% endif %}
+        </div>
+    </div>
+{%- endmacro %}
+
+{%- macro spinner(size="md") -%}
+    <span {{ ui.util.attrs(kwargs) }} class="spinner spinner-{{ size }}"></span>
+{%- endmacro %}
+
+{%- macro toast(message, style, dismissible, duration) -%}
+    <div {{ ui.util.attrs(kwargs) }}>
+        {{ message }}
+    </div>
+{%- endmacro %}
+
+{%- macro tooltip(content, tooltip, position) -%}
+    <span {{ ui.util.attrs(kwargs) }} data-bs-title="{{ tooltip }}" data-bs-toggle="tooltip">
+        {{- content -}}
+    </span>
+{%- endmacro %}

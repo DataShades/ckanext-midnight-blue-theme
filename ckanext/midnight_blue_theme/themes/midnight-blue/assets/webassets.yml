@@ -1,0 +1,150 @@
+## styles
+css-main:
+  filters: cssrewrite
+  output: base/%(version)s_main.css
+  contents: css/main.css
+css-main-rtl:
+  filters: cssrewrite
+  output: base/%(version)s_main-rtl.css
+  contents: css/main-rtl.css
+
+## scripts
+main:
+  filters: rjsmin
+  output: base/%(version)s_main.js
+  extra:
+    preload:
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/htmx
+  contents:
+    - javascript/apply-html-class.js
+    - javascript/plugins/jquery.inherit.js
+    - javascript/plugins/jquery.proxy-all.js
+    - javascript/plugins/jquery.url-helpers.js
+    - javascript/plugins/jquery.date-helpers.js
+    - javascript/plugins/jquery.slug.js
+    - javascript/plugins/jquery.slug-preview.js
+    - javascript/plugins/jquery.form-warning.js
+    - javascript/sandbox.js
+    - javascript/module.js
+    - javascript/pubsub.js
+    - javascript/client.js
+    - javascript/i18n.js
+    - javascript/notify.js
+    - javascript/toast.js
+    - javascript/confirm.js
+    - javascript/main.js
+    - javascript/htmx-ckan.js
+
+ckan:
+  filters: rjsmin
+  output: base/%(version)s_ckan.js
+  extra:
+    preload:
+      - vendor/bootstrap
+  contents:
+    - javascript/modules/select-switch.js
+    - javascript/modules/slug-preview.js
+    - javascript/modules/basic-form.js
+    - javascript/modules/confirm-action.js
+    - javascript/modules/autocomplete.js
+    - javascript/modules/custom-fields.js
+    - javascript/modules/data-viewer.js
+    - javascript/modules/table-selectable-rows.js
+    - javascript/modules/resource-form.js
+    - javascript/modules/resource-upload-field.js
+    - javascript/modules/resource-reorder.js
+    - javascript/modules/resource-view-reorder.js
+    - javascript/modules/resource-view-embed.js
+    - javascript/modules/resource-view-filters-form.js
+    - javascript/modules/resource-view-filters.js
+    - javascript/modules/table-toggle-more.js
+    - javascript/modules/dataset-visibility.js
+    - javascript/modules/image-upload.js
+    - javascript/modules/metadata-button.js
+    - javascript/modules/copy-into-buffer.js
+
+view-filters:
+  output: base/%(version)s_view-filters.js
+  extra:
+    preload:
+      - theming/midnight-blue-portable/jquery
+      - theming/midnight-blue-portable/qs
+  contents:
+    - javascript/view-filters.js
+
+draft-package:
+  output: base/%(version)s_draft-package.js
+  extra:
+    preload:
+      - theming/midnight-blue-portable/jquery
+  contents:
+    - javascript/draft-package.js
+
+## vendor
+select2-css:
+  output: vendor/%(version)s_select2.css
+  filters: cssrewrite
+  contents:
+    - vendor/select2/select2.css
+
+fontawesome:
+  output: vendor/%(version)s_fontawesome.css
+  filters: cssrewrite
+  contents:
+    - vendor/fontawesome-free/css/all.css
+
+jquery:
+  filters: rjsmin
+  output: vendor/%(version)s_jquery.js
+  contents:
+    - vendor/jquery.js
+
+qs:
+  filters: rjsmin
+  output: vendor/%(version)s_qs.js
+  contents:
+    - vendor/qs.js
+
+vendor:
+  filters: rjsmin
+  output: vendor/%(version)s_vendor.js
+  extra:
+    preload:
+      - theming/midnight-blue-portable/select2-css
+      - theming/midnight-blue-portable/jquery
+  contents:
+    - vendor/jed.js
+    - vendor/moment-with-locales.js
+    - vendor/select2/select2.full.js
+    - vendor/popperjs.js
+    - vendor/purify.js
+
+bootstrap:
+  filters: rjsmin
+  output: vendor/%(version)s_bootstrap.js
+  extra:
+    preload:
+      - theming/midnight-blue-portable/fontawesome
+      - theming/midnight-blue-portable/jquery
+  contents:
+    - vendor/bootstrap/js/bootstrap.js
+
+reorder:
+  filters: rjsmin
+  output: vendor/%(version)s_reorder.js
+  extra:
+    preload:
+      - theming/midnight-blue-portable/jquery
+  contents:
+    - vendor/jquery.ui.core.js
+    - vendor/jquery.ui.widget.js
+    - vendor/jquery.ui.mouse.js
+    - vendor/jquery.ui.sortable.js
+
+htmx:
+  filters: rjsmin
+  output: vendor/%(version)s_htmx.js
+  contents:
+    - vendor/htmx.js

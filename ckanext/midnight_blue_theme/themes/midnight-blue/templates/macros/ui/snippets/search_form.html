@@ -1,0 +1,23 @@
+{%- call ui.util.call(ui.search_form_box, use_htmx=use_htmx, **kwargs) -%}
+    <div>
+        {{ ui.search_input(name=query_name, value=query) }}
+        {{ ui.search_submit_button() }}
+    </div>
+
+    {%- if active_filters -%}
+        {%- for name, value in active_filters -%}
+            {{ ui.hidden_input(name=name, value=value) }}
+        {%- endfor %}
+    {%- endif %}
+
+    {{ ui.search_sort_control(name=sorting_name, selected=sorting, options=sorting_options) }}
+
+    <div>
+        {{ ui.search_results_header(item_count=item_count, first_item_position=first_item_position, last_item_position=last_item_position, query_error=query_error) }}
+    </div>
+
+    {{ ui.search_active_filters(active_filters=active_filters, facet_titles=facet_titles, facets=facets, use_htmx=use_htmx) }}
+
+    {{ ui.search_advanced_controls() }}
+
+{%- endcall %}

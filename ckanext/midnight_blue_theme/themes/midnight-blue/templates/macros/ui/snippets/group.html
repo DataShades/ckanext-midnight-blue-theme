@@ -1,0 +1,7 @@
+{%- call ui.util.call(ui.column, span={"xs": 12, "md": 4, "lg": 3}) -%}
+    {% set img = group.image_display_url or h.url_for_static('/base/images/placeholder-' ~ ('organization' if group.is_organization else 'group') ~ '.png') %}
+    {% set title = group.title or group.name  %}
+    {% set body = h.markdown_extract(group.description, 120)|urlize %}
+
+    {{ ui.card(title=title, img=img, body=body, href=h.url_for(('organization' if group.is_organization else 'group') ~ ".read", id=group.name), **kwargs) }}
+{%- endcall %}

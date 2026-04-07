@@ -1,0 +1,27 @@
+{%- macro popover_handle(content, id) -%}
+    <span {{ ui.util.attrs(kwargs) }} onclick="window['{{ id }}'].togglePopover({source: this})" style="cursor: pointer;">
+        {{ content }}
+    </span>
+{%- endmacro %}
+
+{%- macro modal_handle(content, id) -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("onclick", "ckan.sandbox().ui.getModal('{id}').show()".format(id=id)) -%}
+    {{ ui.button(content, **kwargs) }}
+{%- endmacro %}
+
+{%- macro modal_close_handle(content, id) -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("onclick", "ckan.sandbox().ui.getModal('{id}').close()".format(id=id)) -%}
+    {{ ui.button(content, **kwargs) }}
+{%- endmacro %}
+
+{%- macro tab_handle(content, href, active) -%}
+    {%- if active -%}
+        {%- do kwargs.setdefault("aria", {}).setdefault("selected", "true") -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "active") -%}
+    {%- endif %}
+    {{ ui.link(content, href, **kwargs) }}
+{%- endmacro %}
+
+{%- macro panel_handle(content, id) -%}
+    {{ ui.link(content, href="#" ~ id, **kwargs) }}
+{%- endmacro %}

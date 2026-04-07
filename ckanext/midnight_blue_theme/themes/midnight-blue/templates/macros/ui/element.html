@@ -1,0 +1,76 @@
+{%- macro avatar(src, alt, size) -%}
+    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
+    {%- do attrs.setdefault("width", size) -%}
+    {%- do attrs.setdefault("height", size) -%}
+
+    {{ ui.image(src or h.url_for_static("/base/images/placeholder-user.png"), alt, **kwargs) }}
+{%- endmacro %}
+
+{%- macro badge(content, style) -%}
+    <sup><mark {{ ui.util.attrs(kwargs) }}>{{ content }}</mark></sup>
+{%- endmacro %}
+
+{%- macro breadcrumb_divider(content="/") -%}{%- do kwargs -%}{%- endmacro %}
+
+{%- macro button(content, href, icon, size, type="button", style="primary") -%}
+    {%- set prefix = ui.icon(icon) if icon else "" -%}
+    {%- if href -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "btn btn-" ~ style) -%}
+        {{ ui.link(prefix ~ content, href=href, **kwargs) }}
+    {%- else -%}
+        <button {{ ui.util.attrs(kwargs) }} type="{{ type }}" class="btn btn-{{ style }} {{ ('btn-' ~ size) if size }}">
+            {{- prefix ~ content -}}
+        </button>
+    {%- endif %}
+{%- endmacro %}
+
+{%- macro datetime(dt, date_format, with_hours, empty="") -%}
+    <time {{ ui.util.attrs(kwargs) }} datetime="{{ h.render_datetime(dt, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
+        {{- h.render_datetime(dt, date_format=date_format, with_hours=with_hours) or empty -}}
+    </time>
+{%- endmacro %}
+
+{%- macro divider(content) -%}
+    {%- if content -%}
+        <div {{ ui.util.attrs(kwargs) }} class="divider divider-with-content">
+            <hr><span>{{ content }}</span><hr>
+        </div>
+    {%- else -%}
+        <hr {{ ui.util.attrs(kwargs) }} class="divider">
+    {%- endif %}
+{%- endmacro %}
+
+{%- macro heading(content, level) -%}
+    {%- set tag =  "h" ~ level -%}
+    <{{ tag }} {{ ui.util.attrs(kwargs) }}>{{ content }}</{{ tag }}>
+{%- endmacro %}
+
+{%- macro icon(name, weight=none) -%}
+    <i {{ ui.util.attrs(kwargs) }} class="fa-{{ ui.util.icon(name) }} fa{% if weight %}-{{ weight }}{% endif %}"></i>
+{%- endmacro %}
+
+{%- macro image(src, alt, height, width) -%}
+    {%- if not alt -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("role", "presentation") -%}
+    {%- endif -%}
+    <img {{ ui.util.attrs(kwargs) }} src="{{ src }}" alt="{{ alt }}"
+        {%- if height %} height="{{ height }}"{% endif %}
+        {%- if width %} width="{{ width }}"{% endif %}
+    >
+{%- endmacro %}
+
+{%- macro link(content, href, blank) -%}
+    {%- if blank -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("target", "_blank") -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("rel", "noopener noreferrer") -%}
+    {%- endif %}
+    <a {{ ui.util.attrs(kwargs) }} href="{{ href or content }}">{{ content }}</a>
+{%- endmacro %}
+
+{%- macro tag(content, href) -%}
+    <a {{ ui.util.attrs(kwargs) }} {%- if href %} href="{{ href }}"{%- endif %}>{{ content }}</a>
+{%- endmacro %}
+
+{%- macro video(src, controls) -%}
+    <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }}></video>
+{%- endmacro %}
