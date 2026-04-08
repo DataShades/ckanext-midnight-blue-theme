@@ -1,32 +1,34 @@
 {% extends "user/login.html" %}
-{% import "macros/form.html" as form %}
 
 {% block subtitle -%}
     {{ ui.subtitle_item(_('Reset Your Password')) }}
     {{- super() }}
 {%- endblock %}
+
 {% block page_heading %}{{ _('Reset Your Password') }}{% endblock %}
+
 {% block breadcrumb_content -%}
     {{ ui.breadcrumb(_('Password Reset'), href="", active=true) }}
 {%- endblock %}
 
 {% block form %}
-    <form action="" method="post">
-        {{ h.csrf_input() }}
-        {{ form.errors(error_summary) }}
+    {%- call ui.util.call(ui.form, method="POST") -%}
+        {{ ui.form_errors(error_summary) }}
         {% if user_dict['state'] == 'pending' %}
             <p>{{ _('You can also change username. It can not be modified later.') }}</p>
-            {{ form.input("name", id="field-name", icon='user', label=_("Username"), type="text", value=user_dict["name"],
-          error='', attrs={'autocomplete': 'no', 'class': 'form-control control-medium'}, classes=["form-group"]) }}
+            {{ ui.input(name="name", id="field-name", icon='user', label=_("Username"), value=user_dict["name"], attrs={'autocomplete': 'off'}) }}
         {% endif %}
-        {{ form.input("password1", id="field-password", label=_("Password"), icon='fingerprint', type="password", value='', error='', attrs={'autocomplete': 'no', 'class': 'form-control control-medium'}, classes=["form-group"]) }}
-        {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), icon='fingerprint', type="password", value='', error='', attrs={'autocomplete': 'no', 'class': 'form-control control-medium'}, classes=["form-group"]) }}
-        <div class="form-actions">
+
+        {{ ui.input(name="password1", id="field-password", label=_("Password"), icon='fingerprint', type="password", attrs={'autocomplete': 'off'}) }}
+        {{ ui.input(name="password2", id="field-confirm-password", label=_("Confirm"), icon='fingerprint', type="password", attrs={'autocomplete': 'no'}) }}
+
+        {%- call ui.util.call(ui.form_actions) -%}
             {% block form_button %}
-                <button class="btn btn-primary" type="submit" name="save">{{ _("Update Password") }}</button>
+                {{ ui.button(_("Update Password"), type="submit", attrs={"name": "save"}) }}
             {% endblock form_button %}
-        </div>
-    </form>
+        {%- endcall %}
+    {%- endcall %}
+
 {% endblock form %}
 
 {% block primary_content_inner %}

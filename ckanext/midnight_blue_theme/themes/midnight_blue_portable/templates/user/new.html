@@ -6,7 +6,7 @@
 {%- endblock %}
 
 {% block breadcrumb_content -%}
-    {{ ui.breadcrumb(h.nav_link(_('Registration'), href=h.url_for('user.register'), active=true) }}
+    {{ ui.breadcrumb(_('Registration'), href=h.url_for('user.register'), active=true) }}
 {%- endblock %}
 
 {% block page_heading %}{{ _('Register for an Account') }}{% endblock %}

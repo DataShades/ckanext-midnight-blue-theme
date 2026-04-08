@@ -51,26 +51,26 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro pagination(page=1, total=1, url_generator=h.pager_url, padding=2, hide_edges=false, hide_siblings=false, start_label=null, end_label=null, previous_label=ui.icon("chevron-left", weight="solid"), next_label=ui.icon("chevron-right", weight="solid"), padding_label="...") -%}
+{%- macro pagination(page=1, total=1, url_generator=h.pager_url, padding=2, hide_edges=false, hide_siblings=false, start_label=null, end_label=null, previous_label=ui.icon("chevron-left", weight="solid"), next_label=ui.icon("chevron-right", weight="solid"), padding_label="...", url_params={}) -%}
     {%- if total > 1 %}
         {%- call ui.util.call(ui.pagination_wrapper, **kwargs) -%}
-            {{ ui.pagination_item(previous_label, href=url_generator(page=page - 1)) if page > 1 and not hide_siblings }}
+            {{ ui.pagination_item(previous_label, href=url_generator(page=page - 1, **url_params)) if page > 1 and not hide_siblings }}
 
             {%- if page - 1 > padding %}
-                {{ ui.pagination_item(start_label or 1, href=url_generator(page=1)) if not hide_edges}}
+                {{ ui.pagination_item(start_label or 1, href=url_generator(page=1, **url_params)) if not hide_edges}}
                 <li class="disabled"><a href="#">{{ padding_label }}</a></li>
             {%- endif %}
 
             {%- for i in range([page - padding, 1]|max, [page + padding, total]|min + 1) %}
-                {{ ui.pagination_item(i, href=url_generator(page=i), active=i == page) }}
+                {{ ui.pagination_item(i, href=url_generator(page=i, **url_params), active=i == page) }}
             {%- endfor %}
 
             {%- if total - page > padding %}
                 <li class="disabled"><a href="#">{{ padding_label }}</a></li>
-                {{ ui.pagination_item(end_label or total, href=url_generator(page=total)) if not hide_edges}}
+                {{ ui.pagination_item(end_label or total, href=url_generator(page=total, **url_params)) if not hide_edges}}
             {%- endif %}
 
-            {{ ui.pagination_item(next_label, href=url_generator(page=page + 1)) if page < total and not hide_siblings }}
+            {{ ui.pagination_item(next_label, href=url_generator(page=page + 1, **url_params)) if page < total and not hide_siblings }}
         {%- endcall %}
     {%- endif %}
 {%- endmacro %}

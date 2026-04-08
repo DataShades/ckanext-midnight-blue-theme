@@ -29,7 +29,7 @@
 {#% set resource_wrapper = resource_wrapper | default(_wrapper.resource_wrapper) %#}
 {% set sidebar_nav_wrapper = sidebar_nav_wrapper | default(_wrapper.sidebar_nav_wrapper) %}
 {#% set tab_nav_wrapper = tab_nav_wrapper | default(_wrapper.tab_nav_wrapper) %#}
-{#% set user_wrapper = user_wrapper | default(_wrapper.user_wrapper) %#}
+{% set user_wrapper = user_wrapper | default(_wrapper.user_wrapper) %}
 {% set pagination_wrapper = pagination_wrapper | default(_wrapper.pagination_wrapper) %}
 
 {#% set activity = activity | default(_content.activity) %#}
@@ -39,7 +39,7 @@
 {#% set organization = organization | default(_content.organization) %#}
 {#% set package = package | default(_content.package) %#}
 {#% set resource = resource | default(_content.resource) %#}
-{#% set user = user | default(_content.user) %#}
+{% set user = user | default(_content.user) %}
 
 {#% set accordion = accordion | default(_container.accordion) %#}
 {#% set button_group = button_group | default(_container.button_group) %#}
@@ -60,7 +60,7 @@
 {% set alert = alert | default(feedback.alert) %}
 {#% set confirm_modal = confirm_modal | default(feedback.confirm_modal) %#}
 {#% set modal = modal | default(feedback.modal) %#}
-{#% set popover = popover | default(feedback.popover) %#}
+{% set popover = popover | default(feedback.popover) %}
 {#% set progress = progress | default(feedback.progress) %#}
 {#% set spinner = spinner | default(feedback.spinner) %#}
 {#% set toast = toast | default(feedback.toast) %#}
@@ -94,25 +94,30 @@
 {#% set extra_fields_collection = extra_fields_collection | default(_form.extra_fields_collection) %#}
 {% set field_errors = field_errors | default(_form.field_errors) %}
 {#% set file_input = file_input | default(_form.file_input) %#}
+{% set field_info = field_info | default(_form.field_info) %}
 {% set form = form | default(_form.form) %}
 {% set form_actions = form_actions | default(_form.form_actions) %}
 {% set form_end = form_end | default(_form.form_end) %}
-{#% set form_errors = form_errors | default(_form.form_errors) %#}
+{% set form_errors = form_errors | default(_form.form_errors) %}
+{% set form_annotation = form_annotation | default(_form.form_annotation) %}
 {% set form_start = form_start | default(_form.form_start) %}
-{#% set hidden_input = hidden_input | default(_form.hidden_input) %#}
+{% set hidden_input = hidden_input | default(_form.hidden_input) %}
 {% set input = input | default(_form.input) %}
-{#% set markdown = markdown | default(_form.markdown) %#}
+{% set markdown = markdown | default(_form.markdown) %}
+{% set markdown_popover = markdown_popover | default(_form.markdown_popover) %}
 {#% set radio = radio | default(_form.radio) %#}
 {#% set range_input = range_input | default(_form.range_input) %#}
 {#% set select = select | default(_form.select) %#}
 {% set select_box = select_box | default(_form.select_box) %}
 {% set select_option = select_option | default(_form.select_option) %}
 {% set submit = submit | default(_form.submit) %}
-{#% set textarea = textarea | default(_form.textarea) %#}
+{% set textarea = textarea | default(_form.textarea) %}
+{% set image_upload = image_upload | default(_form.image_upload) %}
+{% set fieldset = fieldset | default(_form.fieldset) %}
 
 {#% set panel_handle = panel_handle | default(_handle.panel_handle) %#}
 {#% set modal_handle = modal_handle | default(_handle.modal_handle) %#}
-{#% set popover_handle = popover_handle | default(_handle.popover_handle) %#}
+{% set popover_handle = popover_handle | default(_handle.popover_handle) %}
 {#% set modal_close_handle = modal_close_handle | default(_handle.modal_close_handle) %#}
 {#% set tab_handle = tab_handle | default(_handle.tab_handle) %#}
 

@@ -9,6 +9,6 @@ Example
 {{ form.hidden('name', 'value') }}
 
 #}
-{% macro hidden(name, value) %}
-<input type="hidden" name="{{ name }}" value="{{ value }}" />
-{% endmacro %}
+{% macro hidden(name, value) -%}
+    {{ ui.hidden_input(name=name, value=value) }}
+{%- endmacro %}

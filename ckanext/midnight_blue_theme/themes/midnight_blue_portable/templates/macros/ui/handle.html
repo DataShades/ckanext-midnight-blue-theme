@@ -1,7 +1,5 @@
 {%- macro popover_handle(content, id) -%}
-    <span {{ ui.util.attrs(kwargs) }} onclick="window['{{ id }}'].togglePopover({source: this})" style="cursor: pointer;">
-        {{ content }}
-    </span>
+    <span {{ ui.util.attrs(kwargs) }} data-module="popover" data-module-popover-content="#{{ id }}">{{ content }}</span>
 {%- endmacro %}
 
 {%- macro modal_handle(content, id) -%}

@@ -4,7 +4,7 @@
 <form id="group-edit" method="post" data-module="basic-form" enctype="multipart/form-data">
   {{ h.csrf_input() }}
   {% block error_summary %}
-    {{ form.errors(error_summary) }}
+    {{ ui.form_errors(error_summary) }}
   {% endblock %}
 
   {% block basic_fields %}

@@ -12,7 +12,7 @@
   <div class="package-metadata-field rounded container">
     <div class="row ">
 
-      {% block errors %}{{ form.errors(error_summary) }}{% endblock %}
+      {% block errors %}{{ ui.form_errors(error_summary) }}{% endblock %}
 
       <input name="id" value="{{ data.id }}" type="hidden"/>
 

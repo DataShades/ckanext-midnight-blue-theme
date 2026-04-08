@@ -9,7 +9,7 @@
     {% block page_heading %}{{ _('Edit Config') }}{% endblock %}
   </h1>
 
-  {{ form.errors(error_summary) }}
+  {{ ui.form_errors(error_summary) }}
 
   <form method='post' action="" id="admin-config-form" enctype="multipart/form-data">
     {% block admin_form %}

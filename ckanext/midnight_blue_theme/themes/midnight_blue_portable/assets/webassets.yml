@@ -64,6 +64,7 @@ ckan:
     - javascript/modules/image-upload.js
     - javascript/modules/metadata-button.js
     - javascript/modules/copy-into-buffer.js
+    - javascript/modules/popover.js
 
 view-filters:
   output: base/%(version)s_view-filters.js

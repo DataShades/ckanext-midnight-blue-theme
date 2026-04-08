@@ -9,21 +9,18 @@
 {%- endblock %}
 
 {% block primary_content_inner %}
-    <h1>
+    {%- call ui.util.call(ui.heading, level=1) -%}
         {% block page_heading %}{{ _('Edit Profile') }}{% endblock %}
-    </h1>
+    {%- endcall %}
     {{ form | safe }}
 {% endblock %}
 
 {% block secondary_content %}
     <section class="module module-narrow module-shallow">
         <div class="module-group">
-            <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('Account Info') }}</h2>
+            <h2 class="module-heading">{{ ui.icon("info-circle") }} {{ _('Account Info') }}</h2>
             <div class="module-content">
-                {% trans %}
-                Your profile lets other CKAN users know about who you are and what you
-                do.
-        {% endtrans %}
+                {{ _("Your profile lets other CKAN users know about who you are and what you do.") }}
             </div>
         </div>
     </section>

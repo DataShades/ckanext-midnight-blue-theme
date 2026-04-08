@@ -12,21 +12,18 @@
 {%- endblock %}
 
 {% block form %}
-    <form action="" class="reset_form" method="post">
-        {{ h.csrf_input() }}
-        <div class="form-group">
-            <label for="field-username">{{ _('Email or username') }}</label>
-            <input id="field-username" class="control-medium form-control" name="user" value="" type="text" />
-        </div>
+    {%- call ui.util.call(ui.form, method="POST") -%}
+        {{ ui.input(name="user", id="field-username", label=_('Email or username')) }}
         {% if g.recaptcha_publickey %}
             {% snippet "user/snippets/recaptcha.html", public_key=g.recaptcha_publickey %}
         {% endif %}
-        <div class="form-actions">
+
+        {%- call ui.util.call(ui.form_actions) -%}
             {% block form_button %}
-                <button class="btn btn-primary" type="submit" name="reset">{{ _("Request Reset") }}</button>
+                {{ ui.button(_("Request Reset"), type="submit", attrs={"name": "reset"}) }}
             {% endblock form_button %}
-        </div>
-    </form>
+        {%- endcall %}
+    {%- endcall %}
 {% endblock form %}
 
 {% block primary_content_inner %}

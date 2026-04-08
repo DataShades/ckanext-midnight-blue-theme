@@ -33,7 +33,9 @@
 
 {%- macro resource_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
 
-{%- macro user_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
+{%- macro user_wrapper(content) -%}
+    <ul class="user-list">{{ content }}</ul>
+{%- endmacro %}
 
 {%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
 
@@ -69,8 +71,13 @@
     {{ ui.list(content, **kwargs) }}
 {%- endmacro %}
 
-{%- macro page_action_wrapper(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="page_primary_action mb-3 mb-md-0 ms-3 pull-right">
+{%- macro page_action_wrapper(content, variant) -%}
+    {%- set classes = "mb-3 mb-md-0 ms-3 pull-right" -%}
+    {%- if variant == "dashboard" -%}
+        {%- set classes = " col-md-4" -%}
+    {%- endif %}
+
+    <div {{ ui.util.attrs(kwargs) }} class="page_primary_action {{ classes }}">
         {{- content -}}
     </div>
 {%- endmacro %}

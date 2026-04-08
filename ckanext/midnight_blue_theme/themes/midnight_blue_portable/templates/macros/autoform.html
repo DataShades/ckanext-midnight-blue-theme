@@ -26,7 +26,7 @@ Example
 #}
 {% import 'macros/form.html' as form %}
 {%- macro generate(form_info=[], data={}, errors={}, error_summary=[]) -%}
-  {{ form.errors(error_summary) if error_summary }}
+  {{ ui.form_errors(error_summary) if error_summary }}
 
   {% for item in form_info %}
     {% set name = item.name %}

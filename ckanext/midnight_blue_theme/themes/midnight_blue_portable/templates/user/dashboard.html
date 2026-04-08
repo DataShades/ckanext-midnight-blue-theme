@@ -15,12 +15,11 @@
 
 {% block secondary_content %}
     {%- call ui.util.call(ui.sidebar_nav_wrapper) -%}
-        {% block dashboard_nav_links %}
-
+        {% block dashboard_nav_links -%}
             {{ ui.sidebar_nav_item(ui.icon('sitemap') ~ (h.humanize_entity_type('package', dataset_type, 'my label') or _('My Datasets')), href=h.url_for('dashboard.datasets'), active=request.endpoint=='dashboard.datasets') }}
             {{ ui.sidebar_nav_item(ui.icon('building') ~ (h.humanize_entity_type('organization', org_type, 'my label') or _('My Organizations')), href=h.url_for('dashboard.organizations'), active=request.endpoint=='dashboard.organizations') }}
             {{ ui.sidebar_nav_item(ui.icon('users') ~ (h.humanize_entity_type('group', group_type, 'my label') or _('My Groups')), href=h.url_for('dashboard.groups'), active=request.endpoint=='dashboard.groups') }}
-        {% endblock dashboard_nav_links %}
+        {%- endblock dashboard_nav_links %}
     {%- endcall %}
 {% endblock secondary_content %}
 
@@ -33,9 +32,9 @@
                         {% block page_heading %}{% endblock %}
                     </div>
                     {% if self.page_primary_action() | trim %}
-                        <div class="page_primary_action col-md-4">
+                        {%- call ui.util.call(ui.page_action_wrapper, variant="dashboard") -%}
                             {% block page_primary_action -%}{% endblock %}
-                        </div>
+                        {%- endcall %}
                     {% endif %}
                 </div>
                 {% block primary_content_inner %}

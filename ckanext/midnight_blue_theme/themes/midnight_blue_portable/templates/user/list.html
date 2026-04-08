@@ -16,17 +16,18 @@
                 {% block page_heading %}{{ _('Users') }}{% endblock %}
             </h1>
             {% block users_list %}
-                <ul class="user-list">
+                {%- call ui.util.call(ui.user_wrapper) -%}
                     {% block users_list_inner %}
                         {% for user in page.items %}
-                            <li>{{ h.linked_user(user.name, maxlength=20) }}</li>
+                            {{ ui.user(user) }}
                         {% endfor %}
                     {% endblock %}
-                </ul>
+                {%- endcall %}
             {% endblock %}
         </div>
         {% block page_pagination %}
-            {{ page.pager(q=q, order_by=order_by) }}
+            {{ ui.pagination(page=page.page, total=page.last_page, url_generator=page._url_generator, url_params={"q": q, "order_by": order_by}) }}
+
         {% endblock %}
     </article>
 {% endblock %}
