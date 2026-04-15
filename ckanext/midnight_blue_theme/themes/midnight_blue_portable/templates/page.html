@@ -33,11 +33,11 @@
                     {% block toolbar %}
                         <div class="toolbar" role="navigation" aria-label="{{ _('Breadcrumb') }}">
                             {% block breadcrumb -%}
-                                {%- set breadcrumb_content = self.breadcrumb_content() | trim -%}
-                                {% if breadcrumb_content -%}
+                                {% if self.breadcrumb_content() | trim -%}
                                     {%- call ui.util.call(ui.breadcrumb_wrapper) -%}
                                         {{ ui.breadcrumb(_('Home'), h.url_for('home.index'), aria={"label": _("Home")}, initial=true) }}
-                                        {{ breadcrumb_content }}
+                                        {%- block breadcrumb_content -%}
+                                        {%- endblock %}
                                     {%- endcall %}
                                 {% endif %}
                             {% endblock %}
@@ -128,6 +128,6 @@
 
 {%- block scripts %}
     {{ super() }}
-    {% asset 'theming/midnight-blue-portable/main' %}
+    {% asset 'base/main' %}
     {% asset 'theming/midnight-blue-portable/ckan' %}
 {% endblock -%}

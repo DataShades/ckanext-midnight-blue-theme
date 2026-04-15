@@ -1,41 +1,14 @@
 ## styles
 css-main:
-  filters: cssrewrite
+  # filters: cssrewrite
   output: base/%(version)s_main.css
   contents: css/main.css
 css-main-rtl:
-  filters: cssrewrite
+  # filters: cssrewrite
   output: base/%(version)s_main-rtl.css
   contents: css/main-rtl.css
 
 ## scripts
-main:
-  filters: rjsmin
-  output: base/%(version)s_main.js
-  extra:
-    preload:
-      - vendor/vendor
-      - vendor/bootstrap
-      - vendor/htmx
-  contents:
-    - javascript/apply-html-class.js
-    - javascript/plugins/jquery.inherit.js
-    - javascript/plugins/jquery.proxy-all.js
-    - javascript/plugins/jquery.url-helpers.js
-    - javascript/plugins/jquery.date-helpers.js
-    - javascript/plugins/jquery.slug.js
-    - javascript/plugins/jquery.slug-preview.js
-    - javascript/plugins/jquery.form-warning.js
-    - javascript/sandbox.js
-    - javascript/module.js
-    - javascript/pubsub.js
-    - javascript/client.js
-    - javascript/i18n.js
-    - javascript/notify.js
-    - javascript/toast.js
-    - javascript/confirm.js
-    - javascript/main.js
-    - javascript/htmx-ckan.js
 
 ckan:
   filters: rjsmin
@@ -86,13 +59,13 @@ draft-package:
 ## vendor
 select2-css:
   output: vendor/%(version)s_select2.css
-  filters: cssrewrite
+  # filters: cssrewrite
   contents:
     - vendor/select2/select2.css
 
 fontawesome:
   output: vendor/%(version)s_fontawesome.css
-  filters: cssrewrite
+  # filters: cssrewrite
   contents:
     - vendor/fontawesome-free/css/all.css
 

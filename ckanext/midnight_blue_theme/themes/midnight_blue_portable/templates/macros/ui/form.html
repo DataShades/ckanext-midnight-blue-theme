@@ -149,7 +149,7 @@ this.parentNode.insertBefore(tpl, this);
     </div>
 {%- endmacro %}
 
-{%- macro checkbox(content, name, id, checked, label, required, placeholder, type, value="on", errors=[], group_class="form-check") -%}
+{%- macro checkbox(content, name, id, checked, label, required, placeholder, type="checkbox", value="on", errors=[], group_class="form-check") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
     {%- set help_id = ui.util.id() if content -%}
 
@@ -161,7 +161,7 @@ this.parentNode.insertBefore(tpl, this);
     {%- if checked -%}{%- do attrs.update({"checked": true}) -%}{%- endif %}
 
     <div class="{{ group_class }}">
-        {{ _input(name=name, value=value, placeholder=placeholder, type="checkbox", id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
+        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
         {%- if label -%}
             <label class="form-check-label checkbox" for="{{ field_id }}">{{ label }}</label>
         {%- endif %}
@@ -250,10 +250,7 @@ this.parentNode.insertBefore(tpl, this);
 {%- endmacro %}
 
 {%- macro radio(content, checked, value="on") -%}
-    {%- if checked -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("checked", true) -%}
-    {%- endif %}
-    {{ ui.input(content, value=value or "on", type="radio", **kwargs) }}
+    {{ ui.checkbox(content, checked=checked, value=value or "on", type="radio", **kwargs) }}
 {%- endmacro %}
 
 {%- macro range_input(content, min_value, max_value, step) -%}
@@ -319,34 +316,31 @@ this.parentNode.insertBefore(tpl, this);
     {{- ui.button(content, type="submit", **kwargs) }}
 {%- endmacro %}
 
-{%- macro textarea(content, name, id, label, value, placeholder, required, errors=[]) -%}
+{%- macro textarea(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
     {%- set help_id = ui.util.id() if content -%}
 
-    <div>
+    <div class="{{ group_class }}">
         {%- if label -%}
-            <label for="{{ field_id }}">{{ label }}</label>
+            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
         {%- endif %}
-        {%- if content -%}
-            <div class="input-help" id="{{ help_id }}">{{ content }}</div>
-        {%- endif %}
-        <textarea
-            {{ ui.util.attrs(kwargs) }}
-            {%- if field_id %} id="{{ field_id }}"{%- endif %}
-            {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
-            {%- if name %} name="{{ name }}"{% endif %}
-            {%- if required %} required{% endif %}
-            {%- if content %} aria-describedby="{{ help_id }}"{% endif %}
-            {%- if errors %} aria-invalid="true"{% endif %}
-        >{{ value or "" }}</textarea>
+        <div class="controls editor">
+            <textarea
+                {{ ui.util.attrs(kwargs) }}
+                cols="20" rows="5"
+                {%- if field_id %} id="{{ field_id }}"{%- endif %}
+                {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
+                {%- if name %} name="{{ name }}"{% endif %}
+                {%- if required %} required{% endif %}
+                {%- if errors %} aria-invalid="true"{% endif %}
+            >{{ value or "" }}</textarea>
+            {{ ui.field_info(content) if content }}
+        </div>
         {%- if errors %}
-            <div>
-                {{ ui.field_errors(errors) }}
-            </div>
+            {{ ui.field_errors(errors) }}
         {%- endif %}
     </div>
 {%- endmacro %}
-
 
 
 {% macro image_upload()  %}
