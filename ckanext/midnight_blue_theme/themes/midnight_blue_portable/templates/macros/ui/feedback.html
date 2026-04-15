@@ -15,7 +15,7 @@
     {%- endif %}
 
     {%- set close_button = ui.modal_close_handle(cancel_label or _("Close"), id=id) %}
-    {%- set confirm_button = ui.button(confirm_label or _("Confirm"), attrs={"onclick": "const form = window['{form_id}']; (form.getAttribute('hx-post')||form.getAttribute('hx-get')) ? form.dispatchEvent(new Event('submit')) : form.submit(); ckan.sandbox().ui.getModal('{id}').close();".format(form_id=form_id, id=id)}) %}
+    {%- set confirm_button = ui.modal_close_handle(confirm_label or _("Confirm"), id=id, type="submit", attrs={"form": form_id}) %}
 
     {%- call ui.util.call(ui.modal, title=title or _("Confirm"), id=id, footer=close_button ~ confirm_button, **kwargs) -%}
         {{ content }}
@@ -23,20 +23,24 @@
 {%- endmacro %}
 
 {%- macro modal(content, title, footer, dismissible, id) -%}
-    <dialog {{ ui.util.attrs(kwargs) }} id="{{ id }}" closedby="{{ 'any' if dismissible else 'closerequest' }}">
-        {%- if title %}
-            {{ ui.heading(title, level=2) }}
-        {%- endif %}
-
-        <div>
-            {{ content }}
-        </div>
-        {%- if footer -%}
-            <div>
-                {{ footer }}
+    <div {{ ui.util.attrs(kwargs) }} class="modal" tabindex="-1" id="{{ id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {%- if title -%}<h5 class="modal-title">{{ title }}</h5>{%- endif %}
+                    {%- if dismissible -%}
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {%- endif %}
+                </div>
+                <div class="modal-body">
+                    {{ content }}
+                </div>
+                <div class="modal-footer">
+                    {{ footer }}
+                </div>
             </div>
-        {%- endif %}
-    </dialog>
+        </div>
+    </div>
 {%- endmacro %}
 
 

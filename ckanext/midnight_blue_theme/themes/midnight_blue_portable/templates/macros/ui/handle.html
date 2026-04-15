@@ -3,12 +3,12 @@
 {%- endmacro %}
 
 {%- macro modal_handle(content, id) -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("onclick", "ckan.sandbox().ui.getModal('{id}').show()".format(id=id)) -%}
+    {%- do kwargs.setdefault("data", {}).update({"bs-toggle": "modal", "bs-target": "#"~id}) -%}
     {{ ui.button(content, **kwargs) }}
 {%- endmacro %}
 
 {%- macro modal_close_handle(content, id) -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("onclick", "ckan.sandbox().ui.getModal('{id}').close()".format(id=id)) -%}
+    {%- do kwargs.setdefault("data", {}).update({"bs-dismiss": "modal", "bs-target": "#"~id}) -%}
     {{ ui.button(content, **kwargs) }}
 {%- endmacro %}
 
