@@ -14,11 +14,12 @@
 
 {%- macro button(content, href, icon, size, type="button", style="primary") -%}
     {%- set prefix = ui.icon(icon) if icon else "" -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("class", "btn btn-" ~ style ~ ((' btn-' ~ size) if size else "")) -%}
+
     {%- if href -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "btn btn-" ~ style) -%}
         {{ ui.link(prefix ~ content, href=href, **kwargs) }}
     {%- else -%}
-        <button {{ ui.util.attrs(kwargs) }} type="{{ type }}" class="btn btn-{{ style }} {{ ('btn-' ~ size) if size }}">
+        <button {{ ui.util.attrs(kwargs) }} type="{{ type }}">
             {{- prefix ~ content -}}
         </button>
     {%- endif %}
@@ -54,8 +55,8 @@
         {%- do kwargs.setdefault("attrs", {}).setdefault("role", "presentation") -%}
     {%- endif -%}
     <img {{ ui.util.attrs(kwargs) }} src="{{ src }}" alt="{{ alt }}"
-        {%- if height %} height="{{ height }}"{% endif %}
-        {%- if width %} width="{{ width }}"{% endif %}
+                                     {%- if height %} height="{{ height }}"{% endif %}
+                                     {%- if width %} width="{{ width }}"{% endif %}
     >
 {%- endmacro %}
 
