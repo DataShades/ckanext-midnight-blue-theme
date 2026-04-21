@@ -1,20 +1,7 @@
+
 {%- macro accordion_wrapper(content) -%}
     <div {{ ui.util.attrs(kwargs) }} role="region" aria-label="{{ _('Accordion') }}">{{ content }}</div>
 {%- endmacro %}
-
-{%- macro activity_wrapper(content) -%}
-    {{ ui.list(content, **kwargs) }}
-{%- endmacro %}
-
-{%- macro facet_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="list-unstyled nav nav-simple nav-facet">{{ content }}</ul>
-{%- endmacro %}
-
-{%- macro group_wrapper(content) -%}{{ ui.grid(content, **kwargs) }}{%- endmacro %}
-
-{%- macro organization_wrapper(content) -%}{{ ui.group_wrapper(content, **kwargs) }}{%- endmacro %}
-
-{%- macro package_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
 
 {%- macro panel_wrapper(content) -%}
     {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id())-%}
@@ -29,12 +16,6 @@
     <div {{ ui.util.attrs(kwargs) }}>
         {{ content }}
     </div>
-{%- endmacro %}
-
-{%- macro resource_wrapper(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
-
-{%- macro user_wrapper(content) -%}
-    <ul class="user-list">{{ content }}</ul>
 {%- endmacro %}
 
 {%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}

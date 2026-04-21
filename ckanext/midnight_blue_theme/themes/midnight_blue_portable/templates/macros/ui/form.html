@@ -1,51 +1,55 @@
 {% from 'macros/form.html' import image_upload as _image_upload %}
 
-{%- macro extra_field(index, data={}, errors={}, name_template='extras__{index}__') -%}
+{%- macro extra_field(content, index=0, data={}, errors={}, name_template='extras__{index}__') -%}
     {%- set prefix = name_template.format(index=index) -%}
-    <fieldset {{ ui.util.attrs(kwargs) }}>
-        <legend>{{ _('Custom Field') }}</legend>
-        {{ ui.input(name=prefix ~ "key", label=_("Key"), value=data.key, errors=errors[prefix~"key"]) }}
-        {{ ui.input(name=prefix ~ "value", label=_("Value"), value=data.value, errors=errors[prefix~"value"]) }}
-        {{ ui.button(_("Remove"), style="danger", attrs={"onclick": "this.closest('fieldset').remove()"}) }}
-    </fieldset>
-{%- endmacro %}
+    {%- set id = 'field-extras-{}'.format(index+1) -%}
+    {%- set error_list = errors[prefix~'key'] or errors[prefix~'value'] -%}
 
-{%- macro extra_field_multiplicator(index, label=_("Add"), placeholder="TPL") -%}
-    <template id="custom-field-template">
-        {{ ui.extra_field(placeholder) }}
-    </template>
-    {{ ui.button(label, data={"index": index}, attrs={"onclick": "
-const tpl = document.getElementById('custom-field-template').content.cloneNode(true);
-tpl.querySelectorAll('input').forEach(el => {
-  el.name = el.name.replace('{{ placeholder }}', this.dataset.index);
-  el.id = el.id.replace('{{ placeholder }}', this.dataset.index);
-});
-tpl.querySelectorAll('label').forEach(el => {
-  el.setAttribute('for', el.getAttribute('for').replace('{{ placeholder }}', this.dataset.index));
-});
-++this.dataset.index;
-this.parentNode.insertBefore(tpl, this);
-    "}, **kwargs) }}
+    {# control-custom class is is used by custom-fields module #}
+    <div class="form-group control-custom">
+        <div class="row">
+            <div class="col-md-6">
+                {{ _input(name=prefix~'key', value=data.key | empty_and_escape, id=id~"-key", errors=error_list, prefix=_("Key"), **kwargs) }}
+            </div>
+
+            <div class="col-md-6 d-flex flex-row-reverse">
+                {% if data.key or data.value or error_list %}
+                    <label class="checkbox pull-right" for="{{ id }}-remove">
+                        <input type="checkbox" id="{{ id }}-remove" name="{{ prefix ~ 'deleted' }}"{% if data.deleted %} checked{% endif %} />
+                        <span class="btn btn-danger"><span class="fa fa-trash"></span><span class="sr-only">{{ _('Remove') }}</span></span>
+                    </label>
+                {% endif %}
+
+                {{ _input(name=prefix~'value', value=data.value | empty_and_escape, id=id~"-value", errors=error_list, prefix=_("Value"), **kwargs) }}
+
+            </div>
+        </div>
+        {{ ui.field_info(content) if content }}
+        {{ ui.field_errors(error_list) if error_list }}
+    </div>
 {%- endmacro %}
 
 {%- macro extra_fields_collection(extras=[], errors={}, limit=3) -%}
-    <div {{ ui.util.attrs(kwargs) }} data-module="custom-fields">
-        {%- for extra in extras -%}
+    <div  {{ ui.util.attrs(kwargs) }} data-module="custom-fields">
+        {% for extra in extras %}
             {{ ui.extra_field(index=loop.index0, data=extra, errors=errors) }}
-        {%- endfor %}
-        {%- set num_extras = extras|count %}
-        {%- set max_extras = [limit - num_extras, 1]|max + num_extras %}
-        {%- for index in range(num_extras, max_extras) -%}
-            {{ ui.extra_field(index=index) }}
-        {%- endfor %}
-        {{- ui.extra_field_multiplicator(max_extras) }}
+        {% endfor %}
+
+        {# Add a max of 3 empty columns #}
+        {% set total_extras = extras|count %}
+        {% set empty_extras = (limit or 3) - total_extras %}
+        {% if empty_extras <= 0 %}{% set empty_extras = 1 %}{% endif %}
+
+        {% for extra in range(total_extras, total_extras + empty_extras) %}
+            {{ ui.extra_field(index=loop.index0 + (extras|count), data=extra, errors=errors) }}
+        {% endfor %}
     </div>
 {%- endmacro %}
 
 {%- macro field_errors(errors) -%}
-    {%- for error in errors -%}
-        <div {{ ui.util.attrs(kwargs) }} class="invalid-feedback">{{ error }}</div>
-    {%- endfor %}
+    <div {{ ui.util.attrs(kwargs) }} class="invalid-feedback d-block error-inline">
+        {{ errors | join (", ") }}
+    </div>
 {%- endmacro %}
 
 {%- macro file_input(content, accept, capture, multiple) -%}
@@ -127,10 +131,7 @@ this.parentNode.insertBefore(tpl, this);
             {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
         </div>
         {{ ui.field_info(content, attrs={"id": help_id}) if content }}
-
-        {%- if errors %}
-            {{ ui.field_errors(errors) }}
-        {%- endif %}
+        {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
 
@@ -166,14 +167,13 @@ this.parentNode.insertBefore(tpl, this);
             <label class="form-check-label checkbox" for="{{ field_id }}">{{ label }}</label>
         {%- endif %}
         {{ ui.field_info(content, attrs={"id": help_id}) if content }}
-        {%- if errors %}
-            {{ ui.field_errors(errors) }}
-        {%- endif %}
+        {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
 
 
-{%- macro _input(name, value, type, id, errors, placeholder, required) -%}
+{%- macro _input(name, value, type, id, errors, placeholder, required, prefix, suffix) -%}
+    {%- set input  -%}
     <input {{ ui.util.attrs(kwargs) }} type="{{ type or "text" }}" class="form-control {{ 'is-invalid' if errors }}"
                                        {%- if name %} name="{{ name }}"{% endif %}
                                        {%- if id %} id="{{ id }}"{%- endif %}
@@ -183,6 +183,16 @@ this.parentNode.insertBefore(tpl, this);
                                        {%- if help_id %} aria-describedby="{{ help_id }}"{% endif %}
                                        {%- if errors %} aria-invalid="true"{% endif -%}
     >
+    {%- endset -%}
+    {%- if prefix or suffix -%}
+        <div class="input-group">
+            {%- if prefix -%}<span class="input-group-text">{{ prefix }}</span>{%- endif %}
+            {{ input }}
+            {%- if suffix -%}<span class="input-group-text">{{ suffix }}</span>{%- endif %}
+        </div>
+    {%- else -%}
+        {{ input }}
+    {%- endif -%}
 {%- endmacro %}
 
 {%- macro markdown_popover(id, title=_("Markdown quick reference")) -%}
@@ -238,14 +248,13 @@ this.parentNode.insertBefore(tpl, this);
                 {%- if name %} name="{{ name }}"{% endif %}
                 {%- if required %} required{% endif %}
                 {%- if errors %} aria-invalid="true"{% endif %}
+                class="form-control {{ 'is-invalid' if errors }}"
             >{{ value or "" }}</textarea>
             {{ ui.field_info(content) if content }}
             <span class="editor-info-block">{% trans trigger=ui.popover_handle(_("markdown formatting"), id=popover_id) %}you can use <a role="button">{{ trigger }}</a> here{% endtrans %}</span>
 
         </div>
-        {%- if errors %}
-            {{ ui.field_errors(errors) }}
-        {%- endif %}
+        {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
 
@@ -333,14 +342,14 @@ this.parentNode.insertBefore(tpl, this);
                 {%- if name %} name="{{ name }}"{% endif %}
                 {%- if required %} required{% endif %}
                 {%- if errors %} aria-invalid="true"{% endif %}
+                class="form-control {{ 'is-invalid' if errors }}"
             >{{ value or "" }}</textarea>
             {{ ui.field_info(content) if content }}
         </div>
-        {%- if errors %}
-            {{ ui.field_errors(errors) }}
-        {%- endif %}
+        {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
+
 
 
 {% macro image_upload()  %}
@@ -349,7 +358,7 @@ this.parentNode.insertBefore(tpl, this);
 
 
 {%- macro fieldset(content, legend) -%}
-    <fieldset>
+    <fieldset {{ ui.util.attrs(kwargs) }}>
         {%- if legend -%}
             <legend>{{ legend }}</legend>
         {%- endif %}

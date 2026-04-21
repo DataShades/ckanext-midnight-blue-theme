@@ -13,6 +13,8 @@ Example:
 #}
 {% block package_list %}
   {% if packages %}
+      {%- call ui.util.call(ui.package_list) -%}
+      {%- endcall %}
     <ul class="{{ list_class or 'dataset-list list-unstyled' }}">
     	{% block package_list_inner %}
 	      {% for package in packages %}

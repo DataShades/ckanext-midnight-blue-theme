@@ -16,7 +16,7 @@
                 {% block page_heading %}{{ _('Users') }}{% endblock %}
             </h1>
             {% block users_list %}
-                {%- call ui.util.call(ui.user_wrapper) -%}
+                {%- call ui.util.call(ui.user_list) -%}
                     {% block users_list_inner %}
                         {% for user in page.items %}
                             {{ ui.user(user) }}

@@ -1,5 +1,5 @@
 {% if followers %}
-    {{ ui.user_wrapper(ui.util.map(ui.user, followers, maxlength=20)) }}
+    {{ ui.user_list(ui.util.map(ui.user, followers, maxlength=20)) }}
 {% else %}
   <p class="empty">{{ _('No followers') }}</p>
 {% endif %}

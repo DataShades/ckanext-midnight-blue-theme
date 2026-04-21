@@ -17,6 +17,7 @@ ckan:
     preload:
       - vendor/bootstrap
   contents:
+    - javascript/init_tooltip.js
     - javascript/modules/select-switch.js
     - javascript/modules/slug-preview.js
     - javascript/modules/basic-form.js

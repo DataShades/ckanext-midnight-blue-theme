@@ -13,24 +13,18 @@
 
 {#% set accordion_wrapper = accordion_wrapper | default(_wrapper.accordion_wrapper) %#}
 {% set account_nav_wrapper = account_nav_wrapper | default(_wrapper.account_nav_wrapper) %}
-{#% set activity_wrapper = activity_wrapper | default(_wrapper.activity_wrapper) %#}
 {% set breadcrumb_wrapper = breadcrumb_wrapper | default(_wrapper.breadcrumb_wrapper) %}
 {% set content_action_wrapper = content_action_wrapper | default(_wrapper.content_action_wrapper) %}
 {% set content_nav_wrapper = content_nav_wrapper | default(_wrapper.content_nav_wrapper) %}
-{% set facet_wrapper = facet_wrapper | default(_wrapper.facet_wrapper) %}
-{#% set group_wrapper = group_wrapper | default(_wrapper.group_wrapper) %#}
 {% set main_nav_wrapper = main_nav_wrapper | default(_wrapper.main_nav_wrapper) %}
 {#% set menu_wrapper = menu_wrapper | default(_wrapper.menu_wrapper) %#}
 {% set nav_wrapper = nav_wrapper | default(_wrapper.nav_wrapper) %}
-{#% set organization_wrapper = organization_wrapper | default(_wrapper.organization_wrapper) %#}
-{#% set package_wrapper = package_wrapper | default(_wrapper.package_wrapper) %#}
 {% set page_action_wrapper = page_action_wrapper | default(_wrapper.page_action_wrapper) %}
 {#% set panel_wrapper = panel_wrapper | default(_wrapper.panel_wrapper) %#}
-{#% set resource_wrapper = resource_wrapper | default(_wrapper.resource_wrapper) %#}
 {% set sidebar_nav_wrapper = sidebar_nav_wrapper | default(_wrapper.sidebar_nav_wrapper) %}
 {#% set tab_nav_wrapper = tab_nav_wrapper | default(_wrapper.tab_nav_wrapper) %#}
-{% set user_wrapper = user_wrapper | default(_wrapper.user_wrapper) %}
 {% set pagination_wrapper = pagination_wrapper | default(_wrapper.pagination_wrapper) %}
+
 
 {#% set activity = activity | default(_content.activity) %#}
 {% set facet = facet | default(_content.facet) %}
@@ -52,6 +46,14 @@
 {% set list = list | default(_container.list) %}
 {% set list_item = list_item | default(_container.list_item) %}
 {#% set panel = panel | default(_container.panel) %#}
+{#% set activity_list = activity_list | default(_container.activity_list) %#}
+{% set facet_list = facet_list | default(_container.facet_list) %}
+{#% set group_list = group_list | default(_container.group_list) %#}
+{#% set resource_list = resource_list | default(_container.resource_list) %#}
+{% set user_list = user_list | default(_container.user_list) %}
+{#% set organization_list = organization_list | default(_container.organization_list) %#}
+{#% set package_list = package_list | default(_container.package_list) %#}
+
 
 {% set facet_section = facet_section | default(_section.facet_section) %}
 {#% set section = section | default(_section.section) %#}
@@ -80,8 +82,8 @@
 {% set breadcrumb_divider = breadcrumb_divider | default(element.breadcrumb_divider) %}
 
 {#% set chart = chart | default(data.chart) %#}
-{#% set code = code | default(data.code) %#}
-{#% set definition_list = definition_list | default(data.definition_list) %#}
+{% set code = code | default(data.code) %}
+{% set definition_list = definition_list | default(data.definition_list) %}
 {% set table = table | default(data.table) %}
 {% set table_body = table_body | default(data.table_body) %}
 {% set table_cell = table_cell | default(data.table_cell) %}
@@ -89,9 +91,8 @@
 {% set table_row = table_row | default(data.table_row) %}
 
 {% set checkbox = checkbox | default(_form.checkbox) %}
-{#% set extra_field = extra_field | default(_form.extra_field) %#}
-{#% set extra_field_multiplicator = extra_field_multiplicator | default(_form.extra_field_multiplicator) %#}
-{#% set extra_fields_collection = extra_fields_collection | default(_form.extra_fields_collection) %#}
+{% set extra_field = extra_field | default(_form.extra_field) %}
+{% set extra_fields_collection = extra_fields_collection | default(_form.extra_fields_collection) %}
 {% set field_errors = field_errors | default(_form.field_errors) %}
 {#% set file_input = file_input | default(_form.file_input) %#}
 {% set field_info = field_info | default(_form.field_info) %}
@@ -105,9 +106,9 @@
 {% set input = input | default(_form.input) %}
 {% set markdown = markdown | default(_form.markdown) %}
 {% set markdown_popover = markdown_popover | default(_form.markdown_popover) %}
-{#% set radio = radio | default(_form.radio) %#}
+{% set radio = radio | default(_form.radio) %}
 {#% set range_input = range_input | default(_form.range_input) %#}
-{#% set select = select | default(_form.select) %#}
+{% set select = select | default(_form.select) %}
 {% set select_box = select_box | default(_form.select_box) %}
 {% set select_option = select_option | default(_form.select_option) %}
 {% set submit = submit | default(_form.submit) %}

@@ -8,7 +8,7 @@
                 {%- set items = h.get_facet_items_dict(facet, search_facets) -%}
 
                 {%- call ui.util.call(ui.facet_section, title=facet_titles[facet], items=items, key=facet, collapsed=not h.currently_active_facet(facet) and default_collapsed, has_more=h.has_more_facets(facet, search_facets, limit=items|length)) -%}
-                    {%- call ui.util.call(ui.facet_wrapper, hx={"boost": "true"} if use_htmx else {}) -%}
+                    {%- call ui.util.call(ui.facet_list, hx={"boost": "true"} if use_htmx else {}) -%}
                         {%- for item in items -%}
                             {{ ui.facet(item.display_name, key=facet, value=item.name, count=item.count, active=item.active) }}
                         {%- endfor %}
