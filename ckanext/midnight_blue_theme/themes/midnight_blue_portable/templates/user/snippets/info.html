@@ -24,13 +24,13 @@
                 {% if about_formatted %}
                     {{ about_formatted }}
                 {% else %}
-                    <p class="empty">
+                    {%- call ui.util.call(ui.empty) -%}
                         {% if is_myself %}
                             {% trans %}You have not provided a biography.{% endtrans %}
                         {% else %}
                             {% trans %}This user has no biography.{% endtrans %}
                         {% endif %}
-                    </p>
+                    {%- endcall %}
                 {% endif %}
             {% endblock %}
             {% block user_nums %}
@@ -60,10 +60,10 @@
                         {{ ui.alert(error_message, style="danger") if error_message }}
 
                         {% if am_following %}
-                            {{ ui.button(ui.icon("circle-minus", weight="solid") ~ _('Unfollow'), style="danger", hx={"post": h.url_for('user.unfollow', id=user.id), "target": "#user-info"}) }}
+                            {{ ui.button(ui.icon("circle-minus", style="solid") ~ _('Unfollow'), style="danger", hx={"post": h.url_for('user.unfollow', id=user.id), "target": "#user-info"}) }}
 
                         {% else %}
-                            {{ ui.button(ui.icon("circle-plus", weight="solid") ~ _('Follow'), style="success", hx={"post": h.url_for('user.follow', id=user.id), "target": "#user-info"}) }}
+                            {{ ui.button(ui.icon("circle-plus", style="solid") ~ _('Follow'), style="success", hx={"post": h.url_for('user.follow', id=user.id), "target": "#user-info"}) }}
                         {% endif %}
                     {% endif %}
                 {% endblock %}

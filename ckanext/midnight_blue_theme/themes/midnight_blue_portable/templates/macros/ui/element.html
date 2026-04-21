@@ -6,8 +6,10 @@
     {{ ui.image(src or h.url_for_static("/base/images/placeholder-user.png"), alt, **kwargs) }}
 {%- endmacro %}
 
-{%- macro badge(content, style) -%}
-    <sup><mark {{ ui.util.attrs(kwargs) }}>{{ content }}</mark></sup>
+{%- macro badge(content, style="default") -%}
+    <span {{ ui.util.attrs(kwargs) }} class="badge bg-{{ style }}{{ ' text-dark' if style in ['warning', 'info', 'light'] }}">
+        {{- content -}}
+    </span>
 {%- endmacro %}
 
 {%- macro breadcrumb_divider(content="/") -%}{%- do kwargs -%}{%- endmacro %}
@@ -46,8 +48,12 @@
     <{{ tag }} {{ ui.util.attrs(kwargs) }}>{{ content }}</{{ tag }}>
 {%- endmacro %}
 
-{%- macro icon(name, weight=none) -%}
-    <i {{ ui.util.attrs(kwargs) }} class="fa-{{ ui.util.icon(name) }} fa{% if weight %}-{{ weight }}{% endif %}"></i>
+{%- macro icon(name, style=none) -%}
+    {%- set base_class = "fa" -%}
+    {%- if style -%}
+        {%- set base_class = base_class ~ "-" ~ style -%}
+    {%- endif %}
+    <i {{ ui.util.attrs(kwargs) }} class="{{ base_class }} fa-{{ ui.util.icon(name) }}"></i>
 {%- endmacro %}
 
 {%- macro image(src, alt, height, width) -%}
@@ -74,4 +80,8 @@
 
 {%- macro video(src, controls) -%}
     <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }}></video>
+{%- endmacro %}
+
+{%- macro empty(content) -%}
+    <p {{ ui.util.attrs(kwargs) }} class="empty">{{ content }}</p>
 {%- endmacro %}

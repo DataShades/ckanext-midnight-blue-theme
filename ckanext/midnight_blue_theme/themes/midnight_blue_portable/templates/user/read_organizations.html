@@ -16,12 +16,12 @@
             {% snippet "organization/snippets/organization_list.html", organizations=orgs_available, show_capacity=True %}
         </div>
     {% else %}
-        <p class="empty">
+        {%- call ui.util.call(ui.empty) -%}
             {% if is_myself %}
                 {{ h.humanize_entity_type('organization', org_type, 'you not member') or _('You are not a member of any organizations.') }}
             {% else %}
                 {{ h.humanize_entity_type('organization', org_type, 'user not member') or _('User isn\'t a member of any organizations.') }}
             {% endif %}
-        </p>
+        {%- endcall %}
     {% endif %}
 {% endblock %}

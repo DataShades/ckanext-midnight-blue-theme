@@ -19,9 +19,9 @@
             {% snippet "organization/snippets/organization_list.html", organizations=organizations, show_capacity=True %}
         </div>
     {% else %}
-        <p class="empty">
+        {%- call ui.util.call(ui.empty) -%}
             {{ h.humanize_entity_type('organization', org_type, 'you not member') or _('You are not a member of any organizations.') }}
             {{ ui.link(_('Create one now?'), href=h.url_for(org_type ~ '.new')) if h.check_access('organization_create') }}
-        </p>
+        {%- endcall %}
     {% endif %}
 {% endblock %}

@@ -13,9 +13,10 @@
     {% if user_dict.datasets %}
         {% snippet 'snippets/package_list.html', packages=user_dict.datasets %}
     {% else %}
-        <p class="empty">
+        {%- call ui.util.call(ui.empty) -%}
             {{ _('You haven\'t created any datasets.') }}
             {{ ui.link(_('Create one now?'), href=h.url_for(dataset_type ~ '.new')) if h.check_access('package_create') }}
-        </p>
+        {%- endcall %}
+
     {% endif %}
 {% endblock %}

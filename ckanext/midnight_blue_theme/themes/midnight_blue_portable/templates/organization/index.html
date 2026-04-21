@@ -27,9 +27,7 @@
                 {% snippet "organization/snippets/organization_list.html", organizations=page.items %}
             {% endif %}
         {% else %}
-            <p class="empty">
-                {{ _('There are currently no organizations for this site') }}.
-            </p>
+            {{ ui.empty(_('There are currently no organizations for this site')) }}
         {% endif %}
     {% endblock %}
     {% block page_pagination %}

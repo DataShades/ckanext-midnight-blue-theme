@@ -58,7 +58,7 @@
 {%- macro language_selector() -%}
     {% set current_lang = request.environ.CKAN_LANG %}
     {%- set data_attrs = {"module": "autocomplete", "module-dropdown-class": "lang-dropdown", "module-container-class": "lang-container"} -%}
-    {%- set label = ui.icon("globe", weight="solid") ~ ui.util.tag(_('Language'), "span", attrs={"class": "sr-only"}) -%}
+    {%- set label = ui.icon("globe", style="solid") ~ ui.util.tag(_('Language'), "span", attrs={"class": "sr-only"}) -%}
 
     <div class="lang-select">
         {%- call ui.util.call(ui.form, method="POST", action=h.url_for('util.internal_redirect'), data={"module": "select-switch"}) -%}

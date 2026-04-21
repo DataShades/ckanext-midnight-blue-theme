@@ -31,7 +31,7 @@
 {#% set group = group | default(_content.group) %#}
 {#% set license = license | default(_content.license) %#}
 {#% set organization = organization | default(_content.organization) %#}
-{#% set package = package | default(_content.package) %#}
+{% set package = package | default(_content.package) %}
 {#% set resource = resource | default(_content.resource) %#}
 {% set user = user | default(_content.user) %}
 
@@ -52,7 +52,7 @@
 {#% set resource_list = resource_list | default(_container.resource_list) %#}
 {% set user_list = user_list | default(_container.user_list) %}
 {#% set organization_list = organization_list | default(_container.organization_list) %#}
-{#% set package_list = package_list | default(_container.package_list) %#}
+{% set package_list = package_list | default(_container.package_list) %}
 
 
 {% set facet_section = facet_section | default(_section.facet_section) %}
@@ -69,7 +69,8 @@
 {% set tooltip = tooltip | default(feedback.tooltip) %}
 
 {#% set avatar = avatar | default(element.avatar) %#}
-{#% set badge = badge | default(element.badge) %#}
+{% set badge = badge | default(element.badge) %}
+{% set empty = empty | default(element.empty) %}
 {% set button = button | default(element.button) %}
 {% set datetime = datetime | default(element.datetime) %}
 {#% set divider = divider | default(element.divider) %#}

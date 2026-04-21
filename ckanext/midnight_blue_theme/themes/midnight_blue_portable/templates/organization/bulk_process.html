@@ -85,7 +85,7 @@
                       {% endif %}
                     </h3>
                     {% if notes %}
-                      <p>{{ notes|urlize }}</p>
+                        <p>{{ notes|urlize }}</p>
                     {% endif %}
                   </td>
                 </tr>
@@ -94,7 +94,7 @@
           </table>
         </form>
       {% else %}
-        <p class="empty">{{ _('This organization has no datasets associated to it') }}</p>
+        {{ ui.empty(_('This organization has no datasets associated to it')) }}
       {% endif %}
     {% endblock %}
   </div>

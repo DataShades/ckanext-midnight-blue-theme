@@ -11,7 +11,9 @@
 {%- macro organization_list(content) -%}{{ ui.group_list(content, **kwargs) }}{%- endmacro %}
 
 {%- macro package_list(content) -%}
-    {{ ui.list(content, **kwargs) }}
+    <ul {{ ui.util.attrs(kwargs) }} class="dataset-list list-unstyled">
+        {{ content }}
+    </ul>
 {%- endmacro %}
 
 {%- macro resource_list(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
