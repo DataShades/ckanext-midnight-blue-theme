@@ -4,7 +4,7 @@
 {# Allows custom attributes to be added to the <html> tag #}
 {%- block htmltag -%}
     {% set lang = h.lang() %}
-    <html lang="{{ lang }}" {% if h.is_rtl_language()  %} dir="rtl" {% endif %} >
+    <html lang="{{ lang }}" {% if h.is_rtl_language()  %} dir="rtl" {% endif %} class="js">
 {%- endblock -%}
 
 {# Allows custom attributes to be added to the <head> tag #}

@@ -1,15 +1,15 @@
-{% import "macros/ui/content.html" as _content with context  %}
-{% import "macros/ui/wrapper.html" as _wrapper with context  %}
-{% import "macros/ui/container.html" as _container with context  %}
-{% import "macros/ui/data.html" as data with context %}
-{% import "macros/ui/element.html" as element with context  %}
-{% import "macros/ui/feedback.html" as feedback with context %}
-{% import "macros/ui/form.html" as _form with context %}
-{% import "macros/ui/handle.html" as _handle with context %}
-{% import "macros/ui/meta.html" as meta with context %}
-{% import "macros/ui/nav.html" as _nav with context %}
-{% import "macros/ui/search.html" as _search with context %}
-{% import "macros/ui/section.html" as _section with context %}
+{% import "macros/ui/content.html" as _content %}
+{% import "macros/ui/wrapper.html" as _wrapper %}
+{% import "macros/ui/container.html" as _container %}
+{% import "macros/ui/data.html" as data%}
+{% import "macros/ui/element.html" as element %}
+{% import "macros/ui/feedback.html" as feedback%}
+{% import "macros/ui/form.html" as _form%}
+{% import "macros/ui/handle.html" as _handle%}
+{% import "macros/ui/meta.html" as meta%}
+{% import "macros/ui/nav.html" as _nav%}
+{% import "macros/ui/search.html" as _search%}
+{% import "macros/ui/section.html" as _section%}
 
 {#% set accordion_wrapper = accordion_wrapper | default(_wrapper.accordion_wrapper) %#}
 {% set account_nav_wrapper = account_nav_wrapper | default(_wrapper.account_nav_wrapper) %}
@@ -144,15 +144,14 @@
 {% set pagination = pagination | default(_nav.pagination) %}
 {% set pagination_item = pagination_item | default(_nav.pagination_item) %}
 
-{#% set search_active_filters = search_active_filters | default(_search.search_active_filters) %#}
-{#% set search_advanced_controls = search_advanced_controls | default(_search.search_advanced_controls) %#}
-{#% set search_form_box = search_form_box | default(_search.search_form_box) %#}
-{#% set search_form = search_form | default(_search.search_form) %#}
-{#% set search_input = search_input | default(_search.search_input) %#}
-{#% set search_results_header = search_results_header | default(_search.search_results_header) %#}
-{#% set search_sort_control = search_sort_control | default(_search.search_sort_control) %#}
-{#% set search_submit_button = search_submit_button | default(_search.search_submit_button) %#}
-{#% set search_pagination_info = search_pagination_info | default(_search.search_pagination_info) %#}
+{% set search_active_filters = search_active_filters | default(_search.search_active_filters) %}
+{% set search_advanced_controls = search_advanced_controls | default(_search.search_advanced_controls) %}
+{% set search_form_box = search_form_box | default(_search.search_form_box) %}
+{% set search_form = search_form | default(_search.search_form) %}
+{% set search_input = search_input | default(_search.search_input) %}
+{% set search_results_text = search_results_text | default(_search.search_results_text) %}
+{% set search_sort_control = search_sort_control | default(_search.search_sort_control) %}
+{% set search_submit_button = search_submit_button | default(_search.search_submit_button) %}
 
 
 {#  CUSTOM COMPONENTS #}

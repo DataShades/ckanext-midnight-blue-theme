@@ -280,20 +280,25 @@
     {%- call ui.util.call(ui.select_box, content, selected=selected, options=options or [], **kwargs) -%}
         {%- for option in (options or []) %}
             {%- if option is string %}
-                {% set value, text = option, option %}
-            {%- else -%}
-                {% set value = option.value %}
+                {% set text, value = option, option %}
+
+            {%- elif option is mapping -%}
                 {% set text = option.text or option.value %}
+                {% set value = option.value %}
+
+            {%- else -%}
+                {% set text, value = option %}
+
             {%- endif %}
             {{ ui.select_option(text, value, selected=value in selected_values) }}
         {%- endfor %}
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[]) -%}
+{%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[], group_class="form-group") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
     {%- set help_id = ui.util.id() if nested_content -%}
-    <div class="form-group">
+    <div class="{{ group_class }}">
         {%- if label -%}
             <label class="form-label" for="{{ field_id }}">{{ label }}</label>
         {%- endif %}

@@ -49,10 +49,7 @@
 {%- endmacro %}
 
 {%- macro icon(name, style=none) -%}
-    {%- set base_class = "fa" -%}
-    {%- if style -%}
-        {%- set base_class = base_class ~ "-" ~ style -%}
-    {%- endif %}
+    {%- set base_class = "fa-{}".format(style) if style else "fa" -%}
     <i {{ ui.util.attrs(kwargs) }} class="{{ base_class }} fa-{{ ui.util.icon(name) }}"></i>
 {%- endmacro %}
 
