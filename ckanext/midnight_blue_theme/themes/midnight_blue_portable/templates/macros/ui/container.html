@@ -16,18 +16,32 @@
     </ul>
 {%- endmacro %}
 
-{%- macro resource_list(content) -%}{{ ui.list(content, **kwargs) }}{%- endmacro %}
+{%- macro resource_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="resource-list">
+        {{ content }}
+    </ul>
+{%- endmacro %}
 
 {%- macro user_list(content) -%}
     <ul {{ ui.util.attrs(kwargs) }} class="user-list">{{ content }}</ul>
 {%- endmacro %}
 
 
-{%- macro accordion(content, title, open) -%}
-    <details {{ ui.util.attrs(kwargs) }} {{ "open" if open}}>
-        <summary role="button" aria-expanded="{{ 'true' if open else 'false' }}">{{ title }}</summary>
-        <div role="region" aria-labelledby="{{ kwargs.attrs.id if kwargs.attrs and kwargs.attrs.id else '' }}">{{ content }}</div>
-    </details>
+{%- macro accordion(content, title, open, content_class) -%}
+    {%- set header_id = ui.util.id() -%}
+    {%- set id = ui.util.id() -%}
+    <div {{ ui.util.attrs(kwargs) }} class="accordion-item">
+        <h2 class="accordion-header" id="{{ header_id }}">
+            <button class="accordion-button {{ 'collapsed' if not open }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}" aria-expanded="{{ 'true' if open else 'false' }}" aria-controls="{{ id }}">
+                {{ title }}
+            </button>
+        </h2>
+        <div id="{{ id }}" class="{{ content_class }} accordion-collapse collapse {{ 'show' if open }}" aria-labelledby="{{ header_id }}" >
+            <div class="accordion-body">
+                {{ content }}
+            </div>
+        </div>
+    </div>
 {%- endmacro %}
 
 {%- macro button_group(content, direction="row") -%}

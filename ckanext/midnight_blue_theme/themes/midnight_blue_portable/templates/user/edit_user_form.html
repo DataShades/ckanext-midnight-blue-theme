@@ -17,7 +17,7 @@
 
                 {% set is_upload = data.image_url and not data.image_url.startswith('http') %}
                 {% set is_url = data.image_url and data.image_url.startswith('http') %}
-                {{ ui.image_upload(data, errors, is_upload_enabled=h.uploads_enabled(), is_url=is_url, is_upload=is_upload, upload_label=_('Profile picture'), url_label=_('Profile picture URL') ) }}
+                {{ ui.image_upload(data, errors, is_upload_enabled=h.uploads_enabled("user"), is_url=is_url, is_upload=is_upload, upload_label=_('Profile picture'), url_label=_('Profile picture URL') ) }}
             {%- endcall %}
 
         {% endblock %}
@@ -25,7 +25,7 @@
         {% block extra_fields %}
             {% if current_user.sysadmin and data.state == 'deleted' %}
                 {% call ui.util.call(ui.checkbox, name='activate_user', label=_('Reactivate User'), id='activate_user', value=True, checked=false) %}
-                    {{ _('This account is deactivated, if you want to reactivate it, please click on checkbox.') }}
+                    {{ ui.field_info(_('This account is deactivated, if you want to reactivate it, please click on checkbox.')) }}
                 {% endcall %}
             {% endif %}
         {% endblock %}

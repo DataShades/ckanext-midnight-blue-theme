@@ -1,4 +1,7 @@
-{% set title = res.name  %}
-{% set body = h.markdown_extract(res.description, 120)|urlize %}
+{%- set res = resource -%}
+{%- set pkg = kwargs.pkg -%}
+{%- set can_edit = kwargs.can_edit -%}
+{%- set user_is_edit = kwargs.user_is_edit -%}
+{%- set url = kwargs.url -%}
 
-{{ ui.card(title=title, body=body, href=h.url_for("resource.read", id=res.package_id, resource_id=res.id), **kwargs) }}
+{% include 'package/snippets/resource_item.html'%}

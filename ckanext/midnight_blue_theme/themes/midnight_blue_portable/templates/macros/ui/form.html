@@ -24,7 +24,7 @@
 
             </div>
         </div>
-        {{ ui.field_info(content) if content }}
+        {{ content }}
         {{ ui.field_errors(error_list) if error_list }}
     </div>
 {%- endmacro %}
@@ -111,10 +111,8 @@
 
 {%- macro input(content, name, id, label, value, required, placeholder, type, icon, errors=[], group_class="form-group") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
-    {%- set help_id = ui.util.id() if content -%}
 
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
-    {%- if content %}{%- do aria_attrs.setdefault("describedby", help_id) -%}{%- endif -%}
     {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
 
     <div class="{{ group_class }}">
@@ -128,9 +126,9 @@
             {%- if icon -%}
                 <i class="fa-{{ ui.util.icon(icon) }} fa icon"></i>
             {%- endif %}
-            {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
+            {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
         </div>
-        {{ ui.field_info(content, attrs={"id": help_id}) if content }}
+        {{ content }}
         {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
@@ -152,21 +150,19 @@
 
 {%- macro checkbox(content, name, id, checked, label, required, placeholder, type="checkbox", value="on", errors=[], group_class="form-check") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
-    {%- set help_id = ui.util.id() if content -%}
 
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
-    {%- if content %}{%- do aria_attrs.setdefault("describedby", help_id) -%}{%- endif -%}
     {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
     {%- set attrs = kwargs.setdefault("attrs", {}) -%}
     {%- do attrs.setdefault("class", "form-check-input") -%}
     {%- if checked -%}{%- do attrs.update({"checked": true}) -%}{%- endif %}
 
     <div class="{{ group_class }}">
-        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, help_id=help_id, **kwargs) }}
+        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
         {%- if label -%}
             <label class="form-check-label checkbox" for="{{ field_id }}">{{ label }}</label>
         {%- endif %}
-        {{ ui.field_info(content, attrs={"id": help_id}) if content }}
+        {{ content }}
         {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
@@ -180,7 +176,6 @@
                                        {%- if value %} value="{{ value|empty_and_escape }}"{% endif %}
                                        {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
                                        {%- if required %} required{% endif %}
-                                       {%- if help_id %} aria-describedby="{{ help_id }}"{% endif %}
                                        {%- if errors %} aria-invalid="true"{% endif -%}
     >
     {%- endset -%}
@@ -250,7 +245,7 @@
                 {%- if errors %} aria-invalid="true"{% endif %}
                 class="form-control {{ 'is-invalid' if errors }}"
             >{{ value or "" }}</textarea>
-            {{ ui.field_info(content) if content }}
+            {{ content }}
             <span class="editor-info-block">{% trans trigger=ui.popover_handle(_("markdown formatting"), id=popover_id) %}you can use <a role="button">{{ trigger }}</a> here{% endtrans %}</span>
 
         </div>
@@ -297,7 +292,6 @@
 
 {%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[], group_class="form-group") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
-    {%- set help_id = ui.util.id() if nested_content -%}
     <div class="{{ group_class }}">
         {%- if label -%}
             <label class="form-label" for="{{ field_id }}">{{ label }}</label>
@@ -309,12 +303,11 @@
             {%- if field_id %} id="{{ field_id }}"{%- endif %}
             {%- if required %} required{%- endif %}
             {%- if multiple %} multiple{%- endif %}
-            {%- if nested_content %} aria-describedby="{{ help_id }}"{% endif %}
             {%- if errors %} aria-invalid="true"{% endif %}
         >
             {{ content }}
         </select>
-        {{ ui.field_info(nested_content, attrs={"id": help_id}) if nested_content }}
+        {{ nested_content }}
         {{ ui.field_errors(errors) if errors }}
     </div>
 {%- endmacro %}
@@ -332,7 +325,6 @@
 
 {%- macro textarea(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
-    {%- set help_id = ui.util.id() if content -%}
 
     <div class="{{ group_class }}">
         {%- if label -%}
@@ -349,7 +341,7 @@
                 {%- if errors %} aria-invalid="true"{% endif %}
                 class="form-control {{ 'is-invalid' if errors }}"
             >{{ value or "" }}</textarea>
-            {{ ui.field_info(content) if content }}
+            {{ content }}
         </div>
         {{ ui.field_errors(errors) if errors }}
     </div>

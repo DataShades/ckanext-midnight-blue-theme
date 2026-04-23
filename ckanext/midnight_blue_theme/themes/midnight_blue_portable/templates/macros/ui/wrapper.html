@@ -1,6 +1,6 @@
 
-{%- macro accordion_wrapper(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} role="region" aria-label="{{ _('Accordion') }}">{{ content }}</div>
+{%- macro accordion_wrapper(content, id) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="accordion" {% if id -%}id="{{ id }}"{%- endif %}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro panel_wrapper(content) -%}

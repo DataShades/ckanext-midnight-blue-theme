@@ -11,7 +11,7 @@
 {% import "macros/ui/search.html" as _search%}
 {% import "macros/ui/section.html" as _section%}
 
-{#% set accordion_wrapper = accordion_wrapper | default(_wrapper.accordion_wrapper) %#}
+{% set accordion_wrapper = accordion_wrapper | default(_wrapper.accordion_wrapper) %}
 {% set account_nav_wrapper = account_nav_wrapper | default(_wrapper.account_nav_wrapper) %}
 {% set breadcrumb_wrapper = breadcrumb_wrapper | default(_wrapper.breadcrumb_wrapper) %}
 {% set content_action_wrapper = content_action_wrapper | default(_wrapper.content_action_wrapper) %}
@@ -32,11 +32,11 @@
 {#% set license = license | default(_content.license) %#}
 {#% set organization = organization | default(_content.organization) %#}
 {% set package = package | default(_content.package) %}
-{#% set resource = resource | default(_content.resource) %#}
+{% set resource = resource | default(_content.resource) %}
 {% set user = user | default(_content.user) %}
 
-{#% set accordion = accordion | default(_container.accordion) %#}
-{#% set button_group = button_group | default(_container.button_group) %#}
+{% set accordion = accordion | default(_container.accordion) %}
+{% set button_group = button_group | default(_container.button_group) %}
 {#% set card = card | default(_container.card) %#}
 {% set column = column | default(_container.column) %}
 {% set container = container | default(_container.container) %}
@@ -49,7 +49,7 @@
 {#% set activity_list = activity_list | default(_container.activity_list) %#}
 {% set facet_list = facet_list | default(_container.facet_list) %}
 {#% set group_list = group_list | default(_container.group_list) %#}
-{#% set resource_list = resource_list | default(_container.resource_list) %#}
+{% set resource_list = resource_list | default(_container.resource_list) %}
 {% set user_list = user_list | default(_container.user_list) %}
 {#% set organization_list = organization_list | default(_container.organization_list) %#}
 {% set package_list = package_list | default(_container.package_list) %}
@@ -60,8 +60,8 @@
 {#% set sidebar_section = sidebar_section | default(_section.sidebar_section) %#}
 
 {% set alert = alert | default(feedback.alert) %}
-{#% set confirm_modal = confirm_modal | default(feedback.confirm_modal) %#}
-{#% set modal = modal | default(feedback.modal) %#}
+{% set confirm_modal = confirm_modal | default(feedback.confirm_modal) %}
+{% set modal = modal | default(feedback.modal) %}
 {% set popover = popover | default(feedback.popover) %}
 {#% set progress = progress | default(feedback.progress) %#}
 {#% set spinner = spinner | default(feedback.spinner) %#}
@@ -118,9 +118,9 @@
 {% set fieldset = fieldset | default(_form.fieldset) %}
 
 {#% set panel_handle = panel_handle | default(_handle.panel_handle) %#}
-{#% set modal_handle = modal_handle | default(_handle.modal_handle) %#}
+{% set modal_handle = modal_handle | default(_handle.modal_handle) %}
 {% set popover_handle = popover_handle | default(_handle.popover_handle) %}
-{#% set modal_close_handle = modal_close_handle | default(_handle.modal_close_handle) %#}
+{% set modal_close_handle = modal_close_handle | default(_handle.modal_close_handle) %}
 {#% set tab_handle = tab_handle | default(_handle.tab_handle) %#}
 
 {% set account = account | default(meta.account) %}

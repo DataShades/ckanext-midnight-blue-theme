@@ -71,8 +71,9 @@
 
         {% block header_account_notlogged %}
             {% if not current_user.is_authenticated %}
-                <div class="col-md-2 login">
+                <div class="col-md-2 gap-2 login">
                     {{ ui.button(_('Login') ~ ui.icon("sign-in"), href=h.url_for('user.login')) }}
+                    {{ ui.button(_('Register') ~ ui.icon("id-card"), href=h.url_for('user.register')) if h.check_access('user_create') }}
                 </div>
             {% endif %}
         {% endblock %}
