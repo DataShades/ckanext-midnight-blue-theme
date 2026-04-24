@@ -3,21 +3,6 @@
     <div {{ ui.util.attrs(kwargs) }} class="accordion" {% if id -%}id="{{ id }}"{%- endif %}>{{ content }}</div>
 {%- endmacro %}
 
-{%- macro panel_wrapper(content) -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id())-%}
-    <script>
-        window.addEventListener("hashchange", event => {
-            const hash = window.location.hash.slice(1);
-            const wrapper = document.getElementById("{{ kwargs.attrs.id }}");
-            wrapper.querySelectorAll(`[data-panel]`).forEach(el => el.hidden = hash ? el.dataset.panel !== hash : !el.dataset.panelDefault);
-        })
-        document.addEventListener("DOMContentLoaded", () => window.dispatchEvent(new Event("hashchange")));
-    </script>
-    <div {{ ui.util.attrs(kwargs) }}>
-        {{ content }}
-    </div>
-{%- endmacro %}
-
 {%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
 
 {%- macro breadcrumb_wrapper(content) -%}
@@ -44,10 +29,6 @@
     </ul>
 {%- endmacro %}
 
-{%- macro menu_wrapper(content) -%}
-    <div {{ ui.util.attrs(kwargs) }}>{{ content }}</div>
-{%- endmacro %}
-
 {%- macro nav_wrapper(content) -%}
     {{ ui.list(content, **kwargs) }}
 {%- endmacro %}
@@ -63,8 +44,12 @@
     </div>
 {%- endmacro %}
 
-{%- macro tab_nav_wrapper(content) -%}
+{%- macro tab_wrapper(content) -%}
     <nav {{ ui.util.attrs(kwargs) }} class="tabs" role="tablist">{{ content }}</nav>
+{%- endmacro %}
+
+{%- macro tab_content_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="tab-content">{{ content }}</div>
 {%- endmacro %}
 
 

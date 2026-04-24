@@ -113,13 +113,6 @@
     </li>
 {%- endmacro %}
 
-{%- macro panel(content, id, active) -%}
-    <div {{ ui.util.attrs(kwargs) }} data-panel="{{ id or ui.util.id() }}"
-        {%- if active %} data-panel-default="true"{% else %} hidden{% endif %}>
-        {{ content }}
-    </div>
-{%- endmacro %}
-
 {%- macro dropdown(content, title, inline, id, style="primary") -%}
     {%- do kwargs.setdefault("data", {}).setdefault("bs-toggle", "dropdown") -%}
     {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id()) -%}
@@ -130,5 +123,11 @@
         <ul class="dropdown-menu" aria-labelledby="{{ kwargs.attrs.id }}">
             {{ content }}
         </ul>
+    </div>
+{%- endmacro %}
+
+{%- macro tab_content(content, id) -%}
+    <div {{ ui.util.attrs(kwargs) }} id="{{ id }}">
+        {{ content }}
     </div>
 {%- endmacro %}
