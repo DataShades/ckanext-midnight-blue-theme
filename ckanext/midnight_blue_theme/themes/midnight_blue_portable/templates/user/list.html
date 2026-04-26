@@ -19,7 +19,7 @@
                 {%- call ui.util.call(ui.user_list) -%}
                     {% block users_list_inner %}
                         {% for user in page.items %}
-                            {{ ui.user(user) }}
+                            {{ ui.user(user=user) }}
                         {% endfor %}
                     {% endblock %}
                 {%- endcall %}

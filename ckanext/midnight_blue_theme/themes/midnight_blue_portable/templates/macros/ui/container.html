@@ -6,9 +6,15 @@
     <ul {{ ui.util.attrs(kwargs) }} class="list-unstyled nav nav-simple nav-facet">{{ content }}</ul>
 {%- endmacro %}
 
-{%- macro group_list(content) -%}{{ ui.grid(content, **kwargs) }}{%- endmacro %}
+{%- macro group_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs) }} class="groups-list">
+        {{ content }}
+    </ul>
+{%- endmacro %}
 
-{%- macro organization_list(content) -%}{{ ui.group_list(content, **kwargs) }}{%- endmacro %}
+{%- macro organization_list(content) -%}
+    {{ ui.group_list(content, **kwargs) }}
+{%- endmacro %}
 
 {%- macro package_list(content) -%}
     <ul {{ ui.util.attrs(kwargs) }} class="dataset-list list-unstyled">
@@ -123,11 +129,5 @@
         <ul class="dropdown-menu" aria-labelledby="{{ kwargs.attrs.id }}">
             {{ content }}
         </ul>
-    </div>
-{%- endmacro %}
-
-{%- macro tab_content(content, id) -%}
-    <div {{ ui.util.attrs(kwargs) }} id="{{ id }}">
-        {{ content }}
     </div>
 {%- endmacro %}

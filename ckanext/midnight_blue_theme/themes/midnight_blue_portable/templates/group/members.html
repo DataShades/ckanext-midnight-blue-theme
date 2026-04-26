@@ -8,24 +8,26 @@
 {% block page_primary_action -%}{% endblock %}
 
 {% block primary_content_inner %}
-  <h1 class="page-heading">{{ _('Members') }}</h1>
-  <h2>{{ _('{0} members'.format(members|length)) }}</h2>
-  <table class="table table-header table-hover table-bordered" id="member-table">
-    <thead>
-      <tr>
-        <th>{{ _('User') }}</th>
-        <th>{{ _('Role') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user_id, user, role in members %}
-      <tr>
-        <td class="media">
-          {{ h.linked_user(user_id, maxlength=20) }}
-        </td>
-        <td>{{ role }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h1 class="page-heading">{{ _('Members') }}</h1>
+    {{ ui.heading(_('{0} members'.format(members|length)), level=2) }}
+    {%- call ui.util.call(ui.table, hover=true, bordered=true) -%}
+        <thead>
+            <tr>
+                <th>{{ _('User') }}</th>
+                <th>{{ _('Role') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_id, user, role in members %}
+                <tr>
+                    <td class="media">
+                        {{ h.linked_user(user_id, maxlength=20) }}
+                    </td>
+                    <td>{{ role }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    {%- endcall %}
+
 {% endblock %}

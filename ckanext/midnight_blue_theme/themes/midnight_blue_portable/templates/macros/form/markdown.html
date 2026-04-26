@@ -1,6 +1,3 @@
-{% from "macros/form/input_block.html" import input_block %}
-{% from "macros/form/attributes.html" import attributes %}
-
 {#
 Creates all the markup required for a Markdown textarea element. Handles
 matching labels to inputs, selected item and error messages.
@@ -20,14 +17,8 @@ Examples:
 {{ form.markdown('desc', id='field-description', label=_('Description'), value=data.desc, error=errors.desc) }}
 
 #}
-{% macro markdown(name, id='', label='', value='', placeholder='', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
-{% set classes = (classes|list) %}
-{% do classes.append('control-full') %}
-{% set markdown_tooltip = "<pre><p>__Bold text__ or _italic text_</p><p># title<br>## secondary title<br>### etc</p><p>* list<br>* of<br>* items</p><p>http://auto.link.ed/</p></pre><p><b><a href='http://daringfireball.net/projects/markdown/syntax' target='_blank'>Full markdown syntax</a></b></p><p class='text-muted'><b>Please note:</b> HTML tags are stripped out for security reasons</p>" %}
+{% macro markdown(name, id='', label='', value='', placeholder='', error="", classes=[], attrs={}, is_required=false) %}
+    {%- set extra_html = caller() if caller -%}
+    {{ ui.markdown(extra_html, name=name, id=id, label=label, value=value, placeholder=placeholder, errors=error, attrs=attrs, required=is_required) }}
 
-{%- set extra_html = caller() if caller -%}
-{% call input_block(id or name, label or name, error, classes, control_classes=["editor"], extra_html=extra_html, is_required=is_required) %}
-<textarea id="{{ id or name }}" name="{{ name }}" cols="20" rows="5" placeholder="{{ placeholder }}" {{ attributes(attrs) }}>{{ value | empty_and_escape }}</textarea>
-<span class="editor-info-block">{% trans %}you can use <a href="#markdown" title="Markdown quick reference" data-bs-toggle="popover" data-bs-content="{{ markdown_tooltip }}" data-bs-html="true">markdown formatting</a> here{% endtrans %}</span>
-{% endcall %}
 {% endmacro %}

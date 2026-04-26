@@ -1,25 +1,24 @@
-
-{%- macro group(group) -%}
+{%- macro group(content, group) -%}
     {%- do kwargs -%}
     {%- include "macros/ui/snippets/group.html" -%}
 {%- endmacro %}
 
-{%- macro organization(organization) -%}
+{%- macro organization(content, organization) -%}
     {%- do kwargs -%}
     {%- include "macros/ui/snippets/organization.html" -%}
 {%- endmacro %}
 
-{%- macro package(package) -%}
+{%- macro package(content, package) -%}
     {%- do kwargs -%}
     {%- include "macros/ui/snippets/package.html" -%}
 {%- endmacro %}
 
-{%- macro resource(resource) -%}
+{%- macro resource(content, resource) -%}
     {%- do kwargs -%}
     {%- include "macros/ui/snippets/resource.html" -%}
 {%- endmacro %}
 
-{%- macro user(user) -%}
+{%- macro user(content, user) -%}
     {%- do kwargs -%}
     {%- include "macros/ui/snippets/user.html" -%}
 {%- endmacro %}

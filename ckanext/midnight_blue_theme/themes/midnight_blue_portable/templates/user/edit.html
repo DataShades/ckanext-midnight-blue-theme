@@ -16,12 +16,5 @@
 {% endblock %}
 
 {% block secondary_content %}
-    <section class="module module-narrow module-shallow">
-        <div class="module-group">
-            <h2 class="module-heading">{{ ui.icon("info-circle") }} {{ _('Account Info') }}</h2>
-            <div class="module-content">
-                {{ _("Your profile lets other CKAN users know about who you are and what you do.") }}
-            </div>
-        </div>
-    </section>
+    {{ ui.sidebar_section(_("Your profile lets other CKAN users know about who you are and what you do."), icon="info-circle", title=_('Account Info')) }}
 {% endblock %}

@@ -1,13 +1,7 @@
 {%- macro sidebar_section(content, title) -%}
-    {%- set id = ui.util.id() -%}
-    <aside {{ ui.util.attrs(kwargs) }} role="complementary" aria-labelledby="section-title-{{ id }}">
-        <section>
-            {{ ui.heading(title, level=2, attrs={"id": "section-title-" ~ id}) }}
-            <div>
-                {{ content }}
-            </div>
-        </section>
-    </aside>
+    {%- do kwargs.setdefault("narrow", true) -%}
+    {%- do kwargs.setdefault("shallow", true) -%}
+    {{ ui.section(content, title, **kwargs) }}
 {%- endmacro %}
 
 {%- macro facet_section(content, title, items, key, collapsed, has_more) -%}
@@ -15,8 +9,8 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="module-heading accordion-button {{ 'collapsed' if collapsed or not items }}"
-                    type="button" data-bs-toggle="collapse" data-bs-target="#{{ ui.util.id(title) }}"
-                    {% if not items %}disabled{% endif %}>
+                        type="button" data-bs-toggle="collapse" data-bs-target="#{{ ui.util.id(title) }}"
+                        {% if not items %}disabled{% endif %}>
                     <i class="filter-svg fa-solid fa-filter"></i>
                     {{ title }}
                 </button>
@@ -43,11 +37,16 @@
 
 {%- endmacro %}
 
-{%- macro section(content, title, level=2) -%}
-    <section {{ ui.util.attrs(kwargs) }}>
-        {{ ui.heading(title, level) if title }}
-        <div>
-            {{ content }}
+{%- macro section(content, title, icon, level=2, shallow=false, narrow=false) -%}
+    {%- if icon -%}
+        {%- set title = ui.icon(icon) ~ " " ~ title -%}
+    {%- endif %}
+    <section {{ ui.util.attrs(kwargs) }} class="module {{ 'module-narrow' if narrow }} {{ 'module-shallow' if shallow }}">
+        <div class="module-group">
+            {{ ui.heading(title, level, attrs={"class": "module-heading"}) if title }}
+            <div class="module-content">
+                {{ content }}
+            </div>
         </div>
     </section>
 {%- endmacro %}

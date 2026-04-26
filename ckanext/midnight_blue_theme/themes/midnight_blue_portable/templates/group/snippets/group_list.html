@@ -5,15 +5,15 @@ groups - A list of groups.
 
 Example:
 
-    {% snippet "group/snippets/group_list.html" %}
+{% snippet "group/snippets/group_list.html" %}
 
 #}
 {% block group_list %}
-  <ul class="groups-list">
-    {% block group_list_inner %}
-      {% for group in groups %}
-        {% snippet "group/snippets/group_item.html", group=group, show_capacity=show_capacity %}
-      {% endfor %}
-    {% endblock %}
-  </ul>
+    {%- call ui.util.call(ui.group_list) -%}
+        {% block group_list_inner %}
+            {% for group in groups %}
+                {{ ui.group(group=group, show_capacity=show_capacity) }}
+            {% endfor %}
+        {% endblock %}
+    {%- endcall %}
 {% endblock %}

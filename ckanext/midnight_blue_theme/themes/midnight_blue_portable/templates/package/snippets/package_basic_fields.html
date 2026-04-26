@@ -65,7 +65,7 @@
 
         {% if show_visibility_selector %}
             {% block package_metadata_fields_visibility %}
-                {{ ui.select(name="private", label=_('Visibility'), selected=data.private|trim, options=[( _('Private'), 'True'), (_('Public'), 'False')]) }}
+                {{ ui.select(name="private", label=_('Visibility'), selected=data.private|trim, options=[('True', _('Private')), ('False', _('Public'))]) }}
             {% endblock %}
         {% endif %}
 
@@ -73,7 +73,7 @@
 
 
     {% if data.id and h.check_access('package_delete', {'id': data.id}) and data.state != 'active' %}
-        {{ ui.select(name="state", label=_("State"), selected=data.state, errors=errors.state, options=[(_("Active"), "active"), (_("Deleted"), "deleted")]) }}
+        {{ ui.select(name="state", label=_("State"), selected=data.state, errors=errors.state, options=[("active", _("Active")), ("deleted", _("Deleted"))]) }}
     {% endif %}
 
 {% endblock %}

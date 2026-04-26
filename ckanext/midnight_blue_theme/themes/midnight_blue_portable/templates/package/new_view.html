@@ -18,12 +18,18 @@
 {%- endblock %}
 
 {% block form %}
-    <form method="post" data-module="basic-form resource-form">
-        {{ h.csrf_input() }}
+    {%- call ui.util.call(ui.form, method="POST", data={"module": "basic-form resource-form"}) -%}
         {% include 'package/snippets/view_form.html' %}
-        <div class="form-actions">
-            <button class="btn btn-secondary {% if not h.resource_view_display_preview(data) %}hide{%endif%}" name="preview" value="True" type="submit">{{ _('Preview') }}</button>
-            <button class="btn btn-primary" name="save" value="Save" type="submit">{% block save_button_text %}{{ _('Add') }}{% endblock %}</button>
-        </div>
-    </form>
+        {%- call ui.util.call(ui.form_actions) -%}
+            {%- set preview_attrs = {"name": "preview", "value": "True"} -%}
+            {% if not h.resource_view_display_preview(data) %}
+                {%- do preview_attrs.update("hidden", true) -%}
+            {%endif%}
+            {{ ui.button(_('Preview'), style="secondary", type="submit", attrs=preview_attrs) }}
+
+            {%- call ui.util.call(ui.button, type="submit", attrs={"name": "save", "value": "Save"}) -%}
+                {% block save_button_text %}{{ _('Add') }}{% endblock %}
+            {%- endcall %}
+        {%- endcall %}
+    {%- endcall %}
 {% endblock %}

@@ -75,6 +75,13 @@
     <a {{ ui.util.attrs(kwargs) }} {%- if href %} href="{{ href }}"{%- endif %}>{{ content }}</a>
 {%- endmacro %}
 
+{%- macro tab(content, href, active) -%}
+    {%- if active -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "active") -%}
+    {%- endif %}
+    {{ ui.link(content, href=href, **kwargs) }}
+{%- endmacro %}
+
 {%- macro video(src, controls) -%}
     <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }}></video>
 {%- endmacro %}

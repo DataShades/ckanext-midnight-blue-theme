@@ -20,12 +20,9 @@ Examples:
 {{ form.textarea('desc', id='field-description', label=_('Description'), value=data.desc, error=errors.desc) }}
 
 #}
-{% macro textarea(name, id='', label='', value='', placeholder='', error="", classes=[], attrs={'class': 'form-control'}, is_required=false, rows=5, cols=20) %}
-{% set classes = (classes|list) %}
-{% do classes.append('control-full') %}
+{% macro textarea(name, id='', label='', value='', placeholder='', error="", classes=[], attrs={}, is_required=false, rows=5, cols=20) %}
 
-{%- set extra_html = caller() if caller -%}
-{% call input_block(id or name, label or name, error, classes, extra_html=extra_html, is_required=is_required) %}
-<textarea id="{{ id or name }}" name="{{ name }}" cols="{{ cols }}" rows="{{ rows }}" placeholder="{{ placeholder }}" {{ attributes(attrs) }}>{{ value | empty_and_escape }}</textarea>
-{% endcall %}
+    {%- set extra_html = caller() if caller -%}
+    {{ ui.textarea(extra_html, name=name, id=id, label=label, value=value, placeholder=placeholder, errors=error, attrs=attrs, required=is_required) }}
+
 {% endmacro %}

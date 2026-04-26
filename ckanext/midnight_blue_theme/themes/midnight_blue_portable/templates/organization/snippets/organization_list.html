@@ -5,15 +5,15 @@ organizations - A list of organizations.
 
 Example:
 
-    {% snippet "organization/snippets/organization_list.html" %}
+{% snippet "organization/snippets/organization_list.html" %}
 
 #}
 {% block organization_list %}
-  <ul class="groups-list">
-    {% block organization_list_inner %}
-    {% for organization in organizations %}
-      {% snippet "organization/snippets/organization_item.html", organization=organization, position=loop.index, show_capacity=show_capacity %}
-    {% endfor %}
-    {% endblock %}
-  </ul>
+    {%- call ui.util.call(ui.group_list) -%}
+        {% block organization_list_inner %}
+            {% for organization in organizations %}
+                {{ ui.organization(organization=organization, show_capacity=show_capacity) }}
+            {% endfor %}
+        {% endblock %}
+    {%- endcall %}
 {% endblock %}

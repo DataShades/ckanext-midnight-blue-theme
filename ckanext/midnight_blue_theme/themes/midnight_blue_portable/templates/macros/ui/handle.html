@@ -11,11 +11,3 @@
     {%- do kwargs.setdefault("data", {}).update({"bs-dismiss": "modal", "bs-target": "#"~id}) -%}
     {{ ui.button(content, **kwargs) }}
 {%- endmacro %}
-
-{%- macro tab_handle(content, href, active) -%}
-    {%- if active -%}
-        {%- do kwargs.setdefault("aria", {}).setdefault("selected", "true") -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "active") -%}
-    {%- endif %}
-    {{ ui.link(content, href, **kwargs) }}
-{%- endmacro %}

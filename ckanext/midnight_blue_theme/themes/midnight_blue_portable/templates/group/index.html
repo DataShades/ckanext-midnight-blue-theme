@@ -32,7 +32,7 @@
         {% endif %}
     {% endblock %}
     {% block page_pagination %}
-        {{ page.pager(q=q or '', sort=sort_by_selected or '') }}
+        {{ ui.pagination(page=page.page, total=page.last_page, url_params={"q": q or "", "sort": sort_by_selected or ''}) }}
     {% endblock %}
 {% endblock %}
 

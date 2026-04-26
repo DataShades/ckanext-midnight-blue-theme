@@ -23,7 +23,7 @@ Example:
                 {% block resource_list_inner %}
                     {% set can_edit = can_edit or h.check_access('package_update', {'id':pkg.id }) %}
                     {% for resource in resources %}
-                        {{ ui.resource(resource, pkg=pkg, can_edit=can_edit) }}
+                        {{ ui.resource(resource=resource, pkg=pkg, can_edit=can_edit) }}
                     {% endfor %}
                 {% endblock %}
             {%- endcall %}

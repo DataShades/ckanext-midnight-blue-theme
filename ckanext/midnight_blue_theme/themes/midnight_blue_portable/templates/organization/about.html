@@ -6,13 +6,16 @@
 {%- endblock %}
 
 {% block primary_content_inner %}
-  <h1>{% block page_heading %}{{ group_dict.display_name }}{% endblock %}</h1>
-  {% block organization_description %}
-    {% if group_dict.description %}
-      {{ h.render_markdown(group_dict.description) }}
-    {% endif %}
-  {% endblock %}
-  {% block organization_extras %}
-    {% snippet 'snippets/additional_info.html', extras = h.sorted_extras(group_dict.extras) %}
-  {% endblock %}
+    {%- call ui.util.call(ui.heading, level=1) -%}
+        {% block page_heading %}{{ group_dict.display_name }}{% endblock %}
+    {%- endcall %}
+
+    {% block organization_description %}
+        {% if group_dict.description %}
+            {{ h.render_markdown(group_dict.description) }}
+        {% endif %}
+    {% endblock %}
+    {% block organization_extras %}
+        {% snippet 'snippets/additional_info.html', extras = h.sorted_extras(group_dict.extras) %}
+    {% endblock %}
 {% endblock %}

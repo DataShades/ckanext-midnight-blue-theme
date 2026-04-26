@@ -10,7 +10,7 @@
 
 {%- macro search_sort_control(content, name="sort", selected="", options=[], label=_("Order by")) -%}
     {%- if options -%}
-        {#{ ui.select(content, name=name, label=label, options=options, selected=selected, group_class="control-order-by") }#}
+        {#{ ui.select(content, name=name, label=label, options=options?revert-items, selected=selected, group_class="control-order-by") }#}
 
         <div class="form-group control-order-by">
             <label for="{{ id }}">{{ label }}</label>
@@ -75,6 +75,5 @@
 {%- endmacro %}
 
 {%- macro search_form(query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
-    {%- do kwargs -%}
     {%- include "macros/ui/snippets/search_form.html" -%}
 {%- endmacro %}

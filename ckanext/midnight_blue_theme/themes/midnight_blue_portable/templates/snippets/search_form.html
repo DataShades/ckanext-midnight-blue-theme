@@ -47,7 +47,7 @@
     {% endblock %}
 
     {% block search_facets %}
-        {{ ui.search_active_filters(active_filters=fields, facet_titles=facets.titles, facets=facets.search, use_htmx=true) }}
+        {{ ui.search_active_filters(active_filters=fields, facet_titles=facets.titles if facets else {}, facets=facets.search if facets else {}, use_htmx=true) }}
         <a class="show-filters btn btn-secondary">{{ _('Filter Results') }}</a>
     {% endblock %}
 {%- endcall %}

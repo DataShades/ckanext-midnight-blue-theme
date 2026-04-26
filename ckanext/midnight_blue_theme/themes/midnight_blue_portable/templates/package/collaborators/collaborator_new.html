@@ -59,20 +59,17 @@
 
 {% block secondary_content %}
     {{ super() }}
-    <div class="module module-narrow module-shallow">
-        <h2 class="module-heading">
-            {{ ui.icon("info-circle") }}
-            {{ _('What are the available roles?') }}
-        </h2>
-        <div class="module-content">
-            {% if h.check_config_permission('allow_admin_collaborators') %}
-                {% trans %}
-                <p><strong>Admin:</strong> In addition to managing the dataset, admins can add and remove collaborators from a dataset.</p>
-      {% endtrans %}
-            {% endif %}
+    {%- call ui.util.call(ui.sidebar_section, icon="info-circle", title=_('What are the available roles?')) -%}
+        {% if h.check_config_permission('allow_admin_collaborators') %}
             {% trans %}
-            <p><strong>Editor:</strong> Editors can edit the dataset and its resources, as well accessing the dataset if private.</p>
-            <p><strong>Member:</strong> Members can access the dataset if private, but not edit it.</p>
+            <p><strong>Admin:</strong> In addition to managing the dataset, admins can add and remove collaborators from a dataset.</p>
+      {% endtrans %}
+        {% endif %}
+        {% trans %}
+        <p><strong>Editor:</strong> Editors can edit the dataset and its resources, as well accessing the dataset if private.</p>
+        <p><strong>Member:</strong> Members can access the dataset if private, but not edit it.</p>
     {% endtrans %}
-        </div>
+
+    {%- endcall %}
+
 {% endblock %}

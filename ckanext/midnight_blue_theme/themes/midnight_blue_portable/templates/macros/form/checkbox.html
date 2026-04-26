@@ -1,5 +1,3 @@
-{% from "macros/form/attributes.html" import attributes %}
-
 {#
     Builds a single checkbox input.
 
@@ -20,15 +18,5 @@
     #}
 {% macro checkbox(name, id='', label='', value='', checked=false, placeholder='', error="", classes=[], attrs={}, is_required=false) %}
     {%- set extra_html = caller() if caller -%}
-    <div class="form-group{{ " " ~ classes | join(" ") }}{% if error %} error{% endif %}">
-        <div class="controls">
-            <label class="checkbox" for="{{ id or name }}">
-                <input id="{{ id or name }}" type="checkbox" name="{{ name }}" value="{{ value | empty_and_escape }}" {{ "checked " if checked }} {{ attributes(attrs) }} />
-                {{ label or name }}
-                {% if is_required %}<span class="control-required">*</span> {% endif %}
-                {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
-            </label>
-            {{ extra_html }}
-        </div>
-    </div>
+    {{ ui.checkbox(extra_html, name=name, id=id, label=label, value=value, checked=checked, errors=error, attrs=attrs, required=is_required) }}
 {% endmacro %}

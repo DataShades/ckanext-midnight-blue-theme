@@ -18,13 +18,18 @@
 {%- endblock %}
 
 {% block form %}
-    <form method="post" data-module="basic-form resource-form">
-        {{ h.csrf_input() }}
+    {%- call ui.util.call(ui.form, method="POST", data={"module": "basic-form resource-form"}) -%}
         {% include 'package/snippets/view_form.html' %}
-        <div class="form-actions">
-            <button class="btn btn-danger pull-left" name="delete" value="Delete"> {{ _('Delete') }} </button>
-            <button class="btn btn-secondary {% if not h.resource_view_display_preview(data) %}hide{%endif%}" name="preview" value="True" type="submit">{{ _('Preview') }}</button>
-            <button class="btn btn-primary" name="save" value="Save" type="submit">{{ _('Update') }}</button>
-        </div>
-    </form>
+        {%- call ui.util.call(ui.form_actions) -%}
+            {%- set preview_attrs = {"name": "preview", "value": "True"} -%}
+            {% if not h.resource_view_display_preview(data) %}
+                {%- do preview_attrs.update({"hidden": true}) -%}
+            {% endif %}
+            {{ ui.button(_('Delete'), type="submit", style="danger", attrs={"name": "delete", "value": "Delete"}) }}
+            {{ ui.button(_('Preview'), type="submit", style="secondary", attrs=preview_attrs) }}
+            {{ ui.button(_('Update'), type="submit", attrs={"name": "save", "value": "Save"}) }}
+        {%- endcall %}
+
+    {%- endcall %}
+
 {% endblock %}
