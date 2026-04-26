@@ -10,17 +10,17 @@
 {# Allows custom attributes to be added to the <head> tag #}
 <head{% block headtag %}{% endblock %}>
     {#
-        Add custom meta tags to the page. Call super() to get the default tags
-        such as charset, viewport and generator.
+    Add custom meta tags to the page. Call super() to get the default tags
+    such as charset, viewport and generator.
 
-        Example:
+    Example:
 
-        {% block meta %}
-        {{ super() }}
-        <meta name="description" value="My website description" />
-        {% endblock %}
+    {% block meta %}
+    {{ super() }}
+    <meta name="description" value="My website description" />
+    {% endblock %}
 
-        #}
+    #}
     {%- block meta -%}
         <meta charset="utf-8" />
         <meta name="site-root" content="{{ h.url_for('home.index', locale='default', qualified=true) }}" />
@@ -34,14 +34,14 @@
     {%- endblock -%}
 
     {#
-        Add a custom title to the page by extending the title block. Call super()
-        to get the default page title.
+    Add a custom title to the page by extending the title block. Call super()
+    to get the default page title.
 
-        Example:
+    Example:
 
-        {% block title %}My Subtitle - {{ super() }}{% endblock %}
+    {% block title %}My Subtitle - {{ super() }}{% endblock %}
 
-        #}
+    #}
     <title>
         {%- block title -%}
             {%- block subtitle -%}{% endblock -%}
@@ -50,25 +50,25 @@
     </title>
 
     {#
-        The links block allows you to add additional content before the stylesheets
-        such as rss feeds and favicons in the same way as the meta block.
-        #}
+    The links block allows you to add additional content before the stylesheets
+    such as rss feeds and favicons in the same way as the meta block.
+    #}
     {% block links -%}
         <link rel="shortcut icon" href="{{ g.favicon }}" />
     {% endblock -%}
 
     {#
-        The styles block allows you to add additional stylesheets to the page in
-        the same way as the meta block. Use super() to include the default
-        stylesheets before or after your own.
+    The styles block allows you to add additional stylesheets to the page in
+    the same way as the meta block. Use super() to include the default
+    stylesheets before or after your own.
 
-        Example:
+    Example:
 
-        {% block styles %}
-        {{ super() }}
-        <link rel="stylesheet" href="/base/css/custom.css" />
-        {% endblock %}
-        #}
+    {% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="/base/css/custom.css" />
+    {% endblock %}
+    #}
     {%- block styles %}
         {%- block styles_theming -%}
             {%- set theme = "theming/midnight-blue-portable/css-main" -%}
@@ -84,7 +84,7 @@
     {%- block custom_styles %}
         {%- if g.site_custom_css -%}
             <style>
-                {{ g.site_custom_css | safe }}
+             {{ g.site_custom_css | safe }}
             </style>
         {%- endif %}
     {% endblock %}
@@ -98,24 +98,24 @@
 <body{% block bodytag %}{% endblock %}>
 
     {#
-        The page block allows you to add content to the page. Most of the time it is
-        recommended that you extend one of the page.html templates in order to get
-        the site header and footer. If you need a clean page then this is the
-        block to use.
+    The page block allows you to add content to the page. Most of the time it is
+    recommended that you extend one of the page.html templates in order to get
+    the site header and footer. If you need a clean page then this is the
+    block to use.
 
-        Example:
+    Example:
 
-        {% block page %}
-        <div>Some other page content</div>
-        {% endblock %}
-        #}
+    {% block page %}
+    <div>Some other page content</div>
+    {% endblock %}
+    #}
     {%- block page %}{% endblock -%}
 
     {#
-        DO NOT USE THIS BLOCK FOR ADDING SCRIPTS
-        Scripts should be loaded by the {% assets %} tag except in very special
-        circumstances
-        #}
+    DO NOT USE THIS BLOCK FOR ADDING SCRIPTS
+    Scripts should be loaded by the {% assets %} tag except in very special
+    circumstances
+    #}
     {%- block scripts %}
     {% endblock -%}
 
@@ -127,4 +127,4 @@
     {{ h.render_assets('style') }}
     {{ h.render_assets('script') }}
 </body>
-</html>
+    </html>

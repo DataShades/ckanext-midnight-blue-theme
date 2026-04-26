@@ -8,9 +8,9 @@
 
 {# remove any scripts #}
 {% block scripts %}
-  <script>
-    var preload_resource = {{ h.literal(h.dump_json(resource)) }};
-  </script>
+    <script>
+     var preload_resource = {{ h.literal(h.dump_json(resource)) }};
+    </script>
 {% endblock %}
 
 {# remove any ckan styles #}

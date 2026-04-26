@@ -1,7 +1,9 @@
 <div class="toolbar">
-  <ol class="breadcrumb">
-    {% snippet 'snippets/home_breadcrumb_item.html' %}
-    {% if stage > 1 %}<li{% if stage == 2 %} class="active"{% endif %}><a href="#">{% if stage == 2 %}Active {% endif %}Breadcrumb Item</a></li>{% endif %}
-    {% if stage > 2 %}<li class="active"><a href="#">Active Breadcrumb Item</a></li>{% endif %}
-  </ol>
+    {%- call ui.util.call(ui.breadcrumb_wrapper) -%}
+        {{ ui.breadcrumb(_('Home'), h.url_for('home.index'), aria={"label": _("Home")}, initial=true) }}
+        {% if stage > 1 %}
+            {{ ui.breadcrumb(("Active " if stage == 2 else "") ~ "Breadcrumb Item", active=stage==2) }}
+        {% endif %}
+        {{ ui.breadcrumb("Active Breadcrumb Item", active=true) if stage > 2 }}
+    {%- endcall %}
 </div>

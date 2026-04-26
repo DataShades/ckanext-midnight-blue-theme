@@ -24,7 +24,7 @@
 {%- endmacro %}
 
 {%- macro facet(content, key, value, count, active) -%}
-    {% set href = h.remove_url_param(key, value) if active else h.add_url_param(new_params={key: value}) %}
+    {% set href = h.remove_url_param(key, value) if active and key else h.add_url_param(new_params={key: value}) %}
     {% set truncated = content|truncate(22) %}
     <li class="nav-item {% if active %}active{% endif %}">
         <a {{ ui.util.attrs(kwargs) }} href="{{ href }}" aria-label="{{ _('Search datasets by {name}: {label}').format(name=key, label=truncated) }}" {% if content != truncated %} data-bs-title="{{ content }}" data-bs-toggle="tooltip" {% endif %}>
