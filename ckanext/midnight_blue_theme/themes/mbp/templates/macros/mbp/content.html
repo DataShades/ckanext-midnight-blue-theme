@@ -1,26 +1,26 @@
 {%- macro group(content, group) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/group.html" -%}
+    {%- include "macros/mbp/snippets/group.html" -%}
 {%- endmacro %}
 
 {%- macro organization(content, organization) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/organization.html" -%}
+    {%- include "macros/mbp/snippets/organization.html" -%}
 {%- endmacro %}
 
 {%- macro package(content, package) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/package.html" -%}
+    {%- include "macros/mbp/snippets/package.html" -%}
 {%- endmacro %}
 
 {%- macro resource(content, resource) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/resource.html" -%}
+    {%- include "macros/mbp/snippets/resource.html" -%}
 {%- endmacro %}
 
 {%- macro user(content, user) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/user.html" -%}
+    {%- include "macros/mbp/snippets/user.html" -%}
 {%- endmacro %}
 
 {%- macro facet(content, key, value, count, active) -%}
@@ -39,10 +39,10 @@
 
 {%- macro activity(content, activity) -%}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/activity.html" -%}
+    {%- include "macros/mbp/snippets/activity.html" -%}
 {%- endmacro %}
 
 {% macro license(content, id, url) %}
     {%- do kwargs -%}
-    {%- include "macros/ui/snippets/license.html" -%}
+    {%- include "macros/mbp/snippets/license.html" -%}
 {% endmacro %}

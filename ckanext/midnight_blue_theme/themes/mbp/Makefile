@@ -6,3 +6,4 @@ help:
 
 css:  ## compile CSS
 	npx sass assets/scss/main.scss assets/css/main.css --no-source-map
+	npx sass assets/scss/main-rtl.scss assets/css/main-rtl.css --no-source-map

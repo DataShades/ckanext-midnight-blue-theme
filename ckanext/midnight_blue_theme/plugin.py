@@ -8,7 +8,7 @@ import ckan.plugins.toolkit as tk
 from ckanext.theming.interfaces import ITheme
 from ckanext.theming.lib import Theme
 
-from ckanext.midnight_blue_theme.themes.midnight_blue_portable.theme import make_theme
+from ckanext.midnight_blue_theme.themes.mbp.theme import make_theme
 
 from . import helpers
 
