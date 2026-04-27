@@ -14517,17 +14517,17 @@ td.diff_header {
 .account-masthead .account {
   float: right;
 }
-.account-masthead .account ul {
+.account-masthead .account > ul {
   display: inline-flex;
   align-items: baseline;
   flex-wrap: wrap;
 }
-.account-masthead .account ul li {
+.account-masthead .account > ul li {
   display: block;
   float: left;
   padding: 0.5rem 0;
 }
-.account-masthead .account ul li a, .account-masthead .account ul li button {
+.account-masthead .account > ul li a, .account-masthead .account > ul li button {
   display: block;
   text-decoration: none;
   border-radius: 8px;
@@ -14535,30 +14535,30 @@ td.diff_header {
   padding: 6px 10px;
   margin-left: 0.5rem;
 }
-.account-masthead .account ul li a span.username,
-.account-masthead .account ul li a span.text, .account-masthead .account ul li button span.username,
-.account-masthead .account ul li button span.text {
+.account-masthead .account > ul li a span.username,
+.account-masthead .account > ul li a span.text, .account-masthead .account > ul li button span.username,
+.account-masthead .account > ul li button span.text {
   margin: 0 2px 0 4px;
 }
-.account-masthead .account ul li a span.text, .account-masthead .account ul li button span.text {
+.account-masthead .account > ul li a span.text, .account-masthead .account > ul li button span.text {
   position: absolute;
   top: -9999px;
   left: -9999px;
 }
-.account-masthead .account ul li a:hover, .account-masthead .account ul li button:hover {
+.account-masthead .account > ul li a:hover, .account-masthead .account > ul li button:hover {
   color: #fff;
   background-color: rgb(10.5, 24, 66);
   text-decoration: none;
 }
-.account-masthead .account ul li a.sub, .account-masthead .account ul li button.sub {
+.account-masthead .account > ul li a.sub, .account-masthead .account > ul li button.sub {
   font-weight: 300;
 }
-.account-masthead .account ul li a.image {
+.account-masthead .account > ul li a.image {
   background-color: #fff;
   color: #000;
   border: 1px solid #d0d5dd;
 }
-.account-masthead .account ul li a.image:hover {
+.account-masthead .account > ul li a.image:hover {
   background-color: rgb(216.75, 216.75, 216.75);
 }
 .account-masthead .account .notifications a span.badge {

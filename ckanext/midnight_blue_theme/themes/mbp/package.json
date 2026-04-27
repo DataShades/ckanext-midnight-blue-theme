@@ -1,0 +1,20 @@
+{
+  "name": "mbp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-scripts": "tsc -w",
+    "compile-styles": "sass assets/scss/main.scss assets/css/main.css --no-source-map; sass assets/scss/main-rtl.scss assets/css/main-rtl.css --no-source-map"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "sass": "^1.99.0",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}

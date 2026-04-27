@@ -1,0 +1,21 @@
+{
+    "exclude": ["node_modules"],
+    "include": [
+        "assets/javascript/*.ts"
+    ],
+    "compilerOptions": {
+        "module": "preserve",
+        "target": "es2020",
+        "types": ["bootstrap"],
+
+        "sourceMap": false,
+
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "strict": true,
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "skipLibCheck": false
+    }
+}

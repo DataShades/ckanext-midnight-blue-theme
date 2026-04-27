@@ -123,11 +123,18 @@
         #}
     {%- block footer %}
         {% include "footer.html" %}
+
+        <div id="notification-container" class="toast-container bottom-0 end-0 me-1 mb-1 position-fixed">
+            <div class="toast">
+                <div class="toast-header">'hello'</div>
+                <div class="toast-body">world</div>
+            </div>
+        </div>
     {% endblock -%}
 {%- endblock -%}
 
 {%- block scripts %}
     {{ super() }}
     {% asset 'base/main' %}
-    {% asset 'theming/midnight-blue-portable/ckan' %}
+    {% asset 'theming/midnight-blue-portable/scripts' %}
 {% endblock -%}

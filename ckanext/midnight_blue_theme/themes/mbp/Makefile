@@ -5,5 +5,4 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 css:  ## compile CSS
-	npx sass assets/scss/main.scss assets/css/main.css --no-source-map
-	npx sass assets/scss/main-rtl.scss assets/css/main-rtl.css --no-source-map
+	npm run compile-styles
