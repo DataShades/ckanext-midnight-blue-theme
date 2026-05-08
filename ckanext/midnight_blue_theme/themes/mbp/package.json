@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-scripts": "tsc -w",
+      "watch-styles": "sass -w assets/scss/main.scss assets/css/main.css",
     "compile-styles": "sass assets/scss/main.scss assets/css/main.css --no-source-map; sass assets/scss/main-rtl.scss assets/css/main-rtl.css --no-source-map"
   },
   "keywords": [],

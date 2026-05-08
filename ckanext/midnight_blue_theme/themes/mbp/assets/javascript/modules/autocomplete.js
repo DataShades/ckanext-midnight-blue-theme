@@ -28,6 +28,7 @@ this.ckan.module('autocomplete', function (jQuery) {
       tokensep: ',',
       interval: 300,
       dropdownClass: '',
+      containerClass: '',
       minimumInputLength: 0
     },
 
@@ -56,7 +57,8 @@ this.ckan.module('autocomplete', function (jQuery) {
         },
         dropdownCssClass: this.options.dropdownClass,
         tokenSeparators: this.options.tokensep.split(''),
-        minimumInputLength: this.options.minimumInputLength
+        minimumInputLength: this.options.minimumInputLength,
+        selectionCssClass: this.options.containerClass
       };
 
       // Different keys are required depending on whether the select is
@@ -69,9 +71,15 @@ this.ckan.module('autocomplete', function (jQuery) {
           var Tags = $.fn.select2.amd.require('select2/data/tags');
           settings.dataAdapter = Utils.Decorate(settings.dataAdapter, Tags)
           settings.multiple = "multiple"
+
+          // tokenizer is not applied when custom data adapter is used
+          if (settings.tokenSeparators != null) {
+            var Tokenizer = $.fn.select2.amd.require('select2/data/tokenizer');
+            settings.dataAdapter = Utils.Decorate(settings.dataAdapter, Tokenizer);
+          }
         }
 
-        // minimum input length is not applied when custom data adapter is user
+        // minimum input length is not applied when custom data adapter is used
         if (this.options.minimumInputLength > 0) {
           var Utils = $.fn.select2.amd.require('select2/utils');
           var MinimumInputLength = $.fn.select2.amd.require('select2/data/minimumInputLength');

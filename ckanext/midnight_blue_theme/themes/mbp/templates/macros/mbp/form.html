@@ -160,7 +160,7 @@
         {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
         {%- if label -%}
             <label class="form-check-label checkbox" for="{{ field_id }}">
-                {{ label }}
+                {{- label -}}
                 {%- if required -%}<span class="control-required">*</span>{%- endif %}
             </label>
         {%- endif %}
@@ -234,7 +234,10 @@
 
     <div class="{{ group_class }}">
         {%- if label -%}
-            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
+            <label class="form-label" for="{{ field_id }}">
+                {%- if required -%}<span class="control-required">*</span>{%- endif %}
+                {{- label -}}
+            </label>
         {%- endif %}
         <div class="controls editor">
             <textarea
@@ -296,7 +299,10 @@
     {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
     <div class="{{ group_class }}">
         {%- if label -%}
-            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
+            <label class="form-label" for="{{ field_id }}">
+                {%- if required -%}<span class="control-required">*</span>{%- endif %}
+                {{- label -}}
+            </label>
         {%- endif %}
         <select
             {{ ui.util.attrs(kwargs) }}
@@ -330,7 +336,10 @@
 
     <div class="{{ group_class }}">
         {%- if label -%}
-            <label class="form-label" for="{{ field_id }}">{{ label }}</label>
+            <label class="form-label" for="{{ field_id }}">
+                {%- if required -%}<span class="control-required">*</span>{%- endif %}
+                {{- label -}}
+            </label>
         {%- endif %}
         <div class="controls editor">
             <textarea
