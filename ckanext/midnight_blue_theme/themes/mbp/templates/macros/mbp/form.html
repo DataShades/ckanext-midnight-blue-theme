@@ -109,8 +109,7 @@
 {%- endmacro %}
 
 {%- macro input(content, name, id, label, value, required, placeholder, type, icon, errors=[], group_class="form-group") -%}
-    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
-
+    {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
     {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
 
@@ -148,7 +147,7 @@
 {%- endmacro %}
 
 {%- macro checkbox(content, name, id, checked, label, required, placeholder, type="checkbox", value="on", errors=[], group_class="form-group form-check") -%}
-    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
     {%- if errors  %}{%- do aria_attrs.setdefault("invalid", "true") -%}{%- endif -%}
@@ -224,7 +223,7 @@
 
 
 {%- macro markdown(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
-    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
     {% set popover_id = ui.util.id() %}
 
     {{ ui.markdown_popover(id=popover_id) }}
@@ -296,7 +295,7 @@
 {%- endmacro %}
 
 {%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[], group_class="form-group") -%}
-    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
     <div class="{{ group_class }}">
         {%- if label -%}
             <label class="form-label" for="{{ field_id }}">
@@ -332,7 +331,7 @@
 {%- endmacro %}
 
 {%- macro textarea(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
-    {%- set field_id = id or ("field-" ~ name) if name else ui.util.id() if label else "" -%}
+    {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
     <div class="{{ group_class }}">
         {%- if label -%}

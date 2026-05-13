@@ -94,7 +94,7 @@
 {% set extra_field = extra_field | default(_form.extra_field) %}
 {% set extra_fields_collection = extra_fields_collection | default(_form.extra_fields_collection) %}
 {% set field_errors = field_errors | default(_form.field_errors) %}
-{#% set file_input = file_input | default(_form.file_input) %#}
+{% set file_input = file_input | default(_form.file_input) %}
 {% set field_info = field_info | default(_form.field_info) %}
 {% set form = form | default(_form.form) %}
 {% set form_actions = form_actions | default(_form.form_actions) %}

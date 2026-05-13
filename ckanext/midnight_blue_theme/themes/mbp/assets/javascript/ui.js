@@ -34,6 +34,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
         constructor(el) {
             this.el = el;
             _Modal_modal.set(this, void 0);
+            // @ts-ignore
             __classPrivateFieldSet(this, _Modal_modal, bootstrap.Modal.getOrCreateInstance(el), "f");
         }
         destroy() {
@@ -51,6 +52,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
         constructor(el) {
             this.el = el;
             _Notification_toast.set(this, void 0);
+            // @ts-ignore
             __classPrivateFieldSet(this, _Notification_toast, bootstrap.Toast.getOrCreateInstance(el), "f");
         }
         close() {
@@ -68,6 +70,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
         constructor(el) {
             this.el = el;
             _Tooltip_tooltip.set(this, void 0);
+            // @ts-ignore
             __classPrivateFieldSet(this, _Tooltip_tooltip, bootstrap.Tooltip.getOrCreateInstance(el), "f");
         }
         close() {
@@ -85,6 +88,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
         constructor(el) {
             this.el = el;
             _Popover_popover.set(this, void 0);
+            // @ts-ignore
             __classPrivateFieldSet(this, _Popover_popover, bootstrap.Popover.getOrCreateInstance(el), "f");
         }
         close() {
