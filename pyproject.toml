@@ -18,6 +18,7 @@ classifiers = [
 keywords = [ "CKAN", ]
 dependencies = [
   "typing-extensions",
+  "ckanext-theming",
 ]
 
 [project.urls]

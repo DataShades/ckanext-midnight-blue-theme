@@ -1,121 +1,68 @@
-[![Tests](https://github.com/ckan/ckanext-midnight-blue-theme/workflows/Tests/badge.svg?branch=main)](https://github.com/ckan/ckanext-midnight-blue-theme/actions)
+[![Tests](https://github.com/datashades/ckanext-midnight-blue-theme/workflows/Tests/badge.svg?branch=main)](https://github.com/datashades/ckanext-midnight-blue-theme/actions)
 
 # ckanext-midnight-blue-theme
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
+Portable version of CKAN's midnight blue theme that uses
+[ckanext-theming](https://github.com/DataShades/ckanext-theming).
 
 
 ## Requirements
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
-
-If your extension works across different versions you can add the following table:
-
 Compatibility with core CKAN versions:
 
-| CKAN version    | Compatible?   |
-| --------------- | ------------- |
-| 2.9 and earlier | not tested    |
-| 2.10            | not tested    |
-| 2.11            | not tested    |
-
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+| CKAN version     | Compatible? |
+|------------------|-------------|
+| 2.11 and earlier | no          |
+| 2.12             | yes         |
 
 
 ## Installation
 
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
-
 To install ckanext-midnight-blue-theme:
 
-1. Activate your CKAN virtual environment, for example:
+1. Install the extension
 
-     . /usr/lib/ckan/default/bin/activate
-
-2. Clone the source and install it on the virtualenv
-
-    git clone https://github.com/ckan/ckanext-midnight-blue-theme.git
+    ```sh
+    git clone https://github.com/DataShades/ckanext-midnight-blue-theme.git
     cd ckanext-midnight-blue-theme
     pip install -e .
-	pip install -r requirements.txt
+    ```
 
-3. Add `midnight-blue-theme` to the `ckan.plugins` setting in your CKAN
-   config file (by default the config file is located at
-   `/etc/ckan/default/ckan.ini`).
+1. Add `theming` and `midnight_blue_theme` to the `ckan.plugins` setting in
+   your CKAN config file.
 
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+1. Use `midnight-blue-portable` as a value ckanext-theming's `ckan.ui.theme`:
 
-     sudo service apache2 reload
+    ```ini
+    ckan.ui.theme = midnight-blue-portable
+    ```
 
+Note, this extension requires ckanext-theming, but does not pins it to specific
+version. Consider adding `ckanext-theming==X.Y.Z` to requirements of your
+project.
 
-## Config settings
+## Details
 
-None at present
+The theme implementation is close to the midnight blue theme from CKAN
+core. Tha main difference is that this theme follows
+[ckanext-theming](https://github.com/DataShades/ckanext-theming) workflow. It
+provides and uses UI macros instead of inline HTML for standard components.
 
-**TODO:** Document any optional config settings here. For example:
+Bellow is the list of things that this plugin does differently comparint to the
+midnight-blue from CKAN core:
 
-	# The minimum number of hours to wait before re-checking a resource
-	# (optional, default: 24).
-	ckanext.midnight_blue_theme.some_setting = some_default_value
+* primary block does not use CSS float. Instead if relies on Bootstrap5 `col`
+  class.
+* `page.html` uses layouts suggested in [this
+  PR](https://github.com/ckan/ckan/pull/9330). Try adding `{% block page_layout
+  %}no-sidebar{% endblock %}` to any page to hide sidebar, or use `sidebar-end`
+  value of the layout block to move sidebar to the other side of the page.
+* field errors reported using Bootstrap5 native styles for errors. Main
+  differences: there is no red background for error text, instead, the text
+  itself uses red color; fields with errors have red outline.
+* the whole block `header_account_notlogged` is not rendered if user is logged
+  in. In the original theme, block is rendered without content.
 
-
-## Developer installation
-
-To install ckanext-midnight-blue-theme for development, activate your CKAN virtualenv and
-do:
-
-    git clone https://github.com/ckan/ckanext-midnight-blue-theme.git
-    cd ckanext-midnight-blue-theme
-    pip install -e .
-    pip install -r dev-requirements.txt
-
-
-## Tests
-
-To run the tests, do:
-
-    pytest --ckan-ini=test.ini
-
-
-## Releasing a new version of ckanext-midnight-blue-theme
-
-If ckanext-midnight-blue-theme should be available on PyPI you can follow these steps to publish a new version:
-
-1. Update the version number in the `pyproject.toml` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
-
-2. Make sure you have the latest version of necessary packages:
-
-    pip install --upgrade setuptools wheel twine
-
-3. Create a source and binary distributions of the new version:
-
-       python -m build && twine check dist/*
-
-   Fix any errors you get.
-
-4. Upload the source distribution to PyPI:
-
-       twine upload dist/*
-
-5. Commit any outstanding changes:
-
-       git commit -a
-       git push
-
-6. Tag the new release of the project on GitHub with the version number from
-   the `setup.py` file. For example if the version number in `setup.py` is
-   0.0.1 then do:
-
-       git tag 0.0.1
-       git push --tags
 
 ## License
 

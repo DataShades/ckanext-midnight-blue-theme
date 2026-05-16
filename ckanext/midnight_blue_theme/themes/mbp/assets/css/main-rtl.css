@@ -12194,10 +12194,6 @@ a.tag:hover {
   padding-bottom: 8px;
 }
 
-.no-nav .module:last-child {
-  margin-top: 0;
-}
-
 .module-image {
   float: left;
   width: 50px;
@@ -14113,10 +14109,6 @@ td.diff_header {
   justify-content: flex-end;
 }
 
-.no-nav .page-header {
-  border-radius: 3px 3px 0 0;
-}
-
 .nav-tabs-plain {
   padding: 0 25px;
 }
@@ -14170,28 +14162,14 @@ td.diff_header {
   font-style: italic;
 }
 
-[role=main],
-.main {
-  position: relative;
-}
-
 .main {
   padding: 20px 0;
   background-color: #fff;
 }
 
-.main:after,
-[role=main]:after {
-  bottom: 0;
-  border-top-width: 1px;
-}
-
 .main .primary {
   border-radius: 20px;
   background-color: #f2f4f7;
-  position: relative;
-  float: right;
-  margin-left: 0;
 }
 
 .main .secondary {
