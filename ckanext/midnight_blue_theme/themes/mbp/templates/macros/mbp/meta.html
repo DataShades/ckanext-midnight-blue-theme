@@ -5,7 +5,7 @@
 {%- endmacro %}
 
 {%- macro account(content, title, subtitle, logo) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="account-masthead">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "account-masthead"}}) }}>
         {{ ui.container(content) }}
     </div>
 {%- endmacro %}
@@ -23,7 +23,7 @@
 {%- endmacro %}
 
 {%- macro header(content, title, subtitle, logo, href) -%}
-    <header {{ ui.util.attrs(kwargs) }} class="masthead">
+    <header {{ ui.util.attrs(kwargs, {"attrs": {"class": "masthead"}}) }}>
         {%- call ui.util.call(ui.container) -%}
             {% if g.debug and not g.debug_supress_header %}
                 <div class="debug">Blueprint : {{ g.blueprint }}<br />View : {{ g.view }}</div>
@@ -48,11 +48,11 @@
 {%- endmacro %}
 
 {%- macro footer_main(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="site-footer">{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "site-footer"}}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro footer_secondary(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="bg-black">{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "bg-black"}}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro language_selector() -%}

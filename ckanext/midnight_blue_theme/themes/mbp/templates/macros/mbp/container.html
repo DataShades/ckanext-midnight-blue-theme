@@ -3,11 +3,11 @@
 {%- endmacro %}
 
 {%- macro facet_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="list-unstyled nav nav-simple nav-facet">{{ content }}</ul>
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "list-unstyled nav nav-simple nav-facet"}}) }}>{{ content }}</ul>
 {%- endmacro %}
 
 {%- macro group_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="groups-list">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "groups-list"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
@@ -17,26 +17,26 @@
 {%- endmacro %}
 
 {%- macro package_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="dataset-list list-unstyled">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "dataset-list list-unstyled"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
 {%- macro resource_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="resource-list">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "resource-list"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
 {%- macro user_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="user-list">{{ content }}</ul>
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "user-list"}}) }}>{{ content }}</ul>
 {%- endmacro %}
 
 
 {%- macro accordion(content, title, open, content_class) -%}
     {%- set header_id = ui.util.id() -%}
     {%- set id = ui.util.id() -%}
-    <div {{ ui.util.attrs(kwargs) }} class="accordion-item">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "accordion-item"}}) }}>
         <h2 class="accordion-header" id="{{ header_id }}">
             <button class="accordion-button {{ 'collapsed' if not open }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}" aria-expanded="{{ 'true' if open else 'false' }}" aria-controls="{{ id }}">
                 {{ title }}
@@ -51,7 +51,7 @@
 {%- endmacro %}
 
 {%- macro button_group(content, direction="row") -%}
-    <div {{ ui.util.attrs(kwargs) }} class="btn-group btn-group-{{ direction }}">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "btn-group btn-group-"~direction}}) }}>
         {{- content -}}
     </div>
 {%- endmacro %}
@@ -81,20 +81,25 @@
 {%- endmacro %}
 
 {%- macro column(content, span, offset) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="col
-        {%- if span %}
-        {%- for breakpoint, size in span.items() %} col-{{ breakpoint ~ '-' if breakpoint != 'xs' }}{{ size }}{% endfor %}
-        {%- endif -%}
-        {%- if offset %}
-        {%- for breakpoint, size in offset.items() %} offset-{{ breakpoint ~ '-' if breakpoint != 'xs' }}{{ size }}{% endfor %}
-        {%- endif -%}
-        ">
+    {%- set class = "col" -%}
+    {%- if span %}
+        {%- for breakpoint, size in span.items() %}
+            {%- set class = class ~ ' col-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
+        {% endfor %}
+    {%- endif -%}
+    {%- if offset %}
+        {%- for breakpoint, size in offset.items() %}
+            {%- set class = class ~ ' offset-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
+        {% endfor %}
+    {%- endif -%}
+
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": class}}) }}>
         {{ content }}
     </div>
 {%- endmacro %}
 
 {%- macro container(content, fluid) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="container {{ 'container-fluid' if fluid }}">{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "container" ~ ('-fluid' if fluid else "")}}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro grid(content) -%}
@@ -104,11 +109,11 @@
 {%- endmacro %}
 
 {%- macro row(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="row">{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "row"}}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro list(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="list-unstyled">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "list-unstyled"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}

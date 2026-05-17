@@ -7,7 +7,8 @@
 {%- endmacro %}
 
 {%- macro badge(content, style="default") -%}
-    <span {{ ui.util.attrs(kwargs) }} class="badge bg-{{ style }}{{ ' text-dark' if style in ['warning', 'info', 'light'] }}">
+    {%- set class = "badge bg-" ~ style ~ (' text-dark' if style in ['warning', 'info', 'light'] else "") -%}
+    <span {{ ui.util.attrs(kwargs, {"attrs": {"class": class}}) }}>
         {{- content -}}
     </span>
 {%- endmacro %}
@@ -16,7 +17,8 @@
 
 {%- macro button(content, href, icon, size, type="button", style="primary") -%}
     {%- set prefix = ui.icon(icon) if icon else "" -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("class", "btn btn-" ~ style ~ ((' btn-' ~ size) if size else "")) -%}
+    {%- set class = "btn btn-" ~ style ~ ((' btn-' ~ size) if size else "") -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("class", class) -%}
 
     {%- if href -%}
         {{ ui.link(prefix ~ content, href=href, **kwargs) }}
@@ -35,7 +37,7 @@
 
 {%- macro divider(content) -%}
     {%- if content -%}
-        <div {{ ui.util.attrs(kwargs) }} class="divider divider-with-content">
+        <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "divider divider-with-content"}}) }}>
             <hr><span>{{ content }}</span><hr>
         </div>
     {%- else -%}
@@ -87,5 +89,5 @@
 {%- endmacro %}
 
 {%- macro empty(content) -%}
-    <p {{ ui.util.attrs(kwargs) }} class="empty">{{ content }}</p>
+    <p {{ ui.util.attrs(kwargs, {"attrs": {"class": "empty"}}) }}>{{ content }}</p>
 {%- endmacro %}

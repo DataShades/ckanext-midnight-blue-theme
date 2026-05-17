@@ -1,6 +1,7 @@
 {%- macro alert(content, dismissible, style="info") -%}
     {%- set style_class = style if style.startswith("alert-") else "alert-" ~ style -%}
-    <div {{ ui.util.attrs(kwargs) }} class="alert fade show {{ "alert-dismissible" if dismissible }} {{ style_class }}" role="alert">
+    {%- set class = "alert fade show " ~  ("alert-dismissible " if dismissible else "") ~ style_class -%}
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": class, "role": "alert"}}) }}>
         {{ content }}
         {%- if dismissible -%}
             <button type="button" class="btn-close close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -23,7 +24,7 @@
 {%- endmacro %}
 
 {%- macro modal(content, title, footer, dismissible, id) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="modal fade" tabindex="-1" id="{{ id }}">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "modal fade"}}) }} tabindex="-1" id="{{ id }}">
         <div class="modal-dialog">
             <div class="modal-content">
                 {%- if title or dismissible -%}
@@ -55,7 +56,7 @@
 {%- endmacro %}
 
 {%- macro progress(content, value=0, max=100) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="progress">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "progress"}}) }}>
         <div class="progress-bar" style="width: {{ (value / max) * 100 }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="{{ max }}">
             {%- if content %}{{ content }}{% else %}{{ value }} / {{ max }}{% endif %}
         </div>
@@ -63,7 +64,7 @@
 {%- endmacro %}
 
 {%- macro spinner(size="md") -%}
-    <span {{ ui.util.attrs(kwargs) }} class="spinner spinner-{{ size }}"></span>
+    <span {{ ui.util.attrs(kwargs, {"attrs": {"class": "spinner spinner-" ~ size}}) }}></span>
 {%- endmacro %}
 
 {%- macro toast(message, style, dismissible, duration) -%}

@@ -1,30 +1,30 @@
 
 {%- macro accordion_wrapper(content, id) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="accordion" {% if id -%}id="{{ id }}"{%- endif %}>{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "accordion"}}) }} {% if id -%}id="{{ id }}"{%- endif %}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
 
 {%- macro breadcrumb_wrapper(content) -%}
-    <ol {{ ui.util.attrs(kwargs) }} class="breadcrumb">
+    <ol {{ ui.util.attrs(kwargs, {"attrs": {"class": "breadcrumb"}}) }}>
         {{ content }}
     </ol>
 {%- endmacro %}
 
 {%- macro content_action_wrapper(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="content_action gap-1 mb-md-3">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "content_action gap-1 mb-md-3"}}) }}>
         {{- content -}}
     </div>
 {%- endmacro %}
 
 {%- macro content_nav_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="nav nav-pills">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "nav nav-pills"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
 {%- macro main_nav_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="navbar-nav mb-2 mb-lg-0 col-md-10">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "navbar-nav mb-2 mb-lg-0 col-md-10"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
@@ -39,25 +39,25 @@
         {%- set classes = " col-md-4" -%}
     {%- endif %}
 
-    <div {{ ui.util.attrs(kwargs) }} class="page_primary_action {{ classes }}">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "page_primary_action " ~  classes}}) }}>
         {{- content -}}
     </div>
 {%- endmacro %}
 
 {%- macro tab_wrapper(content) -%}
-    <nav {{ ui.util.attrs(kwargs) }} class="tabs" role="tablist">{{ content }}</nav>
+    <nav {{ ui.util.attrs(kwargs, {"attrs": {"class": "tabs"}}) }} role="tablist">{{ content }}</nav>
 {%- endmacro %}
 
 
 
 {%- macro sidebar_nav_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs) }} class="nav nav-options">
+    <ul {{ ui.util.attrs(kwargs, {"attrs": {"class": "nav nav-options"}}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
 {%- macro pagination_wrapper(content) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="pagination-wrapper">
+    <div {{ ui.util.attrs(kwargs, {"attrs": {"class": "pagination-wrapper"}}) }}>
         <ul class="pagination justify-content-center">
             {{- content -}}
         </ul>
