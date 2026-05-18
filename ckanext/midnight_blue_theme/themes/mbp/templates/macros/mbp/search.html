@@ -1,9 +1,9 @@
 {%- macro search_input(content, name="q", value="", label=_("Search"), placeholder=_("Search...")) -%}
-    <input {{ ui.util.attrs(kwargs, {"attrs": {"class": "form-control"}}) }} aria-label="{{ placeholder }}" autocomplete="off" type="search" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}">
+    <input {{ ui.util.attrs(kwargs, {"class": "form-control"}) }} aria-label="{{ placeholder }}" autocomplete="off" type="search" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}">
 {%- endmacro %}
 
 {%- macro search_submit_button(content=ui.icon("search")) -%}
-    <button {{ ui.util.attrs(kwargs, {"attrs": {"class": "btn"}}) }} type="submit" value="search" aria-label="{{_('Submit')}}">
+    <button {{ ui.util.attrs(kwargs, {"class": "btn"}) }} type="submit" value="search" aria-label="{{_('Submit')}}">
         {{ content }}
     </button>
 {%- endmacro %}

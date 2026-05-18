@@ -21,7 +21,7 @@
 {%- endmacro %}
 
 {%- macro code(content, language, dedent) -%}
-    <pre {{ ui.util.attrs(kwargs, {"attrs": {"class": "code"}})}}><code class="language-{{ language or 'text' }}">
+    <pre {{ ui.util.attrs(kwargs, {"class": "code"})}}><code class="language-{{ language or 'text' }}">
         {%- if dedent -%}
             {%- set ns = namespace(skip=none) -%}
             {%- for line in content.splitlines() -%}
