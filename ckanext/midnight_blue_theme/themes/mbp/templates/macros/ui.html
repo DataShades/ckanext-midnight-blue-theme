@@ -20,15 +20,14 @@
 {% set nav_wrapper = nav_wrapper | default(_wrapper.nav_wrapper) %}
 {% set page_action_wrapper = page_action_wrapper | default(_wrapper.page_action_wrapper) %}
 {% set sidebar_nav_wrapper = sidebar_nav_wrapper | default(_wrapper.sidebar_nav_wrapper) %}
-{#% set tab_wrapper = tab_wrapper | default(_wrapper.tab_wrapper) %#}
+{% set tab_wrapper = tab_wrapper | default(_wrapper.tab_wrapper) %}
 
 {% set pagination_wrapper = pagination_wrapper | default(_wrapper.pagination_wrapper) %}
 
-
-{#% set activity = activity | default(_content.activity) %#}
+{% set activity = activity | default(_content.activity) %}
 {% set facet = facet | default(_content.facet) %}
 {% set group = group | default(_content.group) %}
-{#% set license = license | default(_content.license) %#}
+{% set license = license | default(_content.license) %}
 {% set organization = organization | default(_content.organization) %}
 {% set package = package | default(_content.package) %}
 {% set resource = resource | default(_content.resource) %}
@@ -36,7 +35,7 @@
 
 {% set accordion = accordion | default(_container.accordion) %}
 {% set button_group = button_group | default(_container.button_group) %}
-{#% set card = card | default(_container.card) %#}
+{% set card = card | default(_container.card) %}
 {% set column = column | default(_container.column) %}
 {% set container = container | default(_container.container) %}
 {% set dropdown = dropdown | default(_container.dropdown) %}
@@ -44,7 +43,7 @@
 {% set row = row | default(_container.row) %}
 {% set list = list | default(_container.list) %}
 {% set list_item = list_item | default(_container.list_item) %}
-{#% set activity_list = activity_list | default(_container.activity_list) %#}
+{% set activity_list = activity_list | default(_container.activity_list) %}
 {% set facet_list = facet_list | default(_container.facet_list) %}
 {% set group_list = group_list | default(_container.group_list) %}
 {% set resource_list = resource_list | default(_container.resource_list) %}
@@ -61,12 +60,12 @@
 {% set confirm_modal = confirm_modal | default(feedback.confirm_modal) %}
 {% set modal = modal | default(feedback.modal) %}
 {% set popover = popover | default(feedback.popover) %}
-{#% set progress = progress | default(feedback.progress) %#}
-{#% set spinner = spinner | default(feedback.spinner) %#}
-{#% set toast = toast | default(feedback.toast) %#}
+{% set progress = progress | default(feedback.progress) %}
+{% set spinner = spinner | default(feedback.spinner) %}
+{% set toast = toast | default(feedback.toast) %}
 {% set tooltip = tooltip | default(feedback.tooltip) %}
 
-{#% set avatar = avatar | default(element.avatar) %#}
+{% set avatar = avatar | default(element.avatar) %}
 {% set badge = badge | default(element.badge) %}
 {% set empty = empty | default(element.empty) %}
 {% set button = button | default(element.button) %}
@@ -76,12 +75,12 @@
 {% set icon = icon | default(element.icon) %}
 {% set image = image | default(element.image) %}
 {% set link = link | default(element.link) %}
-{#% set tag = tag | default(element.tag) %#}
-{#% set tab = tab | default(element.tab) %#}
-{#% set video = video | default(element.video) %#}
+{% set tag = tag | default(element.tag) %}
+{% set tab = tab | default(element.tab) %}
+{% set video = video | default(element.video) %}
 {% set breadcrumb_divider = breadcrumb_divider | default(element.breadcrumb_divider) %}
 
-{#% set chart = chart | default(data.chart) %#}
+{% set chart = chart | default(data.chart) %}
 {% set code = code | default(data.code) %}
 {% set definition_list = definition_list | default(data.definition_list) %}
 {% set table = table | default(data.table) %}
@@ -107,7 +106,7 @@
 {% set markdown = markdown | default(_form.markdown) %}
 {% set markdown_popover = markdown_popover | default(_form.markdown_popover) %}
 {% set radio = radio | default(_form.radio) %}
-{#% set range_input = range_input | default(_form.range_input) %#}
+{% set range_input = range_input | default(_form.range_input) %}
 {% set select = select | default(_form.select) %}
 {% set select_box = select_box | default(_form.select_box) %}
 {% set select_option = select_option | default(_form.select_option) %}

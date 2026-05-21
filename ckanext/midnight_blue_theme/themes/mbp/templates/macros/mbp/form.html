@@ -169,9 +169,9 @@
 {%- endmacro %}
 
 
-{%- macro _input(name, value, type, id, errors, placeholder, required, prefix, suffix) -%}
+{%- macro _input(name, value, type, id, errors, placeholder, required, prefix, suffix, input_class="form-control") -%}
     {%- set input  -%}
-    <input {{ ui.util.attrs(kwargs, {"class": "form-control" ~ (' is-invalid' if errors else "")}) }}
+    <input {{ ui.util.attrs(kwargs, {"class": input_class ~ (' is-invalid' if errors else "")}) }}
         type="{{ type or "text" }}"
         {%- if name %} name="{{ name }}"{% endif %}
         {%- if id %} id="{{ id }}"{%- endif %}
@@ -272,6 +272,7 @@
     {%- if step is defined -%}
         {%- do kwargs.setdefault("attrs", {}).setdefault("step", step) -%}
     {%- endif %}
+    {%- do kwargs.setdefault("input_class", "form-range") -%}
     {{ ui.input(content, type="range", **kwargs) }}
 {%- endmacro %}
 

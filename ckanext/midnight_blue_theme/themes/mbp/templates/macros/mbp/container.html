@@ -1,5 +1,7 @@
 {%- macro activity_list(content) -%}
-    {{ ui.list(content, **kwargs) }}
+    <ul {{ ui.util.attrs(kwargs, {"class": "activity"}) }}>
+        {{ content }}
+    </ul>
 {%- endmacro %}
 
 {%- macro facet_list(content) -%}
@@ -56,44 +58,40 @@
     </div>
 {%- endmacro %}
 
-{%- macro card(content, title, footer, img, href) -%}
-    <div {{ ui.util.attrs(kwargs) }} role="article" aria-label="{{ title if title else _('Card') }}" style="border: 1px solid gray">
+{%- macro card(content, title, footer, img) -%}
+    <div {{ ui.util.attrs(kwargs, {"class": "card"}) }} >
         {%- if img -%}
-            {{ ui.image(img, **kwargs) }}
+            {{ ui.image(img, attrs={"class": "carg-img-top"}) }}
         {%- endif %}
-
-        <strong>
-            {%- if href -%}
-                {{ ui.link(title, href=href) }}
-            {%- else -%}
-                {{ title }}
+        <div class="card-body">
+            {%- if title -%}
+                <h5 class="card-title">{{ title }}</h5>
             {%- endif %}
-        </strong>
-
-        {%- if content -%}
-            <div>{{ content }}</div>
-        {%- endif %}
-
+            {%- if content -%}
+                <div class="card-text">{{ content }}</div>
+            {%- endif %}
+        </div>
         {%- if footer -%}
-            <div>{{ footer }}</div>
+            <div class="card-footer">{{ footer }}</div>
         {%- endif %}
     </div>
 {%- endmacro %}
 
 {%- macro column(content, span, offset) -%}
-    {%- set class = "col" -%}
+    {%- set ns = namespace(class="col") -%}
     {%- if span %}
         {%- for breakpoint, size in span.items() %}
-            {%- set class = class ~ ' col-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
-        {% endfor %}
-    {%- endif -%}
-    {%- if offset %}
-        {%- for breakpoint, size in offset.items() %}
-            {%- set class = class ~ ' offset-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
+            {%- set ns.class = ns.class ~ ' col-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
         {% endfor %}
     {%- endif -%}
 
-    <div {{ ui.util.attrs(kwargs, {"class": class}) }}>
+    {%- if offset %}
+        {%- for breakpoint, size in offset.items() %}
+            {%- set ns.class = ns.class ~ ' offset-' ~ (""  if breakpoint == 'xs' else breakpoint ~ '-') ~ size -%}
+        {% endfor %}
+    {%- endif -%}
+
+    <div {{ ui.util.attrs(kwargs, {"class": ns.class}) }}>
         {{ content }}
     </div>
 {%- endmacro %}

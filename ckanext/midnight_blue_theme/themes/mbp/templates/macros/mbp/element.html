@@ -1,9 +1,6 @@
-{%- macro avatar(src, alt, size) -%}
-    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
-    {%- do attrs.setdefault("width", size) -%}
-    {%- do attrs.setdefault("height", size) -%}
-
-    {{ ui.image(src or h.url_for_static("/base/images/placeholder-user.png"), alt, **kwargs) }}
+{%- macro avatar(content, username, size=22) -%}
+    {%- do kwargs -%}
+    {{ h.user_image(username, size) }}
 {%- endmacro %}
 
 {%- macro badge(content, style="default") -%}
@@ -78,10 +75,9 @@
 {%- endmacro %}
 
 {%- macro tab(content, href, active) -%}
-    {%- if active -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "active") -%}
-    {%- endif %}
-    {{ ui.link(content, href=href, **kwargs) }}
+    <li class="nav-item">
+        <a {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else "")}) }} href="{{ href }}">{{ content }}</a>
+    </li>
 {%- endmacro %}
 
 {%- macro video(src, controls) -%}

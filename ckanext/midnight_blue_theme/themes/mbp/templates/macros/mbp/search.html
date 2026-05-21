@@ -12,7 +12,7 @@
     {%- if options -%}
         {#{ ui.select(content, name=name, label=label, options=options?revert-items, selected=selected, group_class="control-order-by") }#}
 
-        <div class="form-group control-order-by">
+        <div {{ ui.util.attrs(kwargs, {"class": "form-group control-order-by"}) }}>
             <label for="{{ id }}">{{ label }}</label>
             <select id="{{ id }}" name="sort" class="form-control form-select">
                 {% for label, value in options %}
@@ -26,7 +26,7 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro search_results_text(content, count, error, query, type) -%}
+{%- macro search_results_text(content, count, error, query, type="dataset") -%}
     {%- call ui.util.call(ui.heading, level=2, **kwargs) -%}
         {%- if error %}
             {{ _('Error: {error}').format(error=error) }}
@@ -41,7 +41,7 @@
 
 {%- macro search_active_filters(active_filters, facet_titles, facets, use_htmx) -%}
     {%- if active_filters -%}
-        <p class="filter-list">
+        <p {{ ui.util.attrs(kwargs, {"class": "filter-list"}) }}>
             {%- for key, values in active_filters|groupby(0) -%}
                 {% set items = facets[key]['items'] if facets and key in facets else [] %}
                 <span class="facet">{{ facet_titles.get(key, key) }}:</span>
@@ -75,5 +75,6 @@
 {%- endmacro %}
 
 {%- macro search_form(query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
+    {%- do kwargs -%}
     {%- include "macros/mbp/snippets/search_form.html" -%}
 {%- endmacro %}
