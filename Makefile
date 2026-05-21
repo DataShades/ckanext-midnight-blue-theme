@@ -7,3 +7,8 @@ help:
 css:  ## compile CSS
 	cd ckanext/midnight_blue_theme/themes/mbp/; \
 	npm run compile-styles
+
+changelog:  ## compile changelog
+	git cliff --output CHANGELOG.md $(if $(bump),--tag $(bump))
+
+

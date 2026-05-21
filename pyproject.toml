@@ -1,6 +1,6 @@
 [project]
 name = "ckanext-midnight-blue-theme"
-version = "0.0.1"
+version = "0.0.2"
 description = "Portable version of midnight-blue theme"
 readme = "README.md"
 authors = [
