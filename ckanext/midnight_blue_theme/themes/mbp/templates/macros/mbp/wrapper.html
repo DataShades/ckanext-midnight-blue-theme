@@ -1,6 +1,6 @@
 
-{%- macro accordion_wrapper(content, id) -%}
-    <div {{ ui.util.attrs(kwargs, {"class": "accordion"}) }} {% if id -%}id="{{ id }}"{%- endif %}>{{ content }}</div>
+{%- macro accordion_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs, {"class": "accordion"}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
