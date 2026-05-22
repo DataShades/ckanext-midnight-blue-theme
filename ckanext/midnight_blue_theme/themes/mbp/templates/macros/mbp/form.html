@@ -65,7 +65,7 @@
 {%- endmacro %}
 
 {%- macro form(content, method, action, enctype, include_csrf=true) -%}
-    {{ ui.form_start(method, action, enctype, **kwargs) }}
+    {{ ui.form_start(method=method, action=action, enctype=enctype, **kwargs) }}
     {{ h.csrf_input() if include_csrf and method and method|upper != "GET" }}
     {{ content }}
     {{ ui.form_end() }}
@@ -94,13 +94,13 @@
     {% endif %}
 {%- endmacro %}
 
-{%- macro form_start(method, action, enctype) -%}
+{%- macro form_start(content, method, action, enctype) -%}
     <form
         {{ ui.util.attrs(kwargs) }}
         {%- if method %} method="{{ method }}"{%- endif %}
         {%- if action %} action="{{ action }}"{%- endif %}
         {%- if enctype %} enctype="{{ enctype }}"{%- endif -%}
-    >
+    >{{ content }}
 {%- endmacro %}
 
 
@@ -131,7 +131,7 @@
     </div>
 {%- endmacro %}
 
-{%- macro form_annotation() -%}
+{%- macro form_annotation(content) -%}
     <div {{ ui.util.attrs(kwargs) }}>
         <p class="control-required-message">
             <span class="control-required">*</span> {{ _("Required field") }}
@@ -146,7 +146,7 @@
     </div>
 {%- endmacro %}
 
-{%- macro checkbox(content, name, id, checked, label, required, placeholder, type="checkbox", value="on", errors=[], group_class="form-group form-check") -%}
+{%- macro checkbox(content, name, id, checked, label, required, type="checkbox", value="on", errors=[], group_class="form-group form-check") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
@@ -156,7 +156,7 @@
     {%- if checked -%}{%- do attrs.update({"checked": true}) -%}{%- endif %}
 
     <div class="{{ group_class }}">
-        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
+        {{ _input(name=name, value=value, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
         {%- if label -%}
             <label class="form-check-label checkbox" for="{{ field_id }}">
                 {{- label -}}
@@ -296,7 +296,7 @@
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[], group_class="form-group") -%}
+{%- macro select_box(content, nested_content, name, id, label, multiple, required, errors=[], group_class="form-group") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
     <div class="{{ group_class }}">
         {%- if label -%}

@@ -1,4 +1,11 @@
 
+## [unreleased]
+[Compare with v0.0.2](https://github.com/DataShades/ckanext-midnight-blue-theme/compare/v0.0.2..HEAD)
+
+### 🚜 Refactor
+
+- rename `pkg` to `package` in resource component` ([6fe56f7](https://github.com/DataShades/ckanext-midnight-blue-theme/commit/6fe56f71aa0d2aeff4fe1b8a566ce687b1d2e9e2))
+
 ## [v0.0.2](https://github.com/DataShades/ckanext-midnight-blue-theme/releases/tag/v0.0.2) - 2026-05-21
 [Compare with v0.0.1](https://github.com/DataShades/ckanext-midnight-blue-theme/compare/v0.0.1..v0.0.2)
 

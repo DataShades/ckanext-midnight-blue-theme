@@ -4,7 +4,7 @@
     {%- if not initial %} {{ g.template_title_delimiter }} {% endif %}
 {%- endmacro %}
 
-{%- macro account(content, title, subtitle, logo) -%}
+{%- macro account(content) -%}
     <div {{ ui.util.attrs(kwargs, {"class": "account-masthead"}) }}>
         {{ ui.container(content) }}
     </div>

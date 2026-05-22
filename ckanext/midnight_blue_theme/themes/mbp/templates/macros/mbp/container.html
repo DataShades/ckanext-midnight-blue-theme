@@ -1,39 +1,3 @@
-{%- macro activity_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "activity"}) }}>
-        {{ content }}
-    </ul>
-{%- endmacro %}
-
-{%- macro facet_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled nav nav-simple nav-facet"}) }}>{{ content }}</ul>
-{%- endmacro %}
-
-{%- macro group_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "groups-list"}) }}>
-        {{ content }}
-    </ul>
-{%- endmacro %}
-
-{%- macro organization_list(content) -%}
-    {{ ui.group_list(content, **kwargs) }}
-{%- endmacro %}
-
-{%- macro package_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "dataset-list list-unstyled"}) }}>
-        {{ content }}
-    </ul>
-{%- endmacro %}
-
-{%- macro resource_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "resource-list"}) }}>
-        {{ content }}
-    </ul>
-{%- endmacro %}
-
-{%- macro user_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "user-list"}) }}>{{ content }}</ul>
-{%- endmacro %}
-
 
 {%- macro accordion(content, title, open, content_class) -%}
     {%- set header_id = ui.util.id() -%}
@@ -51,6 +15,7 @@
         </div>
     </div>
 {%- endmacro %}
+
 
 {%- macro button_group(content, direction="row") -%}
     <div {{ ui.util.attrs(kwargs, {"class": "btn-group btn-group-"~direction}) }}>
@@ -100,6 +65,19 @@
     <div {{ ui.util.attrs(kwargs, {"class": "container" ~ ('-fluid' if fluid else "")}) }}>{{ content }}</div>
 {%- endmacro %}
 
+{%- macro dropdown(content, title, inline, style="primary") -%}
+    {%- do kwargs.setdefault("data", {}).setdefault("bs-toggle", "dropdown") -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id()) -%}
+    {%- do kwargs.setdefault("aria", {}).setdefault("expanded", "false") -%}
+
+    <div class="dropdown {{ 'btn-group' if inline }}">
+        {{ ui.button(title, style=style ~ " dropdown-toggle", **kwargs) }}
+        <ul class="dropdown-menu" aria-labelledby="{{ kwargs.attrs.id }}">
+            {{ content }}
+        </ul>
+    </div>
+{%- endmacro %}
+
 {%- macro grid(content) -%}
     {%- call ui.util.call(ui.container, **kwargs) -%}
         {{ content }}
@@ -122,15 +100,39 @@
     </li>
 {%- endmacro %}
 
-{%- macro dropdown(content, title, inline, id, style="primary") -%}
-    {%- do kwargs.setdefault("data", {}).setdefault("bs-toggle", "dropdown") -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("id", ui.util.id()) -%}
-    {%- do kwargs.setdefault("aria", {}).setdefault("expanded", "false") -%}
 
-    <div class="dropdown {{ 'btn-group' if inline }}">
-        {{ ui.button(title, style=style ~ " dropdown-toggle", **kwargs) }}
-        <ul class="dropdown-menu" aria-labelledby="{{ kwargs.attrs.id }}">
-            {{ content }}
-        </ul>
-    </div>
+{%- macro activity_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "activity"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro facet_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled nav nav-simple nav-facet"}) }}>{{ content }}</ul>
+{%- endmacro %}
+
+{%- macro group_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "groups-list"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro organization_list(content) -%}
+    {{ ui.group_list(content, **kwargs) }}
+{%- endmacro %}
+
+{%- macro package_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "dataset-list list-unstyled"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro resource_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "resource-list"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro user_list(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "user-list"}) }}>{{ content }}</ul>
 {%- endmacro %}

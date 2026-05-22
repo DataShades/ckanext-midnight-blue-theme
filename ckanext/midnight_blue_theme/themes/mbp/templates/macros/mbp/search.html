@@ -60,8 +60,9 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro search_advanced_controls() -%}
+{%- macro search_advanced_controls(content) -%}
     {%- do kwargs -%}
+    {{ content }}
 {%- endmacro %}
 
 {%- macro search_form_box(content, use_htmx) -%}
@@ -74,7 +75,7 @@
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro search_form(query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
+{%- macro search_form(content, query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
     {%- do kwargs -%}
     {%- include "macros/mbp/snippets/search_form.html" -%}
 {%- endmacro %}
