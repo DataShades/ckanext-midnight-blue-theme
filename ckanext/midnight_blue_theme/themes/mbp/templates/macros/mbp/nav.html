@@ -6,13 +6,10 @@
 {%- endmacro %}
 
 {%- macro nav_item(content, href, active) -%}
-    {%- set link_kwargs = kwargs -%}
-    {%- if active -%}
-        {%- do link_kwargs.setdefault("aria", {}).setdefault("current", "page") -%}
-    {%- endif %}
-
-    {%- call ui.util.call(ui.list_item, attrs={"class": "active"} if active else {}) -%}
-        {{ ui.link(content, href=href, **link_kwargs) }}
+    {%- call ui.util.call(ui.list_item, attrs={"class": "nav-item" ~ (" active"  if active else "")}) -%}
+        <a {{ ui.util.attrs(kwargs, {"class": "active"} if active else {}) }} href="{{ href }}">
+            {{ content }}
+        </a>
     {%- endcall %}
 {%- endmacro %}
 

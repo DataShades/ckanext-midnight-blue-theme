@@ -51,7 +51,7 @@
 
 
 {%- macro sidebar_nav_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "nav nav-options"}) }}>
+    <ul {{ ui.util.attrs(kwargs, {"class": "nav nav-options flex-column"}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
