@@ -18,7 +18,7 @@
 
 
 {%- macro button_group(content, direction="row") -%}
-    <div {{ ui.util.attrs(kwargs, {"class": "btn-group btn-group-"~direction}) }}>
+    <div {{ ui.util.attrs(kwargs, {"class": "btn-group" ~ ("-vertical" if direction == "column" else "")}) }}>
         {{- content -}}
     </div>
 {%- endmacro %}

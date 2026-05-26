@@ -3,8 +3,8 @@
     {{ h.user_image(username, size) }}
 {%- endmacro %}
 
-{%- macro badge(content, style="default") -%}
-    {%- set class = "badge bg-" ~ style ~ (' text-dark' if style in ['warning', 'info', 'light'] else "") -%}
+{%- macro badge(content, style="primary") -%}
+    {%- set class = "badge bg-" ~ style ~ ' text-bg-' ~ style -%}
     <span {{ ui.util.attrs(kwargs, {"class": class}) }}>
         {{- content -}}
     </span>
@@ -26,9 +26,14 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro datetime(content, date_format, with_hours, empty="") -%}
-    <time {{ ui.util.attrs(kwargs) }} datetime="{{ h.render_datetime(content, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
-        {{- h.render_datetime(content, date_format=date_format, with_hours=with_hours) or empty -}}
+{%- macro datetime(dt, date_format, with_hours, relative, empty="") -%}
+    <time {{ ui.util.attrs(kwargs) }} datetime="{{ h.render_datetime(dt, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
+        {%- if relative -%}
+            {%- set value = h.time_ago_from_timestamp(dt) -%}
+            {{ value if value != "Unknown" else empty }}
+        {%- else -%}
+            {{ h.render_datetime(dt, date_format=date_format, with_hours=with_hours) or empty }}
+        {%- endif -%}
     </time>
 {%- endmacro %}
 
@@ -65,7 +70,7 @@
 {%- macro link(content, href, blank) -%}
     {%- if blank -%}
         {%- do kwargs.setdefault("attrs", {}).setdefault("target", "_blank") -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("rel", "noopener noreferrer") -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("rel", "noopener") -%}
     {%- endif %}
     <a {{ ui.util.attrs(kwargs) }} href="{{ href or content }}">{{ content }}</a>
 {%- endmacro %}
