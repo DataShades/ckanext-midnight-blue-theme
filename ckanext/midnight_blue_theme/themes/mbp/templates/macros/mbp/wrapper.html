@@ -48,12 +48,16 @@
     <nav {{ ui.util.attrs(kwargs, {"class": "nav nav-tabs"}) }} role="tablist">{{ content }}</nav>
 {%- endmacro %}
 
+{%- macro sidebar_nav_wrapper(content, title) -%}
+    <section class="module">
+        <div class="module-group">
+            {{ ui.heading(title, level=2, attrs={"class": "module-heading bg-primary text-bg-primary"}) if title }}
 
-
-{%- macro sidebar_nav_wrapper(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "nav nav-options flex-column"}) }}>
-        {{ content }}
-    </ul>
+            <ul {{ ui.util.attrs(kwargs, {"class": "nav nav-options flex-column"}) }}>
+                {{ content }}
+            </ul>
+        </div>
+    </section>
 {%- endmacro %}
 
 {%- macro pagination_wrapper(content) -%}
@@ -61,5 +65,11 @@
         <ul class="pagination justify-content-center">
             {{- content -}}
         </ul>
+    </div>
+{%- endmacro %}
+
+{%- macro tab_pane_wrapper(content) -%}
+    <div {{ ui.util.attrs(kwargs) }} class="tab-content">
+        {{ content }}
     </div>
 {%- endmacro %}

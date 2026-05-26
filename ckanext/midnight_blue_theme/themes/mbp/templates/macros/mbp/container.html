@@ -136,3 +136,9 @@
 {%- macro user_list(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "user-list"}) }}>{{ content }}</ul>
 {%- endmacro %}
+
+{%- macro tab_pane(content, active, id) -%}
+    <div {{ ui.util.attrs(kwargs, {"class": "tab-pane fade" ~(" show active" if active else ""), "id": id}) }} role="tabpanel" tabindex="0">
+        {{ content }}
+    </div>
+{%- endmacro %}

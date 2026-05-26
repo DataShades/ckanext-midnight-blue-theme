@@ -21,7 +21,7 @@
 {% set page_action_wrapper = page_action_wrapper | default(_wrapper.page_action_wrapper) %}
 {% set sidebar_nav_wrapper = sidebar_nav_wrapper | default(_wrapper.sidebar_nav_wrapper) %}
 {% set tab_wrapper = tab_wrapper | default(_wrapper.tab_wrapper) %}
-
+{% set tab_pane_wrapper = tab_pane_wrapper | default(_wrapper.tab_pane_wrapper) %}
 {% set pagination_wrapper = pagination_wrapper | default(_wrapper.pagination_wrapper) %}
 
 {% set activity = activity | default(_content.activity) %}
@@ -50,7 +50,7 @@
 {% set user_list = user_list | default(_container.user_list) %}
 {% set organization_list = organization_list | default(_container.organization_list) %}
 {% set package_list = package_list | default(_container.package_list) %}
-
+{% set tab_pane = tab_pane | default(_container.tab_pane) %}
 
 {% set facet_section = facet_section | default(_section.facet_section) %}
 {% set section = section | default(_section.section) %}

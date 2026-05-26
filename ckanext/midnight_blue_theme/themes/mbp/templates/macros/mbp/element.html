@@ -76,17 +76,25 @@
 {%- endmacro %}
 
 {%- macro tag(content, href) -%}
-    <a {{ ui.util.attrs(kwargs) }} {%- if href %} href="{{ href }}"{%- endif %}>{{ content }}</a>
+    {%- if href -%}
+        <a {{ ui.util.attrs(kwargs, {"class": "tag"}) }} href="{{ href }}">{{ content }}</a>
+    {%- else -%}
+        <span {{ ui.util.attrs(kwargs, {"class": "tag"}) }}>{{ content }}</span>
+    {%- endif %}
 {%- endmacro %}
 
-{%- macro tab(content, href, active) -%}
+{%- macro tab(content, href, active, id) -%}
     <li class="nav-item">
-        <a {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else "")}) }} href="{{ href }}">{{ content }}</a>
+        {%- if href is defined -%}
+            <a {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else "")}) }} href="{{ href }}">{{ content }}</a>
+        {%- else -%}
+            <button {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else ""), }) }} data-bs-toggle="tab" data-bs-target="#{{ id }}" type="button" role="tab" aria-controls="{{ id }}">{{ content }}</button>
+        {%- endif %}
     </li>
 {%- endmacro %}
 
-{%- macro video(src, controls) -%}
-    <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }}></video>
+{%- macro video(src, controls, autoplay) -%}
+    <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }} {{ "autoplay" if autoplay }}></video>
 {%- endmacro %}
 
 {%- macro empty(content) -%}

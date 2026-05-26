@@ -11980,14 +11980,6 @@ a.tag:hover {
   font-weight: bold;
 }
 
-.js .tab-content {
-  display: none;
-}
-
-.js .tab-content.active {
-  display: block;
-}
-
 .module > .page-header {
   margin-top: 0px;
 }
