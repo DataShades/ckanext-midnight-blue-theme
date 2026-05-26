@@ -27,3 +27,15 @@
         {%- endif %}
     </div>
 {% endblock %}
+
+
+{% block primary %}
+    {%- if PAGE_LAYOUT == "no-sidebar" -%}
+        <div class="primary col" role="main">
+            {{ self.primary_content() }}
+        </div>
+    {%- else -%}
+        {{ super() }}
+    {%- endif %}
+
+{% endblock %}
