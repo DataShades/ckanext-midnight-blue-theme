@@ -99,7 +99,7 @@
                                         {% endblock %}
                                         <div class="module-content">
                                             {% if self.page_primary_action() | trim %}
-                                                {%- call ui.util.call(ui.page_action_wrapper) -%}
+                                                {%- call ui.util.call(ui.page_action_wrapper, _extra_class="pull-right") -%}
                                                     {% block page_primary_action -%}{% endblock %}
                                                 {%- endcall %}
                                             {% endif %}
