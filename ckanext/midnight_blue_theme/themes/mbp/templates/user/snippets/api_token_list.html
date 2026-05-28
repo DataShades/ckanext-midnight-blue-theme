@@ -38,7 +38,7 @@
 
         {%- endcall %}
 
-        {{ ui.submit(ui.icon("times") ~ _('Revoke tokens'), style="danger", data={"module": "confirm-action", "module-content": _('Are you sure you want to revoke these tokens?')}, attrs={"id": "revoke-tokens-button", "disabled": ""}) }}
+        {{ ui.button(ui.icon("times") ~ _('Revoke tokens'), style="danger", type="submit", data={"module": "confirm-action", "module-content": _('Are you sure you want to revoke these tokens?')}, attrs={"id": "revoke-tokens-button", "disabled": ""}) }}
 
     {%- endcall %}
 
