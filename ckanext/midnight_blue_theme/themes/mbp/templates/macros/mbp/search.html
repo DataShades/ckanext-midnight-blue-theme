@@ -47,6 +47,7 @@
                 <span class="facet">{{ facet_titles.get(key, key) }}:</span>
                 {%- for _key, value in values %}
                     <span class="filtered pill">
+                        {{ ui.hidden_input(name=key, value=value) }}
                         {{ h.list_dict_filter(items, 'name', 'display_name', value) }}
                         {%- call ui.util.call(ui.tooltip, tooltip=_('Remove')) -%}
                             <a href="{{ h.remove_url_param(key, value) }}" class="remove" aria-label="{{ _('Remove applied filter: {value}').format(value=value) }}" hx-boost="{{ 'true' if use_htmx else 'false' }}">
