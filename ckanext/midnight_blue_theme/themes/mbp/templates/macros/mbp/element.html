@@ -1,7 +1,3 @@
-{%- macro avatar(content, username, size=22) -%}
-    {%- do kwargs -%}
-    {{ h.user_image(username, size) }}
-{%- endmacro %}
 
 {%- macro badge(content, style="primary") -%}
     {%- set class = "badge bg-" ~ style ~ ' text-bg-' ~ style -%}

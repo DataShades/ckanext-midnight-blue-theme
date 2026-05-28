@@ -37,15 +37,6 @@
     </code></pre>
 {%- endmacro %}
 
-{%- macro definition_list(items) -%}
-    <dl {{ ui.util.attrs(kwargs) }}>
-        {%- for term, definition in items %}
-            <dt>{{ term }}</dt>
-            <dd>{{ definition }}</dd>
-        {%- endfor %}
-    </dl>
-{%- endmacro %}
-
 {%- macro table(content, striped=false, bordered=false, condensed=false, hover=false) -%}
     <table {{ ui.util.attrs(kwargs) }}
         class="table {{ 'table-bordered' if bordered }} {{ 'table-striped' if striped }} {{ 'table-sm' if condensed }} {{ 'table-hover' if hover }}"
