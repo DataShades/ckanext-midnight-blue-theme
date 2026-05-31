@@ -179,10 +179,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
             if (props.style) {
                 el.classList.add(`text-bg-${props.style}`);
             }
-            if (title) {
+            if (title || props.dismissible) {
                 const header = el.appendChild(document.createElement("div"));
                 header.classList.add("toast-header");
-                header.append(title);
+                if (title) {
+                    header.append(title);
+                }
                 if (props.dismissible) {
                     header.insertAdjacentHTML("beforeend", `<button type="button" class="ms-auto btn-close" data-bs-dismiss="toast" aria-label="Close"></button>`);
                 }
@@ -205,7 +207,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
                 throw "Only string tooltips are supported";
             }
             target.dataset.bsTitle = content;
-            target.dataset.placement = props.position || "bottom";
+            if (props.position) {
+                target.dataset.bsPlacement = props.position;
+            }
             return new Tooltip(target);
         },
         getTooltip(id) {

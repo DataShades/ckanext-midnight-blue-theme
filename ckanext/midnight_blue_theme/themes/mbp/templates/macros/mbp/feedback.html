@@ -23,8 +23,16 @@
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro modal(content, title, footer, dismissible, id) -%}
-    <div {{ ui.util.attrs(kwargs, {"class": "modal fade"}) }} tabindex="-1" id="{{ id }}">
+{%- macro modal(content, title, footer, dismissible, id, size) -%}
+    {%- set class = "modal fade" -%}
+    {%- if size -%}
+        {%- set class = class ~ " modal-" ~ size -%}
+    {%- endif %}
+    {%- set default_attrs = {"class": class, "id": id, "tabindex": "-1"} -%}
+    {%- if not dismissible -%}
+        {%- do default_attrs.update({"data-bs-backdrop": "static", "data-bs-keyboard": "false"}) -%}
+    {%- endif %}
+    <div {{ ui.util.attrs(kwargs, default_attrs) }}>
         <div class="modal-dialog">
             <div class="modal-content">
                 {%- if title or dismissible -%}
