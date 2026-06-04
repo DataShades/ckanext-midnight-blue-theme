@@ -23,6 +23,18 @@
     </ul>
 {%- endmacro %}
 
+{%- macro footer_main_nav_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
+{%- macro footer_secondary_nav_wrapper(content) -%}
+    <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled"}) }}>
+        {{ content }}
+    </ul>
+{%- endmacro %}
+
 {%- macro main_nav_wrapper(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "navbar-nav mb-2 mb-lg-0 col-md-10"}) }}>
         {{ content }}

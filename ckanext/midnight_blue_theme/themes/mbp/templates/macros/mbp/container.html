@@ -42,6 +42,9 @@
     </div>
 {%- endmacro %}
 
+{%- macro filters(content) -%}
+    <div {{ ui.util.attrs(kwargs, {"class": "secondary filters"}) }}>{{ content }}</div>
+{%- endmacro %}
 
 {%- macro container(content, fluid) -%}
     <div {{ ui.util.attrs(kwargs, {"class": "container" ~ ('-fluid' if fluid else "")}) }}>{{ content }}</div>

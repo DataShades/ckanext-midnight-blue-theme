@@ -59,10 +59,11 @@
     {% set current_lang = request.environ.CKAN_LANG %}
     {%- set data_attrs = {"module": "autocomplete", "module-dropdown-class": "lang-dropdown", "module-container-class": "lang-container"} -%}
     {%- set label = ui.icon("globe", style="solid") ~ ui.util.tag(_('Language'), "span", attrs={"class": "sr-only"}) -%}
+    {%- set item_kwargs = kwargs -%}
 
     <div class="lang-select">
         {%- call ui.util.call(ui.form, method="POST", action=h.url_for('util.internal_redirect'), data={"module": "select-switch"}) -%}
-            {%- call ui.util.call(ui.select_box, name="url", id=ui.util.id(), data=data_attrs, label=label, **kwargs) -%}
+            {%- call ui.util.call(ui.select_box, name="url", id=ui.util.id(), data=data_attrs, label=label, **item_kwargs) -%}
                 {% for locale in h.get_available_locales() %}
                     {{ ui.select_option(locale.display_name or locale.english_name, value=h.url_for(h.current_url(), locale=locale.short_name), selected=locale.short_name == current_lang) }}
                 {% endfor %}
