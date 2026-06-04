@@ -10,19 +10,7 @@
     </div>
 {%- endmacro %}
 
-{%- macro header_logo(href, logo, title, subtitle) -%}
-    {% if logo -%}
-        {{ ui.link(ui.image(h.url_for_static_or_external(logo), alt=title, aria={"label": _('Navigate to Home - {site_title}').format(site_title=title)}), href=href, attrs={"class": "logo"}) }}
-
-    {%- else -%}
-        {{ ui.link(title, href=href, **kwargs) }}
-        {%- if subtitle -%}
-            <p class="mb-0">{{ subtitle }}</p>
-        {%- endif %}
-    {%- endif %}
-{%- endmacro %}
-
-{%- macro header(content, title, subtitle, logo, href) -%}
+{%- macro header(content, title, subtitle, logo, href=h.url_for('home.index')) -%}
     <header {{ ui.util.attrs(kwargs, {"class": "masthead"}) }}>
         {%- call ui.util.call(ui.container) -%}
             {% if g.debug and not g.debug_supress_header %}
@@ -31,7 +19,15 @@
 
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="{{ g.header_class }} navbar-left col-md-2">
-                    {{ ui.header_logo(logo=logo, title=title, subtitle=subtitle, href=href or h.url_for('home.index')) }}
+                    {% if logo -%}
+                        {{ ui.link(ui.image(h.url_for_static_or_external(logo), alt=title, aria={"label": _('Navigate to Home - {site_title}').format(site_title=title)}), href=href, attrs={"class": "logo"}) }}
+
+                    {%- else -%}
+                        {{ ui.link(title, href=href, **kwargs) }}
+                        {%- if subtitle -%}
+                            <p class="mb-0">{{ subtitle }}</p>
+                        {%- endif %}
+                    {%- endif %}
                 </div>
                 {{ ui.button(ui.icon("bars"), attrs={"class": "navbar-toggler"}, data={"bs-toggle": "collapse", "bs-target": "#main-navigation-toggle"}, aria={"controls": "main-navigation-toggle",  "expanded": "false", "label": _('Toggle navigation')}) }}
 
