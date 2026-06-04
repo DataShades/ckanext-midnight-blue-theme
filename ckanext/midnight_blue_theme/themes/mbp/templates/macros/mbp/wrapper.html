@@ -3,7 +3,7 @@
     <div {{ ui.util.attrs(kwargs, {"class": "accordion"}) }}>{{ content }}</div>
 {%- endmacro %}
 
-{%- macro account_nav_wrapper(content) -%}{{ ui.nav_wrapper(content, **kwargs) }}{%- endmacro %}
+{%- macro account_nav(content) -%}{{ ui.nav(content, **kwargs) }}{%- endmacro %}
 
 {%- macro breadcrumb_wrapper(content) -%}
     <ol {{ ui.util.attrs(kwargs, {"class": "breadcrumb"}) }}>
@@ -17,31 +17,31 @@
     </div>
 {%- endmacro %}
 
-{%- macro content_nav_wrapper(content) -%}
+{%- macro content_nav(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "nav nav-pills"}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
-{%- macro footer_main_nav_wrapper(content) -%}
+{%- macro footer_main_nav(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled"}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
-{%- macro footer_secondary_nav_wrapper(content) -%}
+{%- macro footer_secondary_nav(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled"}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
-{%- macro main_nav_wrapper(content) -%}
+{%- macro main_nav(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "navbar-nav mb-2 mb-lg-0 col-md-10"}) }}>
         {{ content }}
     </ul>
 {%- endmacro %}
 
-{%- macro nav_wrapper(content) -%}
+{%- macro nav(content) -%}
     {{ ui.list(content, **kwargs) }}
 {%- endmacro %}
 
@@ -60,7 +60,7 @@
     <nav {{ ui.util.attrs(kwargs, {"class": "nav nav-tabs"}) }} role="tablist">{{ content }}</nav>
 {%- endmacro %}
 
-{%- macro sidebar_nav_wrapper(content, title) -%}
+{%- macro sidebar_nav(content, title) -%}
     <section class="module">
         <div class="module-group">
             {{ ui.heading(title, level=2, attrs={"class": "module-heading bg-primary text-bg-primary"}) if title }}

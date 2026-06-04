@@ -7,7 +7,7 @@
             {%- call ui.util.call(ui.account) -%}
                 {% block header_account_container_content %}
                     <div class="account avatar authed" data-module="me" data-me="{{ current_user.id }}">
-                        {%- call ui.util.call(ui.account_nav_wrapper) -%}
+                        {%- call ui.util.call(ui.account_nav) -%}
                             {% block header_account_logged %}
 
                                 {% block header_account_profile %}
@@ -55,7 +55,7 @@
 
     {%- call ui.util.call(ui.header, logo=g.site_logo, title=g.site_title, subtitle=g.site_description) -%}
         {% block header_site_navigation %}
-            {%- call ui.util.call(ui.main_nav_wrapper) -%}
+            {%- call ui.util.call(ui.main_nav) -%}
                 {% block header_site_navigation_tabs %}
                     {% set org_type = h.default_group_type('organization') %}
                     {% set group_type = h.default_group_type('group') %}
