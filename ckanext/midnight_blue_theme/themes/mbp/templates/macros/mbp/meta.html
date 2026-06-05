@@ -23,7 +23,7 @@
                         {{ ui.link(ui.image(h.url_for_static_or_external(logo), alt=title, aria={"label": _('Navigate to Home - {site_title}').format(site_title=title)}), href=href, attrs={"class": "logo"}) }}
 
                     {%- else -%}
-                        {{ ui.link(title, href=href, **kwargs) }}
+                        {{ ui.link(title, href=href) }}
                         {%- if subtitle -%}
                             <p class="mb-0">{{ subtitle }}</p>
                         {%- endif %}
