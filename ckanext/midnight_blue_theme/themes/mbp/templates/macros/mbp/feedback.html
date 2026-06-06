@@ -106,6 +106,15 @@
     </div>
 {%- endmacro %}
 
+{%- macro toast_stack(content, position="bottom-right") -%}
+    {%- set class = "toast-container position-fixed m-2" -%}
+    {%- set class = class ~ (" top-0" if position.startswith("top") else " bottom-0") -%}
+    {%- set class = class ~ (" start-0" if position.startswith("left") else " end-0") -%}
+    <div {{ ui.util.attrs(kwargs, {"class": class}) }}>
+        {{- content -}}
+    </div>
+{%- endmacro %}
+
 {%- macro tooltip(content, tooltip, position) -%}
     <span {{ ui.util.attrs(kwargs, {"data-bs-title": tooltip, "data-bs-toggle": "tooltip", "data-bs-placement": position or "auto"}) }}>
         {{- content -}}

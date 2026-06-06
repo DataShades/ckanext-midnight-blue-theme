@@ -117,15 +117,13 @@
     {% endblock -%}
 
     {#
-    Override the footer on a page by page basis by extending this block. If
-    making sitewide header changes it is preferable to override the footer.html-u
-    file.
-    #}
+        Override the footer on a page by page basis by extending this block. If
+        making sitewide header changes it is preferable to override the footer.html-u
+        file.
+        #}
     {%- block footer %}
         {% include "footer.html" %}
-
-        <div id="notification-container" class="toast-container bottom-0 end-0 me-1 mb-1 position-fixed">
-        </div>
+        {{ ui.toast_stack(position="bottom-right", attrs={"id": "notification-container"}) }}
     {% endblock -%}
 {%- endblock -%}
 
