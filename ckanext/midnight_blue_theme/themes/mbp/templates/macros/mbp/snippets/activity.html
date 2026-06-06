@@ -1,7 +1,0 @@
-{%- macro activity(content, activity) -%}
-    {{ h.snippet([
-           "snippets/activities/{}.html".format(activity.activity_type.replace(' ', '_')),
-           "snippets/activities/fallback.html"
-        ], activity=activity, **kwargs) }}
-
-{%- endmacro %}

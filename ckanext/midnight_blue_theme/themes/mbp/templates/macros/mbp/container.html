@@ -205,13 +205,6 @@
     </li>
 {%- endmacro %}
 
-
-{%- macro activity_list(content) -%}
-    <ul {{ ui.util.attrs(kwargs, {"class": "activity"}) }}>
-        {{ content }}
-    </ul>
-{%- endmacro %}
-
 {%- macro facet_list(content) -%}
     <ul {{ ui.util.attrs(kwargs, {"class": "list-unstyled nav nav-simple nav-facet"}) }}>{{ content }}</ul>
 {%- endmacro %}
