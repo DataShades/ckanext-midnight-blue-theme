@@ -18,7 +18,7 @@
                         <div class="footer-links row">
                             {% block footer_nav %}
                                 <div class="col-md-6">
-                                    {%- call ui.util.call(ui.nav_wrapper) -%}
+                                    {%- call ui.util.call(ui.nav) -%}
                                         {% block footer_links %}
                                             {{ ui.nav_item(_('Home'), h.url_for('home.index')) }}
                                             {{ ui.nav_item(h.humanize_entity_type('package', dataset_type, 'footer nav') or _('Datasets'), h.url_for(dataset_type ~ '.search')) }}
@@ -31,7 +31,7 @@
                                     {%- endcall %}
                                 </div>
                                 <div class="col-md-6">
-                                    {%- call ui.util.call(ui.nav_wrapper) -%}
+                                    {%- call ui.util.call(ui.nav) -%}
                                         {% block footer_links_ckan %}
                                             {% set api_url = 'https://docs.ckan.org/en/{0}/api/'.format(g.ckan_doc_version) %}
                                             {{ ui.nav_item(_('CKAN API'), href=api_url, blank=true) }}

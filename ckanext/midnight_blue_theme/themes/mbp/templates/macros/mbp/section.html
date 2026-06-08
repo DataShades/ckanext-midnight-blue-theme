@@ -5,7 +5,7 @@
 {%- endmacro %}
 
 {%- macro facet_section(content, title, items, key, collapsed, has_more) -%}
-    <section {{ ui.util.attrs(kwargs) }}class="module module-narrow module-shallow accordion">
+    <section {{ ui.util.attrs(kwargs, {"class": "module module-narrow module-shallow accordion"}) }}>
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="module-heading accordion-button {{ 'collapsed' if collapsed or not items }}"
@@ -41,7 +41,7 @@
     {%- if icon -%}
         {%- set title = ui.icon(icon) ~ " " ~ title -%}
     {%- endif %}
-    <section {{ ui.util.attrs(kwargs) }} class="module {{ 'module-narrow' if narrow }} {{ 'module-shallow' if shallow }}">
+    <section {{ ui.util.attrs(kwargs, {"class": "module" ~ (' module-narrow' if narrow else "") ~ (' module-shallow' if shallow else "")}) }}>
         <div class="module-group">
             {{ ui.heading(title, level, attrs={"class": "module-heading"}) if title }}
             <div class="module-content">

@@ -46,7 +46,7 @@
 {%- endmacro %}
 
 {%- macro field_errors(errors) -%}
-    <div {{ ui.util.attrs(kwargs) }} class="invalid-feedback d-block error-inline">
+    <div {{ ui.util.attrs(kwargs, {"class": "invalid-feedback d-block error-inline"}) }}>
         {{ errors | join (", ") }}
     </div>
 {%- endmacro %}
@@ -65,14 +65,14 @@
 {%- endmacro %}
 
 {%- macro form(content, method, action, enctype, include_csrf=true) -%}
-    {{ ui.form_start(method, action, enctype, **kwargs) }}
+    {{ ui.form_start(method=method, action=action, enctype=enctype, **kwargs) }}
     {{ h.csrf_input() if include_csrf and method and method|upper != "GET" }}
     {{ content }}
     {{ ui.form_end() }}
 {%- endmacro %}
 
 {%- macro form_actions(content) -%}
-    <div{{ ui.util.attrs(kwargs) }} class="form-actions">{{ content }}</div>
+    <div {{ ui.util.attrs(kwargs, {"class": "form-actions"}) }}>{{ content }}</div>
 {%- endmacro %}
 
 {%- macro form_end(content) -%}
@@ -83,7 +83,7 @@
 
 {%- macro form_errors(errors) -%}
     {% if errors %}
-        <div {{ ui.util.attrs(kwargs) }} class="error-explanation alert alert-danger">
+        <div {{ ui.util.attrs(kwargs, {"class": "error-explanation alert alert-danger"}) }}>
             <p>{{ _('The form contains invalid entries:') }}</p>
             <ul>
                 {% for key, error in errors.items() %}
@@ -94,13 +94,13 @@
     {% endif %}
 {%- endmacro %}
 
-{%- macro form_start(method, action, enctype) -%}
+{%- macro form_start(content, method, action, enctype) -%}
     <form
         {{ ui.util.attrs(kwargs) }}
         {%- if method %} method="{{ method }}"{%- endif %}
         {%- if action %} action="{{ action }}"{%- endif %}
         {%- if enctype %} enctype="{{ enctype }}"{%- endif -%}
-    >
+    >{{ content }}
 {%- endmacro %}
 
 
@@ -131,7 +131,7 @@
     </div>
 {%- endmacro %}
 
-{%- macro form_annotation() -%}
+{%- macro form_annotation(content) -%}
     <div {{ ui.util.attrs(kwargs) }}>
         <p class="control-required-message">
             <span class="control-required">*</span> {{ _("Required field") }}
@@ -140,13 +140,13 @@
 {%- endmacro %}
 
 {%- macro field_info(content, icon="info-circle") -%}
-    <div {{ ui.util.attrs(kwargs) }} class="form-text">
+    <div {{ ui.util.attrs(kwargs, {"class": "form-text"}) }}>
         {{- ui.icon("info-circle") if icon }}
         {{ content -}}
     </div>
 {%- endmacro %}
 
-{%- macro checkbox(content, name, id, checked, label, required, placeholder, type="checkbox", value="on", errors=[], group_class="form-group form-check") -%}
+{%- macro checkbox(content, name, id, checked, label, required, type="checkbox", value="on", errors=[], group_class="form-group form-check") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
     {%- set aria_attrs = kwargs.setdefault("aria", {}) -%}
@@ -156,7 +156,7 @@
     {%- if checked -%}{%- do attrs.update({"checked": true}) -%}{%- endif %}
 
     <div class="{{ group_class }}">
-        {{ _input(name=name, value=value, placeholder=placeholder, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
+        {{ _input(name=name, value=value, type=type, id=field_id, errors=errors, required=required, **kwargs) }}
         {%- if label -%}
             <label class="form-check-label checkbox" for="{{ field_id }}">
                 {{- label -}}
@@ -169,15 +169,16 @@
 {%- endmacro %}
 
 
-{%- macro _input(name, value, type, id, errors, placeholder, required, prefix, suffix) -%}
+{%- macro _input(name, value, type, id, errors, placeholder, required, prefix, suffix, input_class="form-control") -%}
     {%- set input  -%}
-    <input {{ ui.util.attrs(kwargs) }} type="{{ type or "text" }}" class="form-control {{ 'is-invalid' if errors }}"
-                                       {%- if name %} name="{{ name }}"{% endif %}
-                                       {%- if id %} id="{{ id }}"{%- endif %}
-                                       {%- if value %} value="{{ value|empty_and_escape }}"{% endif %}
-                                       {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
-                                       {%- if required %} required{% endif %}
-                                       {%- if errors %} aria-invalid="true"{% endif -%}
+    <input {{ ui.util.attrs(kwargs, {"class": input_class ~ (' is-invalid' if errors else "")}) }}
+        type="{{ type or "text" }}"
+        {%- if name %} name="{{ name }}"{% endif %}
+        {%- if id %} id="{{ id }}"{%- endif %}
+        {%- if value %} value="{{ value|empty_and_escape }}"{% endif %}
+        {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
+        {%- if required %} required{% endif %}
+        {%- if errors %} aria-invalid="true"{% endif -%}
     >
     {%- endset -%}
     {%- if prefix or suffix -%}
@@ -240,14 +241,14 @@
         {%- endif %}
         <div class="controls editor">
             <textarea
-                {{ ui.util.attrs(kwargs) }}
+                {{ ui.util.attrs(kwargs, {"class": "form-control" ~ (' is-invalid' if errors else "")}) }}
                 cols="20" rows="5"
                 {%- if field_id %} id="{{ field_id }}"{%- endif %}
                 {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
                 {%- if name %} name="{{ name }}"{% endif %}
                 {%- if required %} required{% endif %}
                 {%- if errors %} aria-invalid="true"{% endif %}
-                class="form-control {{ 'is-invalid' if errors }}"
+
             >{{ value or "" }}</textarea>
             {{ content }}
             <span class="editor-info-block">{% trans trigger=ui.popover_handle(_("markdown formatting"), id=popover_id) %}you can use <a role="button">{{ trigger }}</a> here{% endtrans %}</span>
@@ -271,6 +272,7 @@
     {%- if step is defined -%}
         {%- do kwargs.setdefault("attrs", {}).setdefault("step", step) -%}
     {%- endif %}
+    {%- do kwargs.setdefault("input_class", "form-range") -%}
     {{ ui.input(content, type="range", **kwargs) }}
 {%- endmacro %}
 
@@ -294,7 +296,7 @@
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro select_box(content, nested_content, name, id, label, multiple, required, autocomplete, errors=[], group_class="form-group") -%}
+{%- macro select_box(content, nested_content, name, id, label, multiple, required, errors=[], group_class="form-group") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
     <div class="{{ group_class }}">
         {%- if label -%}
@@ -304,8 +306,7 @@
             </label>
         {%- endif %}
         <select
-            {{ ui.util.attrs(kwargs) }}
-            class="form-select {%- if errors %} is-invalid{%- endif %}"
+            {{ ui.util.attrs(kwargs, {"class": "form-select" ~ (' is-invalid' if errors else "")}) }}
             {%- if name %} name="{{ name }}"{%- endif %}
             {%- if field_id %} id="{{ field_id }}"{%- endif %}
             {%- if required %} required{%- endif %}
@@ -323,13 +324,6 @@
     <option {{ ui.util.attrs(kwargs) }} value="{{ value }}" {{ "selected" if selected }}>{{ content }}</option>
 {%- endmacro %}
 
-{%- macro submit(content, value, name) -%}
-    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
-    {%- if value -%}{%- do attrs.update({"value": value}) -%}{%- endif %}
-    {%- if name -%}{%- do attrs.update({"name": name}) -%}{%- endif %}
-    {{- ui.button(content, type="submit", **kwargs) }}
-{%- endmacro %}
-
 {%- macro textarea(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
@@ -342,14 +336,13 @@
         {%- endif %}
         <div class="controls editor">
             <textarea
-                {{ ui.util.attrs(kwargs) }}
+                {{ ui.util.attrs(kwargs, {"class": "form-control" ~ (' is-invalid' if errors else "")}) }}
                 cols="20" rows="5"
                 {%- if field_id %} id="{{ field_id }}"{%- endif %}
                 {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
                 {%- if name %} name="{{ name }}"{% endif %}
                 {%- if required %} required{% endif %}
                 {%- if errors %} aria-invalid="true"{% endif %}
-                class="form-control {{ 'is-invalid' if errors }}"
             >{{ value or "" }}</textarea>
             {{ content }}
         </div>

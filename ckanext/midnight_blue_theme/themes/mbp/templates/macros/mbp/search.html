@@ -1,9 +1,9 @@
 {%- macro search_input(content, name="q", value="", label=_("Search"), placeholder=_("Search...")) -%}
-    <input {{ ui.util.attrs(kwargs) }} aria-label="{{ placeholder }}" autocomplete="off" type="search" class="form-control" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}">
+    <input {{ ui.util.attrs(kwargs, {"class": "form-control"}) }} aria-label="{{ placeholder }}" autocomplete="off" type="search" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}">
 {%- endmacro %}
 
 {%- macro search_submit_button(content=ui.icon("search")) -%}
-    <button {{ ui.util.attrs(kwargs) }} class="btn" type="submit" value="search" aria-label="{{_('Submit')}}">
+    <button {{ ui.util.attrs(kwargs, {"class": "btn"}) }} type="submit" value="search" aria-label="{{_('Submit')}}">
         {{ content }}
     </button>
 {%- endmacro %}
@@ -12,7 +12,7 @@
     {%- if options -%}
         {#{ ui.select(content, name=name, label=label, options=options?revert-items, selected=selected, group_class="control-order-by") }#}
 
-        <div class="form-group control-order-by">
+        <div {{ ui.util.attrs(kwargs, {"class": "form-group control-order-by"}) }}>
             <label for="{{ id }}">{{ label }}</label>
             <select id="{{ id }}" name="sort" class="form-control form-select">
                 {% for label, value in options %}
@@ -26,7 +26,7 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro search_results_text(content, count, error, query, type) -%}
+{%- macro search_results_text(content, count, error, query, type="dataset") -%}
     {%- call ui.util.call(ui.heading, level=2, **kwargs) -%}
         {%- if error %}
             {{ _('Error: {error}').format(error=error) }}
@@ -41,12 +41,13 @@
 
 {%- macro search_active_filters(active_filters, facet_titles, facets, use_htmx) -%}
     {%- if active_filters -%}
-        <p class="filter-list">
+        <p {{ ui.util.attrs(kwargs, {"class": "filter-list"}) }}>
             {%- for key, values in active_filters|groupby(0) -%}
                 {% set items = facets[key]['items'] if facets and key in facets else [] %}
                 <span class="facet">{{ facet_titles.get(key, key) }}:</span>
                 {%- for _key, value in values %}
                     <span class="filtered pill">
+                        {{ ui.hidden_input(name=key, value=value) }}
                         {{ h.list_dict_filter(items, 'name', 'display_name', value) }}
                         {%- call ui.util.call(ui.tooltip, tooltip=_('Remove')) -%}
                             <a href="{{ h.remove_url_param(key, value) }}" class="remove" aria-label="{{ _('Remove applied filter: {value}').format(value=value) }}" hx-boost="{{ 'true' if use_htmx else 'false' }}">
@@ -60,8 +61,9 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro search_advanced_controls() -%}
+{%- macro search_advanced_controls(content) -%}
     {%- do kwargs -%}
+    {{ content }}
 {%- endmacro %}
 
 {%- macro search_form_box(content, use_htmx) -%}
@@ -74,6 +76,7 @@
     {%- endcall %}
 {%- endmacro %}
 
-{%- macro search_form(query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
+{%- macro search_form(content, query, sorting, sorting_options, error, count, facets, facet_titles, active_filters, use_htmx, query_name="q", sorting_name="sort", type="dataset") -%}
+    {%- do kwargs -%}
     {%- include "macros/mbp/snippets/search_form.html" -%}
 {%- endmacro %}

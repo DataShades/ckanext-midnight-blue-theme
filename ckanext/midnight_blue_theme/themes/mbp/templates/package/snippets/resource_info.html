@@ -19,7 +19,10 @@ Example:
         <div class="package-info">
             {% block resource_info %}
                 <div class="nums">
-                    {{ ui.definition_list([(_('Format'), h.get_translated(res, 'format'))]) }}
+                    <dl>
+                        <dt>{{ _('Format') }}</dt>
+                        <dd>{{ h.get_translated(res, 'format') }}</dd>
+                    </dl>
                 </div>
             {% endblock %}
         </div>

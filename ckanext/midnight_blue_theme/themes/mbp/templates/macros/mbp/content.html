@@ -13,7 +13,7 @@
     {%- include "macros/mbp/snippets/package.html" -%}
 {%- endmacro %}
 
-{%- macro resource(content, resource) -%}
+{%- macro resource(content, resource, package) -%}
     {%- do kwargs -%}
     {%- include "macros/mbp/snippets/resource.html" -%}
 {%- endmacro %}
@@ -36,13 +36,3 @@
         </a>
     </li>
 {%- endmacro %}
-
-{%- macro activity(content, activity) -%}
-    {%- do kwargs -%}
-    {%- include "macros/mbp/snippets/activity.html" -%}
-{%- endmacro %}
-
-{% macro license(content, id, url) %}
-    {%- do kwargs -%}
-    {%- include "macros/mbp/snippets/license.html" -%}
-{% endmacro %}

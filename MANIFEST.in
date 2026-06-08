@@ -4,3 +4,4 @@ include requirements.txt
 recursive-include ckanext/midnight_blue_theme *.html *.json *.js *.less *.css *.mo *.yml
 recursive-include ckanext/midnight_blue_theme/migration *.ini *.py *.mako
 recursive-include ckanext/midnight_blue_theme/public *.*
+prune ckanext/midnight_blue_theme/themes/mbp/node_modules

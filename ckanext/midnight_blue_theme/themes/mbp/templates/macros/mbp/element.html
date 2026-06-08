@@ -1,13 +1,7 @@
-{%- macro avatar(src, alt, size) -%}
-    {%- set attrs = kwargs.setdefault("attrs", {}) -%}
-    {%- do attrs.setdefault("width", size) -%}
-    {%- do attrs.setdefault("height", size) -%}
 
-    {{ ui.image(src or h.url_for_static("/base/images/placeholder-user.png"), alt, **kwargs) }}
-{%- endmacro %}
-
-{%- macro badge(content, style="default") -%}
-    <span {{ ui.util.attrs(kwargs) }} class="badge bg-{{ style }}{{ ' text-dark' if style in ['warning', 'info', 'light'] }}">
+{%- macro badge(content, style="primary") -%}
+    {%- set class = "badge bg-" ~ style ~ ' text-bg-' ~ style -%}
+    <span {{ ui.util.attrs(kwargs, {"class": class}) }}>
         {{- content -}}
     </span>
 {%- endmacro %}
@@ -16,7 +10,8 @@
 
 {%- macro button(content, href, icon, size, type="button", style="primary") -%}
     {%- set prefix = ui.icon(icon) if icon else "" -%}
-    {%- do kwargs.setdefault("attrs", {}).setdefault("class", "btn btn-" ~ style ~ ((' btn-' ~ size) if size else "")) -%}
+    {%- set class = "btn btn-" ~ style ~ ((' btn-' ~ size) if size else "") -%}
+    {%- do kwargs.setdefault("attrs", {}).setdefault("class", class) -%}
 
     {%- if href -%}
         {{ ui.link(prefix ~ content, href=href, **kwargs) }}
@@ -27,15 +22,20 @@
     {%- endif %}
 {%- endmacro %}
 
-{%- macro datetime(dt, date_format, with_hours, empty="") -%}
+{%- macro datetime(dt, date_format, with_hours, relative, empty="") -%}
     <time {{ ui.util.attrs(kwargs) }} datetime="{{ h.render_datetime(dt, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
-        {{- h.render_datetime(dt, date_format=date_format, with_hours=with_hours) or empty -}}
+        {%- if relative -%}
+            {%- set value = h.time_ago_from_timestamp(dt) -%}
+            {{ value if value != "Unknown" else empty }}
+        {%- else -%}
+            {{ h.render_datetime(dt, date_format=date_format, with_hours=with_hours) or empty }}
+        {%- endif -%}
     </time>
 {%- endmacro %}
 
 {%- macro divider(content) -%}
     {%- if content -%}
-        <div {{ ui.util.attrs(kwargs) }} class="divider divider-with-content">
+        <div {{ ui.util.attrs(kwargs, {"class": "divider divider-with-content"}) }}>
             <hr><span>{{ content }}</span><hr>
         </div>
     {%- else -%}
@@ -66,26 +66,33 @@
 {%- macro link(content, href, blank) -%}
     {%- if blank -%}
         {%- do kwargs.setdefault("attrs", {}).setdefault("target", "_blank") -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("rel", "noopener noreferrer") -%}
+        {%- do kwargs.setdefault("attrs", {}).setdefault("rel", "noopener") -%}
     {%- endif %}
-    <a {{ ui.util.attrs(kwargs) }} href="{{ href or content }}">{{ content }}</a>
+    <a {{ ui.util.attrs(kwargs) }} href="{{ href }}">{{ content }}</a>
 {%- endmacro %}
 
 {%- macro tag(content, href) -%}
-    <a {{ ui.util.attrs(kwargs) }} {%- if href %} href="{{ href }}"{%- endif %}>{{ content }}</a>
-{%- endmacro %}
-
-{%- macro tab(content, href, active) -%}
-    {%- if active -%}
-        {%- do kwargs.setdefault("attrs", {}).setdefault("class", "active") -%}
+    {%- if href -%}
+        <a {{ ui.util.attrs(kwargs, {"class": "tag"}) }} href="{{ href }}">{{ content }}</a>
+    {%- else -%}
+        <span {{ ui.util.attrs(kwargs, {"class": "tag"}) }}>{{ content }}</span>
     {%- endif %}
-    {{ ui.link(content, href=href, **kwargs) }}
 {%- endmacro %}
 
-{%- macro video(src, controls) -%}
-    <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }}></video>
+{%- macro tab(content, href, active, id) -%}
+    <li class="nav-item">
+        {%- if href is defined -%}
+            <a {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else "")}) }} href="{{ href }}">{{ content }}</a>
+        {%- else -%}
+            <button {{ ui.util.attrs(kwargs, {"class": "nav-link" ~ (" active" if active else ""), }) }} data-bs-toggle="tab" data-bs-target="#{{ id }}" type="button" role="tab" aria-controls="{{ id }}">{{ content }}</button>
+        {%- endif %}
+    </li>
+{%- endmacro %}
+
+{%- macro video(src, controls, autoplay) -%}
+    <video {{ ui.util.attrs(kwargs) }} src="{{ src }}" {{ "controls" if controls }} {{ "autoplay" if autoplay }}></video>
 {%- endmacro %}
 
 {%- macro empty(content) -%}
-    <p {{ ui.util.attrs(kwargs) }} class="empty">{{ content }}</p>
+    <p {{ ui.util.attrs(kwargs, {"class": "empty"}) }}>{{ content }}</p>
 {%- endmacro %}
