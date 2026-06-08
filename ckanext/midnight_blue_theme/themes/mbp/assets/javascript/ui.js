@@ -11,7 +11,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 ((ckan) => {
-    var _Modal_modal, _Notification_toast, _Tooltip_tooltip, _Popover_popover;
+    var _Modal_modal, _a, _Notification_toast, _Notification_createToastContainer, _Notification_createProgressBar, _Tooltip_tooltip, _Popover_popover;
     function applyAttrs(el, attrs) {
         Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
     }
@@ -27,6 +27,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
                 el.addEventListener(key, value.listener, value.options);
             }
         });
+    }
+    function contentAsText(content, allowHtml = false) {
+        return typeof content === "string"
+            ? content
+            : content instanceof HTMLElement && allowHtml
+                ? content.innerHTML
+                : content.textContent || "";
     }
     class Modal {
         constructor(el) {
@@ -106,45 +113,167 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
         destroy() {
             __classPrivateFieldGet(this, _Notification_toast, "f").dispose();
         }
-        static create(content, props = {}) {
-            const containerId = "notification-container";
-            const container = document.getElementById(containerId);
-            if (!container) {
-                throw `Notification container(${containerId}) is not defined`;
+        static create(content, options = {}) {
+            const styleName = options.style || "default";
+            const opts = {
+                title: "",
+                icon: "",
+                subtitle: "",
+                delay: options.dismissible ? 3000 : 0,
+                position: "bottom-right",
+                showProgress: true,
+                stacking: true,
+                ...options,
+            };
+            const style = _a.styles[styleName] || _a.styles.default;
+            const containerEl = __classPrivateFieldGet(_a, _a, "m", _Notification_createToastContainer).call(_a, opts.position, styleName);
+            const toastEl = document.createElement("div");
+            const toastID = `toast-${++_a.count}`;
+            toastEl.setAttribute("id", toastID);
+            toastEl.setAttribute("role", "alert");
+            toastEl.setAttribute("aria-live", "assertive");
+            toastEl.setAttribute("aria-atomic", "true");
+            toastEl.classList.add("toast", "align-items-center");
+            style.border && toastEl.classList.add(style.border);
+            toastEl.innerHTML = `
+              <div class="toast-header ${style.main}">
+                ${opts.icon}
+                <strong class="me-auto">${opts.title}</strong>
+                <small>${opts.subtitle}</small>
+                <button type="button" class="btn-close ${style.btnClose}" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body position-relative">${contentAsText(content)}</div>
+            `;
+            if (!opts.stacking) {
+                containerEl
+                    .querySelectorAll(".toast")
+                    .forEach((el) => el.remove());
             }
-            const el = container.appendChild(document.createElement("div"));
-            el.classList.add("toast");
-            applyAttrs(el, props.timeout
-                ? { "data-bs-delay": String(props.timeout) }
-                : { "data-bs-autohide": "false" });
-            if (props.style) {
-                el.classList.add(`text-bg-${props.style}`);
+            containerEl.appendChild(toastEl);
+            toastEl.dataset.bsDelay = String(opts.delay);
+            toastEl.dataset.bsAutohide = String(opts.delay > 0);
+            if (opts.delay && opts.showProgress) {
+                const progressEl = __classPrivateFieldGet(_a, _a, "f", _Notification_createProgressBar).call(_a, opts, style);
+                // reset progress bar to 100% on mouse enter
+                toastEl.addEventListener("mouseenter", function () {
+                    progressEl.style.animation = "none";
+                    progressEl.style.width = "100%";
+                });
+                // restart progress bar animation on mouse leave
+                toastEl.addEventListener("mouseleave", function () {
+                    progressEl.style.animation = `reverseProgress ${opts.delay / 1000}s linear forwards`;
+                });
+                toastEl.querySelector(".toast-body")?.appendChild(progressEl);
             }
-            if (props.title || props.dismissible) {
-                const header = el.appendChild(document.createElement("div"));
-                header.classList.add("toast-header");
-                if (props.title) {
-                    header.append(props.title);
-                }
-                if (props.dismissible) {
-                    header.insertAdjacentHTML("beforeend", `<button type="button" class="ms-auto btn-close" data-bs-dismiss="toast" aria-label="Close"></button>`);
-                }
-            }
-            const body = el.appendChild(document.createElement("div"));
-            body.classList.add("toast-body");
-            body.append(content);
-            const result = new Notification(el);
-            return result;
+            return new _a(toastEl);
         }
         static byId(id) {
             const el = document.getElementById(id);
             if (!el) {
                 return null;
             }
-            return new Notification(el);
+            return new _a(el);
         }
     }
-    _Notification_toast = new WeakMap();
+    _a = Notification, _Notification_toast = new WeakMap(), _Notification_createToastContainer = function _Notification_createToastContainer(position, style) {
+        const containerID = `${this.containerClass}-${position}`;
+        const container = document.getElementById(containerID);
+        if (container)
+            return container;
+        const wrapper = document.createElement("div");
+        const positionClasses = this.positions[position] || this.positions["bottom-right"];
+        wrapper.classList.add("position-relative");
+        wrapper.setAttribute("role", style === "danger" ? "alert" : "status");
+        wrapper.setAttribute("aria-live", style === "danger" ? "assertive" : "polite");
+        wrapper.setAttribute("aria-atomic", "true");
+        wrapper.innerHTML = `<div id="${containerID}" class="toast-container position-fixed pb-1 ${positionClasses}"></div>`;
+        document.body.appendChild(wrapper);
+        return document.getElementById(containerID);
+    };
+    Notification.styles = {
+        secondary: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-secondary",
+            border: "border-secondary",
+            progress: "bg-secondary",
+        },
+        light: {
+            btnClose: "",
+            main: "text-dark bg-light border-bottom border-dark",
+            border: "border-dark",
+            progress: "bg-dark",
+        },
+        white: {
+            btnClose: "",
+            main: "text-dark bg-white border-bottom border-dark",
+            border: "border-dark",
+            progress: "bg-dark",
+        },
+        dark: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-dark",
+            border: "border-dark",
+            progress: "bg-dark",
+        },
+        info: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-info",
+            border: "border-info",
+            progress: "bg-info",
+        },
+        primary: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-primary",
+            border: "border-primary",
+            progress: "bg-primary",
+        },
+        success: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-success",
+            border: "border-success",
+            progress: "bg-success",
+        },
+        warning: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-warning",
+            border: "border-warning",
+            progress: "bg-warning",
+        },
+        danger: {
+            btnClose: "btn-close-white",
+            main: "text-white bg-danger",
+            border: "border-danger",
+            progress: "bg-danger",
+        },
+        default: {
+            btnClose: "",
+            main: "",
+            border: "",
+            progress: "bg-primary",
+        },
+    };
+    Notification.positions = {
+        "top-left": "top-0 start-0 ms-1 mt-1",
+        "top-center": "top-0 start-50 translate-middle-x mt-1",
+        "top-right": "top-0 end-0 me-1 mt-1",
+        "middle-left": "top-50 start-0 translate-middle-y ms-1",
+        "middle-center": "top-50 start-50 translate-middle p-3",
+        "middle-right": "top-50 end-0 translate-middle-y me-1",
+        "bottom-left": "bottom-0 start-0 ms-1 mb-1",
+        "bottom-center": "bottom-0 start-50 translate-middle-x mb-1",
+        "bottom-right": "bottom-0 end-0 me-1 mb-1",
+    };
+    Notification.containerClass = "toast-container";
+    Notification.count = 0;
+    _Notification_createProgressBar = { value: function (opts, style) {
+            const progressEl = document.createElement("div");
+            progressEl.classList.add("progress-bar-timer", "position-absolute", "bottom-0", "start-0");
+            progressEl.classList.add(style.progress);
+            progressEl.style.height = "3px";
+            progressEl.style.borderBottomLeftRadius = "0.25rem";
+            progressEl.style.animation = `reverseProgress ${opts.delay / 1000}s linear forwards`;
+            return progressEl;
+        } };
     class Tooltip {
         constructor(el) {
             this.el = el;
