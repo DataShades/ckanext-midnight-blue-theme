@@ -13,7 +13,7 @@ Example:
 
 #}
 {% set resources = pkg.resources or [] %}
-{% set can_edit = pkg and h.check_access('package_update', {'id':pkg.id }) %}
+{% set can_edit = pkg.id and h.check_access('package_update', {'id':pkg.id }) %}
 
 {% if pkg %}
     {% block resources %}
