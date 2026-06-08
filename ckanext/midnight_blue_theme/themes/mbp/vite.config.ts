@@ -1,7 +1,13 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
+import checker from "vite-plugin-checker";
 
 export default defineConfig({
+    // plugins: [
+    //     checker({
+    //         typescript: true,
+    //     }),
+    // ],
     publicDir: false,
     build: {
         lib: {
