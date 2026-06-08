@@ -153,7 +153,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
             toastEl.dataset.bsDelay = String(opts.delay);
             toastEl.dataset.bsAutohide = String(opts.delay > 0);
             if (opts.delay && opts.showProgress) {
-                const progressEl = __classPrivateFieldGet(_a, _a, "f", _Notification_createProgressBar).call(_a, opts, style);
+                const progressEl = __classPrivateFieldGet(_a, _a, "f", _Notification_createProgressBar).call(_a, opts.delay, style.progress);
                 // reset progress bar to 100% on mouse enter
                 toastEl.addEventListener("mouseenter", function () {
                     progressEl.style.animation = "none";
@@ -265,13 +265,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     };
     Notification.containerClass = "toast-container";
     Notification.count = 0;
-    _Notification_createProgressBar = { value: function (opts, style) {
+    _Notification_createProgressBar = { value: function (delay, cls) {
             const progressEl = document.createElement("div");
             progressEl.classList.add("progress-bar-timer", "position-absolute", "bottom-0", "start-0");
-            progressEl.classList.add(style.progress);
+            progressEl.classList.add(cls);
             progressEl.style.height = "3px";
             progressEl.style.borderBottomLeftRadius = "0.25rem";
-            progressEl.style.animation = `reverseProgress ${opts.delay / 1000}s linear forwards`;
+            progressEl.style.animation = `reverseProgress ${delay / 1000}s linear forwards`;
             return progressEl;
         } };
     class Tooltip {

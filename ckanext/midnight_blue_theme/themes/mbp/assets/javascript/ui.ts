@@ -306,7 +306,10 @@
             toastEl.dataset.bsAutohide = String(opts.delay > 0);
 
             if (opts.delay && opts.showProgress) {
-                const progressEl = Notification.#createProgressBar(opts, style);
+                const progressEl = Notification.#createProgressBar(
+                    opts.delay,
+                    style.progress,
+                );
 
                 // reset progress bar to 100% on mouse enter
                 toastEl.addEventListener("mouseenter", function () {
@@ -325,7 +328,7 @@
             return new Notification(toastEl);
         }
 
-        static #createProgressBar = function (opts, style) {
+        static #createProgressBar = function (delay: number, cls: string) {
             const progressEl = document.createElement("div");
 
             progressEl.classList.add(
@@ -334,11 +337,11 @@
                 "bottom-0",
                 "start-0",
             );
-            progressEl.classList.add(style.progress);
+            progressEl.classList.add(cls);
 
             progressEl.style.height = "3px";
             progressEl.style.borderBottomLeftRadius = "0.25rem";
-            progressEl.style.animation = `reverseProgress ${opts.delay / 1000}s linear forwards`;
+            progressEl.style.animation = `reverseProgress ${delay / 1000}s linear forwards`;
 
             return progressEl;
         };
