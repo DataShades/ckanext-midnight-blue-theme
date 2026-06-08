@@ -1,13 +1,12 @@
 {
     "exclude": ["node_modules"],
     "include": [
-        "assets/javascript/*.ts"
+        "assets/src/*.ts"
     ],
     "compilerOptions": {
         "module": "preserve",
         "target": "es2020",
-        "types": ["bootstrap"],
-
+        "types": ["bootstrap", "node"],
         "sourceMap": false,
 
         "noUncheckedIndexedAccess": true,
