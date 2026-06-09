@@ -1,8 +1,3 @@
-{%- macro subtitle_item(content, initial) -%}
-    {%- do kwargs -%}
-    {{ content }}
-    {%- if not initial %} {{ g.template_title_delimiter }} {% endif %}
-{%- endmacro %}
 
 {%- macro account(content) -%}
     <div {{ ui.util.attrs(kwargs, {"class": "account-masthead"}) }}>

@@ -64,23 +64,6 @@
     {{ ui.input(content, type="file", **kwargs) }}
 {%- endmacro %}
 
-{%- macro form(content, method, action, enctype, include_csrf=true) -%}
-    {{ ui.form_start(method=method, action=action, enctype=enctype, **kwargs) }}
-    {{ h.csrf_input() if include_csrf and method and method|upper != "GET" }}
-    {{ content }}
-    {{ ui.form_end() }}
-{%- endmacro %}
-
-{%- macro form_actions(content) -%}
-    <div {{ ui.util.attrs(kwargs, {"class": "form-actions"}) }}>{{ content }}</div>
-{%- endmacro %}
-
-{%- macro form_end(content) -%}
-    {%- do kwargs -%}
-    {{ content }}
-    </form>
-{%- endmacro %}
-
 {%- macro form_errors(errors) -%}
     {% if errors %}
         <div {{ ui.util.attrs(kwargs, {"class": "error-explanation alert alert-danger"}) }}>
@@ -92,20 +75,6 @@
             </ul>
         </div>
     {% endif %}
-{%- endmacro %}
-
-{%- macro form_start(content, method, action, enctype) -%}
-    <form
-        {{ ui.util.attrs(kwargs) }}
-        {%- if method %} method="{{ method }}"{%- endif %}
-        {%- if action %} action="{{ action }}"{%- endif %}
-        {%- if enctype %} enctype="{{ enctype }}"{%- endif -%}
-    >{{ content }}
-{%- endmacro %}
-
-
-{%- macro hidden_input(name, value) -%}
-    <input {{ ui.util.attrs(kwargs) }} type="hidden" name="{{ name }}" value="{{ value|empty_and_escape or "" }}">
 {%- endmacro %}
 
 {%- macro input(content, name, id, label, value, required, placeholder, type, icon, errors=[], group_class="form-group") -%}
@@ -320,10 +289,6 @@
     </div>
 {%- endmacro %}
 
-{%- macro select_option(content, value, selected) -%}
-    <option {{ ui.util.attrs(kwargs) }} value="{{ value }}" {{ "selected" if selected }}>{{ content }}</option>
-{%- endmacro %}
-
 {%- macro textarea(content, name, id, label, value, placeholder, required, errors=[], group_class="form-group control-full") -%}
     {%- set field_id = id or (name and "field-" ~ name) or (label and ui.util.id()) or "" -%}
 
@@ -350,22 +315,9 @@
     </div>
 {%- endmacro %}
 
-
-
-{%- macro fieldset(content, legend) -%}
-    <fieldset {{ ui.util.attrs(kwargs) }}>
-        {%- if legend -%}
-            <legend>{{ legend }}</legend>
-        {%- endif %}
-        {{ content }}
-    </fieldset>
-{%- endmacro %}
-
-
 {% macro image_upload()  %}
     {{ _image_upload(*varargs, **kwargs) }}
 {%- endmacro -%}
-
 
 {% macro _image_upload(data, errors, field_url='image_url', field_upload='image_upload', field_clear='clear_upload',
                     is_url=false, is_upload=false, is_upload_enabled=false, placeholder=false,

@@ -1,5 +1,4 @@
 {%- macro breadcrumb(content, href, initial, active) -%}
-    {{ ui.breadcrumb_divider() if not initial}}
     <li class="{{ 'home' if initial }} {{ 'active' if active }}">
         {{ ui.link(content, href=href, **kwargs) }}
     </li>
