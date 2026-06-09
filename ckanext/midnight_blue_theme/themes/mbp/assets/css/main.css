@@ -12007,6 +12007,7 @@ a.tag:hover {
   font-size: 1rem;
   background-color: #f2f4f7;
   border-radius: 8px;
+  word-wrap: break-word;
 }
 
 .module-content {
