@@ -341,15 +341,15 @@
     {% else %}
         {% if is_upload_enabled %}
             <div class="image-upload"
-                 data-module="image-upload"
-                 data-module-is_url="{{ 'true' if is_url else 'false' }}"
-                 data-module-is_upload="{{ 'true' if is_upload else 'false' }}"
-                 data-module-field_url="{{ field_url }}"
-                 data-module-field_upload="{{ field_upload }}"
-                 data-module-field_clear="{{ field_clear }}"
-                 data-module-upload_label="{{ upload_label }}"
-                 data-module-field_name="{{ field_name }}"
-                 data-module-previous_upload="{{ 'true' if previous_upload else 'false' }}">
+                data-module="image-upload"
+                data-module-is_url="{{ 'true' if is_url else 'false' }}"
+                data-module-is_upload="{{ 'true' if is_upload else 'false' }}"
+                data-module-field_url="{{ field_url }}"
+                data-module-field_upload="{{ field_upload }}"
+                data-module-field_clear="{{ field_clear }}"
+                data-module-upload_label="{{ upload_label }}"
+                data-module-field_name="{{ field_name }}"
+                data-module-previous_upload="{{ 'true' if previous_upload else 'false' }}">
         {% endif %}
 
 
@@ -365,3 +365,28 @@
     {% endif %}
 
 {% endmacro %}
+
+{%- macro autocomplete(content, source, options, allow_multiple, allow_new, selected, min_chars, debounce, joined, separator, id_key, label_key) -%}
+
+    {%- set defaults = {"data-module": "autocomplete", "data-module-createtags": "true" if allow_new else "false"} -%}
+    {% if source %}{% do defaults.update({"data-module-source": source}) %}{% endif %}
+    {% if debounce %}{% do defaults.update({"data-module-interval": debounce}) %}{% endif %}
+    {% if allow_multiple %}{% do defaults.update({"data-module-tags": allow_multiple}) %}{% endif %}
+    {% if id_key %}{% do defaults.update({"data-module-key": id_key}) %}{% endif %}
+    {% if label_key %}{% do defaults.update({"data-module-label": label_key}) %}{% endif %}
+    {% if separator %}{% do defaults.update({"data-module-tokensep": separator}) %}{% endif %}
+    {% if min_chars %}{% do defaults.update({"data-module-minimum-input-length": min_chars}) %}{% endif %}
+
+    {%- do ui.util.augment_attrs(kwargs, defaults) -%}
+
+    {%- if options or not joined -%}
+        {#  when options are specified, we have to use select input and cannot satisfy joined=true #}
+        {%- do kwargs.update({"multiple": allow_multiple}) -%}
+        {{ ui.select(content, options=options or [], selected=selected, **kwargs) }}
+    {%- else -%}
+        {# Here joined=false cannot be satisfied  #}
+        {%- if selected -%}{%- do kwargs.update({"value": selected}) -%}{%- endif %}
+        {{ ui.input(content, **kwargs) }}
+    {%- endif %}
+
+{%- endmacro %}
