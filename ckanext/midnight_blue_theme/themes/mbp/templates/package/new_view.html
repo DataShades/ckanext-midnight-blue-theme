@@ -23,7 +23,7 @@
         {%- call ui.util.call(ui.form_actions) -%}
             {%- set preview_attrs = {"name": "preview", "value": "True"} -%}
             {% if not h.resource_view_display_preview(data) %}
-                {%- do preview_attrs.update("hidden", true) -%}
+                {%- do preview_attrs.update({"hidden": true}) -%}
             {%endif%}
             {{ ui.button(_('Preview'), style="secondary", type="submit", attrs=preview_attrs) }}
 
