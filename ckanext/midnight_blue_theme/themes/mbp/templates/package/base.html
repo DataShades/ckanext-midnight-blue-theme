@@ -3,7 +3,7 @@
 {% set pkg = pkg_dict %}
 {% set dataset_type = dataset_type or pkg.type or 'dataset' %}
 
-{% block breadcrumb_content_selected -%} class="active"{% endblock %}
+{% block breadcrumb_content_selected %} class="active"{% endblock %}
 
 {% block subtitle -%}
     {{ ui.subtitle_item(_(dataset_type.title())) }}
@@ -11,6 +11,7 @@
 {%- endblock %}
 
 {% block breadcrumb_content -%}
+
     {%- if pkg -%}
         {%- set dataset = h.dataset_display_name(pkg) %}
         {%- if pkg.organization -%}
