@@ -1,5 +1,3 @@
-{% import 'macros/form.html' as form %}
-
 {%- set hx_attrs = {"post": h.url_for('user.api_tokens', id=user.id ), "swap": "outerHTML"} -%}
 
 {%- if created -%}

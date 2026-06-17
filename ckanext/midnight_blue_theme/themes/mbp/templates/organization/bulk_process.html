@@ -47,7 +47,7 @@
                                     {%- endcall %}
 
                                     {%- call ui.util.call(ui.button_group) -%}
-                                        {{ ui.button(_('Make public'), style="danger", icon="times", type="submit", attrs={"name": "bulk_action.delete", "value": "delete"}) }}
+                                        {{ ui.button(_('Delete'), style="danger", icon="times", type="submit", attrs={"name": "bulk_action.delete", "value": "delete"}) }}
                                     {%- endcall %}
                                 </th>
                             </tr>
