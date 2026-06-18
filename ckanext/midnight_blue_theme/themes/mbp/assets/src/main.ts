@@ -3,6 +3,7 @@ import { Modal } from "./modal";
 import { Notification } from "./notification";
 import { Popover } from "./popover";
 import { Tooltip } from "./tooltip";
+import { Autocomplete } from "./autocomplete";
 import { button } from "./util";
 
 ((ckan) => {
@@ -20,6 +21,9 @@ import { button } from "./util";
 
         popover: Popover.create,
         getPopover: Popover.byId,
+
+        autocomplete: Autocomplete.create,
+        getAutocomplete: Autocomplete.byId,
     };
 
     ckan.sandbox.setup((sb) => {
