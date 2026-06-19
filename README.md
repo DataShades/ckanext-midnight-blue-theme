@@ -2,68 +2,117 @@
 
 # ckanext-midnight-blue-theme
 
-Portable version of CKAN's midnight blue theme that uses
-[ckanext-theming](https://github.com/DataShades/ckanext-theming).
+A portable, modern theme implementation of CKAN's classic Midnight Blue theme, fully integrated with [ckanext-theming](https://github.com/DataShades/ckanext-theming).
 
+By implementing the `ckanext-theming` workflow, this extension replaces traditional inline HTML/CSS templates with standard, decoupled UI macros. This ensures that the aesthetic and look of the original Midnight Blue theme is preserved while introducing a clean, maintainable, and modern macro-based architecture.
 
-## Requirements
+---
 
-Compatibility with core CKAN versions:
+## Key Features & Enhancements
 
-| CKAN version     | Compatible? |
-|------------------|-------------|
-| 2.11 and earlier | no          |
-| 2.12             | yes         |
+This extension provides a faithful port of the original Midnight Blue theme but includes several modern layout improvements:
 
+* **Modern Layouts**: Primary content layout blocks no longer rely on CSS float. Instead, they leverage native Bootstrap 5 grid layout classes (`col`).
+* **Enhanced Page Layout Flexibility**: Integrates the flexible layout blocks structure, allowing you to easily customize the page layout. For example, add `{% block page_layout %}no-sidebar{% endblock %}` to hide the sidebar, or set it to `sidebar-end` to move the sidebar to the right.
+* **Refined Form Validation Style**: Employs Bootstrap 5 native styling for field validation errors. Fields with errors have a clean red outline and red helper text without a heavy red background, resulting in a cleaner UI.
+* **Optimized Rendering**: Cleaned up unnecessary markup; blocks such as `header_account_notlogged` are not rendered when a user is logged in, rather than rendering empty elements.
+
+---
+
+## Themes Provided
+
+This extension registers the following theme with the `ckanext-theming` framework:
+
+1. **`midnight-blue-portable`**: The primary theme applying the clean, professional Midnight Blue layout and styles.
+
+---
+
+## Compatibility
+
+| CKAN version | Compatible? |
+|---|---|
+| 2.11 and earlier | no |
+| 2.12 | yes |
+
+> [!NOTE]
+> This extension requires [ckanext-theming](https://github.com/DataShades/ckanext-theming) to run.
+
+---
+
+## Screenshots
+
+Below are placeholders for screenshots of the Midnight Blue Portable theme in action:
+
+### Homepage
+![Homepage Mockup / Screenshot Placeholder](./screenshots/homepage.png)
+
+### Dataset Search / Registry page
+![Dataset Search Mockup / Screenshot Placeholder](./screenshots/search.png)
+
+### Dataset Detail page
+![Dataset Detail Mockup / Screenshot Placeholder](./screenshots/dataset.png)
+
+---
 
 ## Installation
 
-To install ckanext-midnight-blue-theme:
+### 1. Install the Extension
+Activate your CKAN virtual environment and install `ckanext-midnight-blue-theme` and `ckanext-theming`:
 
-1. Install the extension
+```sh
+pip install ckanext-theming
+# Install ckanext-midnight-blue-theme from source or pip
+pip install ckanext-midnight-blue-theme
+```
 
-    ```sh
-    git clone https://github.com/DataShades/ckanext-midnight-blue-theme.git
-    cd ckanext-midnight-blue-theme
-    pip install -e .
-    ```
+Or for development/source installation:
 
-1. Add `theming` and `midnight_blue_theme` to the `ckan.plugins` setting in
-   your CKAN config file.
+```sh
+git clone https://github.com/DataShades/ckanext-midnight-blue-theme.git
+cd ckanext-midnight-blue-theme
+pip install -e .
+```
 
-1. Use `midnight-blue-portable` as a value ckanext-theming's `ckan.ui.theme`:
+### 2. Enable Plugins
+Add both `theming` and `midnight_blue_theme` to the `ckan.plugins` list in your `ckan.ini` file:
 
-    ```ini
-    ckan.ui.theme = midnight-blue-portable
-    ```
+```ini
+ckan.plugins = ... theming midnight_blue_theme
+```
 
-Note, this extension requires ckanext-theming, but does not pins it to specific
-version. Consider adding `ckanext-theming==X.Y.Z` to requirements of your
-project.
+### 3. Select the Theme
+Set `midnight-blue-portable` as the active theme in your `ckan.ini` configuration:
 
-## Details
+```ini
+ckan.ui.theme = midnight-blue-portable
+```
 
-The theme implementation is close to the midnight blue theme from CKAN
-core. Tha main difference is that this theme follows
-[ckanext-theming](https://github.com/DataShades/ckanext-theming) workflow. It
-provides and uses UI macros instead of inline HTML for standard components.
+> [!TIP]
+> Consider pinning `ckanext-theming` to a specific version (e.g. `ckanext-theming==X.Y.Z`) in your project's main requirements.
 
-Bellow is the list of things that this plugin does differently comparint to the
-midnight-blue from CKAN core:
+---
 
-* primary block does not use CSS float. Instead if relies on Bootstrap5 `col`
-  class.
-* `page.html` uses layouts suggested in [this
-  PR](https://github.com/ckan/ckan/pull/9330). Try adding `{% block page_layout
-  %}no-sidebar{% endblock %}` to any page to hide sidebar, or use `sidebar-end`
-  value of the layout block to move sidebar to the other side of the page.
-* field errors reported using Bootstrap5 native styles for errors. Main
-  differences: there is no red background for error text, instead, the text
-  itself uses red color; fields with errors have red outline.
-* the whole block `header_account_notlogged` is not rendered if user is logged
-  in. In the original theme, block is rendered without content.
+## Template Helpers
 
+This extension exposes several template helpers:
+
+* **`get_dataset_count()`**: Returns the total number of datasets on the CKAN instance.
+* **`get_recent_datasets(count=1)`**: Returns a list of the most recently modified or created datasets.
+* **`default_collapse_facets()`**: Returns a boolean indicating if facets in the secondary sidebar should be collapsed by default (configured via `ckan.default_collapse_facets`).
+* **`currently_active_facet(facet)`**: Returns a boolean indicating if a specific facet is currently active or expanded in the request parameters.
+
+---
+
+## Development
+
+If you'd like to run the test suite, run:
+
+```sh
+pytest
+```
+
+---
 
 ## License
 
-[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)
+[AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html)
