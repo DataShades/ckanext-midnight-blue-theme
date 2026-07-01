@@ -28,7 +28,7 @@ const destDir = resolve(assetsDir, "css");
  * Compile SASS sources into CSS theme.
  */
 const build = () =>
-  src([resolve(srcDir, "main.scss"), resolve(srcDir, "main-rtl.scss")])
+      src([resolve(srcDir, "main.scss")].concat(isDev() ? []: [resolve(srcDir, "main-rtl.scss")]))
     // keep details about original SASS code
     .pipe(if_(isDev, sourcemaps.init()))
 
@@ -36,8 +36,8 @@ const build = () =>
     // node_modules packages
     .pipe(
       sass({
-        includePaths: ["../node_modules"],
-        silenceDeprecations: ["import", "legacy-js-api"],
+        loadPaths: ["node_modules"],
+        silenceDeprecations: ["import", "legacy-js-api", "color-functions", "global-builtin", "if-function"],
       }).on("error", sass.logError),
     )
 

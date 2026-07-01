@@ -3,8 +3,8 @@
         "watch-scripts": "vite build -w",
         "build-scripts": "vite build",
         "typecheck-scripts": "tsc --noEmit",
-        "watch-styles": "sass -Inode_modules -w assets/scss/main.scss assets/css/main.css --embed-sources",
-        "compile-styles": "sass -Inode_modules assets/scss/main.scss assets/css/main.css --no-source-map; sass -Inode_modules assets/scss/main-rtl.scss assets/css/main-rtl.css --no-source-map --silence-deprecation color-functions --silence-deprecation global-builtin --silence-deprecation if-function"
+        "watch-styles": "DEBUG=1 gulp dev",
+        "compile-styles": "gulp build"
     },
     "dependencies": {
         "@types/bootstrap": "^5.2.10",
