@@ -8,7 +8,7 @@
 {% block page_primary_action -%}{% endblock %}
 
 {% block primary_content_inner %}
-    <h1 class="page-heading">{{ _('Members') }}</h1>
+    <h1 class="sr-only">{{ _('Members') }}</h1>
     {{ ui.heading(_('{0} members'.format(members|length)), level=2) }}
     {%- call ui.util.call(ui.table, hover=true, bordered=true) -%}
         <thead>

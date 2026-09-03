@@ -9,50 +9,30 @@
     align-items: flex-start;
     align-self: stretch;
     width: 100%;
-}
-.dataset-heading {
-    margin-bottom: 0;
-    font-weight: 500;
-}
 
-.dataset-organization {
-    color: #667085;
-    font-weight: 500;
-}
+    .dataset-content {
+        width: 100%;
+        .dataset-heading {
+            margin-bottom: 0;
+            font-weight: 500;
 
-@include media-breakpoint-down(sm){
-    .dataset-item {
-        word-wrap: break-word;
+            .badge {
+                position: relative;
+                top: 3px;
+            }
+        }
+        .dataset-organization {
+            color: #667085;
+            font-weight: 500;
+        }
+        .dataset-resources {
+            margin-top: 8px;
+
+            li {
+                display: inline;
+            }
+        }
     }
-}
-
-.dataset-heading .badge {
-    position: relative;
-    top: -1px;
-}
-
-.badge-inverse {
-    background-color: $gray-600;
-}
-
-.dataset-private {
-    font-size: 18px;
-    margin-bottom: 0.5rem;
-    &.pull-right {
-        margin-right: 0;
-    }
-}
-
-.dataset-resources {
-    margin-top: 8px;
-}
-
-.dataset-resources li {
-    display: inline;
-}
-
-.dataset-content {
-    width: 100%;
 }
 
 // Resource List
@@ -60,43 +40,44 @@
     @include list-unstyled;
     padding-left: 0;
     margin: -10px -10px 10px -10px;
-}
+   .resource-item {
+        position: relative;
+        padding: 10px 10px 10px 60px;
+        margin-bottom: 0px;
+        display: flex;
+        justify-content: space-between;
+        @include border-radius(3px);
 
-.resource-item {
-    position: relative;
-    padding: 10px 10px 10px 60px;
-    margin-bottom: 0px;
-    display: flex;
-    justify-content: space-between;
-    @include border-radius(3px);
-    &:hover {
-        background-color: $layoutBackgroundColor;
-    }
-}
+        .heading {
+            color: $layoutBoldColor;
+            font-size: 14px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
 
-.resource-item .heading {
-    color: $layoutBoldColor;
-    font-size: 14px;
-    font-weight: bold;
-    overflow-wrap: anywhere;
-}
+            .format-label {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+            }
+        }
 
-.resource-item .format-label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
+        .description {
+            font-size: 12px;
+            margin-bottom: 0;
+            min-height: 12px;
+        }
 
-.resource-item .description {
-    font-size: 12px;
-    margin-bottom: 0;
-    min-height: 12px;
-}
+        &:hover {
+            background-color: $layoutBackgroundColor;
+        }
+   }
 
-@include media-breakpoint-down(sm) {
-    .resource-item .btn-group {
-        display: none;
-    }
+
+   @include media-breakpoint-down(sm) {
+       .btn-group {
+           display: none;
+       }
+   }
 }
 
 .resource-list.reordering {
@@ -149,14 +130,13 @@
     background-color: $gray-100;
     border: 1px solid $genericBorderColor;
     border-radius: 0.25rem;
-}
 
-.tag-list li {
-    display: inline-block;
-}
-
-.tag-list li:last-child {
-    margin-right: 0;
+    li {
+        display: inline-block;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
 }
 
 // Additional Info
@@ -340,7 +320,7 @@
         }
         &::-webkit-scrollbar-thumb {
             border-radius: 10px;
-            background-color: darken($navActiveBackgroundColor, 20%);
+            background-color: color.adjust($navActiveBackgroundColor, $lightness: -20%);
             &:hover {
                 background-color: $layoutLinkColor;
             }
@@ -353,27 +333,6 @@
     @media screen and (max-width: 768px) {
       padding: 4px;
       padding-top: 24px;
-    }
-}
-
-// Preview text styles
-.preview-text {
-    margin-bottom: 24px;
-
-    > .value {
-        color: #101828;
-        font-family: $baseFontFamily;
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 32px;
-    }
-
-    > .label {
-        color: #667085;
-        font-family: $baseFontFamily;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 120%;
     }
 }
 
@@ -390,10 +349,6 @@
         letter-spacing: -0.6px;
         font-size: 0.6rem;
     }
-}
-
-.resource-view {
-    margin-top: 20px;
 }
 
 #activity-archive-notice {
@@ -424,10 +379,3 @@ td.diff_header {
 .diff_sub {
   background-color:#ffaaaa;
 }
-// TRASH VIEW accordion
-// --------------------------------------------------
-
-  .purge-all {
-    float: right;
-    margin-bottom: 15px;
-  }

@@ -1,8 +1,8 @@
 {% import 'macros/form.html' as form %}
 
 {% block resource_view %}
-    <div id="view-{{ resource_view['id'] }}" class="resource-view" data-id="{{ resource_view['id'] }}" data-title="{{ resource_view['title'] }}" data-description="{{ resource_view['descripion'] }}">
-        <div class="actions">
+    <div id="view-{{ resource_view['id'] }}" class="resource-view text-break" data-id="{{ resource_view['id'] }}" data-title="{{ resource_view['title'] }}" data-description="{{ resource_view['descripion'] }}">
+        <div class="actions position-relative">
 
             {{ ui.button(_("Fullscreen"), icon="arrows-alt", style="secondary", blank=true, href=h.url_for(package['type'] ~ '_resource.view', id=package['name'], resource_id=resource['id'], view_id=resource_view['id'], qualified=True)) }}
 

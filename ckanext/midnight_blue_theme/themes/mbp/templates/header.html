@@ -14,7 +14,7 @@
                                     {%- call ui.util.call(ui.account_nav_item, href=h.url_for('user.read', id=current_user.name), attrs={"class": "image", "aria-label": _('View profile')}) -%}
                                         {%- call ui.util.call(ui.tooltip, tooltip=_('View profile')) -%}
                                             {{ h.user_image(current_user.name, size=22) }}
-                                            <span class="username">{{ current_user.display_name }}</span>
+                                            <span class="username">{{ current_user.display_name | truncate(20) }}</span>
                                         {%- endcall %}
                                     {%- endcall %}
                                 {%- endblock %}

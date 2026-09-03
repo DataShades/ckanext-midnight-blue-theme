@@ -12,7 +12,7 @@
 {% block primary_content %}
     <article class="module">
         <div class="module-content">
-            <h1 class="page-heading">
+            <h1 class="sr-only">
                 {% block page_heading %}{{ _('Users') }}{% endblock %}
             </h1>
             {% block users_list %}
@@ -20,6 +20,8 @@
                     {% block users_list_inner %}
                         {% for user in page.items %}
                             {{ ui.user(user=user) }}
+                        {% else %}
+                            {{ ui.empty(_('No matching users found.')) }}
                         {% endfor %}
                     {% endblock %}
                 {%- endcall %}

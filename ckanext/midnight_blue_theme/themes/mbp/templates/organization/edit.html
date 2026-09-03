@@ -10,5 +10,5 @@
     {{- ui.breadcrumb(_('Manage'), href=h.url_for(group_type+'.edit', id=organization.name), active=true) }}
 {%- endblock %}
 
-{% block page_heading_class %}hide-heading{% endblock %}
+{% block page_heading_class %}sr-only{% endblock %}
 {% block page_heading %}{{ _('Edit Organization') }}{% endblock %}

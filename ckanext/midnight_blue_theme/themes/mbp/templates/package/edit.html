@@ -1,7 +1,7 @@
 {% extends 'package/edit_base.html' %}
 
 {% block primary_content_inner %}
-    {%- call ui.util.call(ui.heading, level=1) -%}
+    {%- call ui.util.call(ui.heading, level=1, _extra_class="sr-only") -%}
         {% block form_title %}
             {{ h.humanize_entity_type('package', dataset_type, 'edit label') or _('Edit Dataset') }}
         {% endblock %}

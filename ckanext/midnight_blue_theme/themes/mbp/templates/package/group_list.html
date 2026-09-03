@@ -4,7 +4,7 @@
 {% set default_group_type = h.default_group_type('group') %}
 
 {% block primary_content_inner %}
-    {{ ui.heading(h.humanize_entity_type('group', default_group_type, 'page title') or _('Groups'), level=1) }}
+    {{ ui.heading(h.humanize_entity_type('group', default_group_type, 'page title') or _('Groups'), level=1, _extra_class="sr-only") }}
 
     {% if group_dropdown %}
         {%- call ui.util.call(ui.form, method="POST", attrs={"class": "add-to-group"}) -%}
@@ -14,7 +14,7 @@
                 {% endfor %}
             </select>
 
-            {{ ui.button(_('Add to group'), type="submit", aria={"label": _('Associate this group with this dataset')}) }}
+            {{ ui.button(_('Add to group'), type="submit", aria={"label": _('Associate this group with this dataset')}, _extra_class="my-3") }}
         {%- endcall %}
 
     {% endif %}

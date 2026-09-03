@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 
 {% block primary_content_inner %}
-    {%- call ui.util.call(ui.heading, level=1) -%}
+    {%- call ui.util.call(ui.heading, level=1, _extra_class="sr-only") -%}
         {% block page_heading %}{{ _('Manage Admins') }}{% endblock %}
     {%- endcall %}
     {{ ui.heading(_('Current Sysadmins'), level=2) }}

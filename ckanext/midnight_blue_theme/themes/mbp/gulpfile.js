@@ -37,7 +37,7 @@ const build = () =>
     .pipe(
       sass({
         loadPaths: ["node_modules"],
-        silenceDeprecations: ["import", "legacy-js-api", "color-functions", "global-builtin", "if-function"],
+        silenceDeprecations: ["color-functions", "global-builtin", "if-function", "import"],
       }).on("error", sass.logError),
     )
 

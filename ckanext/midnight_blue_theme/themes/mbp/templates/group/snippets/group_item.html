@@ -27,7 +27,7 @@ Example:
                             </div>
                         {% endblock %}
                         {% block title %}
-                            {{ ui.heading(group.display_name, level=3) }}
+                            {{ ui.heading(group.display_name| truncate(45), level=3, _extra_class="text-break") }}
                         {% endblock %}
                         {% block datasets %}
                             {% if group.package_count %}

@@ -16,7 +16,7 @@
                                 <span class="heading">
                                     {{ group.display_name }}
                                     {% if group.state == 'deleted' %}
-                                        [{{ _('Deleted') }}]
+                                        {{ ui.badge(_('Deleted'), style="danger") }}
                                     {% endif %}
                                 </span>
                             {% endblock %}

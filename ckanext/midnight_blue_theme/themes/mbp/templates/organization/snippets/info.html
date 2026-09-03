@@ -33,7 +33,7 @@ organization page or not.
                             {% block heading %}
                                 <span class="heading">{{ organization.title or organization.name }}
                                     {% if organization.state == 'deleted' %}
-                                        [{{ _('Deleted') }}]
+                                        {{ ui.badge(_('Deleted'), style="danger") }}
                                     {% endif %}
                                 </span>
                             {% endblock %}

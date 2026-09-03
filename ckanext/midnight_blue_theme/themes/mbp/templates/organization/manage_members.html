@@ -10,10 +10,11 @@
     {{- ui.breadcrumb(_('Manage members'), href=h.url_for(group_type+'.manage_members', id=organization.name), attrs={"title": organization.display_name}, active=true) }}
 {%- endblock %}
 
-{% block page_primary_action -%}
+{% block content_action -%}
+    {{ super() }}
     {% if h.check_access('organization_update', {'id': organization.id}) -%}
-        {{ ui.page_action(_('Add Member'), href=h.url_for(group_type+'.member_new', id=group_dict.id), icon="plus-square") }}
-        {{- ui.page_action(_('CSV'), href=h.url_for(group_type+'.member_dump', id=group_dict.id), icon='download') }}
+        {{ ui.content_action(_('Add Member'), href=h.url_for(group_type+'.member_new', id=group_dict.id), icon="plus-square") }}
+        {{- ui.content_action(_('CSV'), href=h.url_for(group_type+'.member_dump', id=group_dict.id), icon='download') }}
     {%- endif %}
 {%- endblock %}
 
@@ -22,7 +23,7 @@
     {% set members_count = ungettext('{count} member', '{count} members', count).format(count=count) %}
     {% set can_create_members = h.check_access('organization_member_create', {'id': organization.id}) %}
     {% set can_delete_members = h.check_access('organization_member_delete', {'id': organization.id}) %}
-    <h1 class="page-heading">{{ _('Manage members') }}</h1>
+    <h1 class="sr-only">{{ _('Manage members') }}</h1>
     {{ ui.heading(members_count, level=2) }}
 
     {%- call ui.util.call(ui.table, bordered=true, hover=true) -%}

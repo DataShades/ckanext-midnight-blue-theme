@@ -9,12 +9,10 @@
 %}
 
 {% block primary_content_inner %}
-    {{ ui.heading(h.humanize_entity_type('organization', org_type, 'facet label') or _('Organizations'), level=1) }}
+    {{ ui.heading(h.humanize_entity_type('organization', org_type, 'facet label') or _('Organizations'), level=1, _extra_class="sr-only") }}
 
     {% if orgs_available %}
-        <div class="wide">
-            {% snippet "organization/snippets/organization_list.html", organizations=orgs_available, show_capacity=True %}
-        </div>
+        {% snippet "organization/snippets/organization_list.html", organizations=orgs_available, show_capacity=True %}
     {% else %}
         {%- call ui.util.call(ui.empty) -%}
             {% if is_myself %}

@@ -13,6 +13,8 @@
     {% block organization_description %}
         {% if group_dict.description %}
             {{ h.render_markdown(group_dict.description) }}
+        {% else %}
+            {{ ui.empty(_('There is no description for this organization')) }}
         {% endif %}
     {% endblock %}
     {% block organization_extras %}

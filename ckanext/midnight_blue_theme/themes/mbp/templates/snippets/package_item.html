@@ -22,13 +22,13 @@ Example:
 
                         {% block heading_title %}
                             {%- with title=title | truncate(80) -%}
-                                {{ ui.link(title, href=h.url_for(package.type~'.read', id=package.name), aria={"label": _('Navigate to dataset: {title}').format(title=title)}) }}
+                                {{ ui.link(title, href=h.url_for(package.type~'.read', id=package.name), aria={"label": _('Navigate to dataset: {title}').format(title=title)}, _extra_class="text-break") }}
                             {%- endwith %}
                         {% endblock %}
 
                         {% block heading_private %}
                             {% if package.private %}
-                                <span class="dataset-private badge bg-dust-red pull-right">
+                                <span class="dataset-private badge bg-dust-red float-end">
                                     {{ _('Private') }}
                                 </span>
                             {% endif %}

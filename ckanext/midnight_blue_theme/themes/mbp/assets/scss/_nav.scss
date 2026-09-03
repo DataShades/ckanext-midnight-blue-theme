@@ -38,7 +38,6 @@
             border-radius: 6px;
             padding: 5px 6px;
             color: $white;
-            border: 1px solid $white;
             min-width: 2rem;
         }
 
@@ -47,7 +46,6 @@
         }
 
         .item-state {
-            float: right;
             position: relative;
             transform: translateY(0);
             left: 10px;
@@ -109,6 +107,9 @@
 
         .nav-simple > li {
             margin-bottom: 4px;
+            &:last-of-type {
+                margin-bottom: 0;
+            }
         }
     }
 }
@@ -173,7 +174,9 @@
 
         a {
             color: $brand-400;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
 
             &:hover {
                 text-decoration: none;

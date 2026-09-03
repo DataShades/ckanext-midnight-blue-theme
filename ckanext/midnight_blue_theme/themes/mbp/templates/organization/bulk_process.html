@@ -13,12 +13,13 @@
     {{- ui.breadcrumb(_('Edit datasets'), href=h.url_for(group_type+'.bulk_process', id=organization.name, attrs={"title": organization.display_name}), active=true) }}
 {%- endblock %}
 
-{% block page_primary_action -%}
-    {{ ui.page_action(h.humanize_entity_type('package', dataset_type, 'add link') or _("Add Dataset"), href=h.url_for(dataset_type ~ '.new', group=group_dict.id), icon="plus-square") }}
+{% block content_action -%}
+    {{ super() }}
+    {{ ui.content_action(h.humanize_entity_type('package', dataset_type, 'add link') or _("Add Dataset"), href=h.url_for(dataset_type ~ '.new', group=group_dict.id), icon="plus-square") }}
 {%- endblock %}
 
 {% block primary_content_inner %}
-    {{ ui.heading(h.humanize_entity_type('package', dataset_type, 'edit label') or _('Edit Datasets'), level=1) }}
+    {{ ui.heading(h.humanize_entity_type('package', dataset_type, 'edit label') or _('Edit Datasets'), level=1, _extra_class="sr-only") }}
 
     <div class="primary col-12">
         {% block search_form %}
@@ -61,7 +62,7 @@
                                         <input type="checkbox" name="dataset_{{ package.id }}">
                                     </td>
                                     <td class="context">
-                                        <a href="{% url_for package.type ~ '.edit', id=package.name %}" class="edit pull-right">
+                                        <a href="{% url_for package.type ~ '.edit', id=package.name %}" class="edit float-end">
                                             {{ _('Edit') }}
                                         </a>
                                         <h3 class="dataset-heading">

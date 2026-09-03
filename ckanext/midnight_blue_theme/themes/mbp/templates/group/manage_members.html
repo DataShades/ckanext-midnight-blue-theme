@@ -10,13 +10,14 @@
     {{- ui.breadcrumb(_('Manage members'), href=h.url_for(group_type+'.manage_members', id=group.name), active=true) }}
 {%- endblock %}
 
-{% block page_primary_action -%}
-    {{ ui.page_action(_('Add Member'), href=h.url_for(group_type+'.member_new', id=group_dict.id), icon='plus-square') }}
-    {{ ui.page_action(_('CSV'), href=h.url_for(group_type+'.member_dump', id=group_dict.id), icon='download') }}
+{% block content_action -%}
+    {{ super() }}
+    {{ ui.content_action(_('Add Member'), href=h.url_for(group_type+'.member_new', id=group_dict.id), icon='plus-square') }}
+    {{ ui.content_action(_('CSV'), href=h.url_for(group_type+'.member_dump', id=group_dict.id), icon='download') }}
 {%- endblock %}
 
 {% block primary_content_inner %}
-    <h1 class="page-heading">{{ _('Members') }}</h1>
+    <h1 class="sr-only">{{ _('Members') }}</h1>
     {{ ui.heading(_('{0} members'.format(members|length)), level=2) }}
 
     {%- call ui.util.call(ui.table, hover=true, bordered=true) -%}

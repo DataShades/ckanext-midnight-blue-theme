@@ -11,14 +11,14 @@
 {%- endblock %}
 
 {% block primary_content_inner %}
-    <h1 class="page-heading">
+    <h1 class="sr-only">
         {% block page_heading %}{{ _('Edit Collaborator') if user else _('Add Collaborator') }}{% endblock %}
     </h1>
 
     {% block form %}
         {%- call ui.util.call(ui.form, method="POST") -%}
             <div class="row">
-                <div class="col-md-5">
+                <div class="col">
                     <div class="form-group control-medium">
                         {% if not user %}
                             <label class="form-label" for="username">

@@ -13,7 +13,7 @@
 
             <div class="col-md-6 d-flex flex-row-reverse">
                 {% if data.key or data.value or error_list %}
-                    <label class="checkbox pull-right" for="{{ id }}-remove">
+                    <label class="checkbox float-end" for="{{ id }}-remove">
                         <input type="checkbox" id="{{ id }}-remove" name="{{ prefix ~ 'deleted' }}"{% if data.deleted %} checked{% endif %} />
                         <span class="btn btn-danger"><span class="fa fa-trash"></span><span class="sr-only">{{ _('Remove') }}</span></span>
                     </label>

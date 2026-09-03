@@ -4,7 +4,7 @@
 {%- set modal_id = ui.util.id() -%}
 
 {% block primary_content_inner %}
-    {%- call ui.util.call(ui.heading, level=1) -%}
+    {%- call ui.util.call(ui.heading, level=1, _extra_class="sr-only") -%}
         {% block page_heading %}{{ _('Trash') }}{% endblock %}
     {%- endcall %}
 

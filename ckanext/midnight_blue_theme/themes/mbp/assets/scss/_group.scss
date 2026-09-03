@@ -9,9 +9,8 @@
     list-style: none;
     padding-left: 0;
     width: 100%;
-}
-@include media-breakpoint-down(md){
-    .groups-list {
+
+    @include media-breakpoint-down(md){
         margin-bottom: $spacer-4;
         grid-template-columns: none;
     }

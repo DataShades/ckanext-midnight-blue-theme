@@ -6,7 +6,7 @@
     {{- super() }}
 {% endblock %}
 
-{% block page_primary_action -%}
+{% block content_action -%}
     {% if h.check_access('resource_view_create', {'resource_id': resource.id}) %}
         {%- call ui.util.call(ui.dropdown, title=ui.icon("plus-square") ~ _('New view'), inline=true) -%}
             {% for view_type, label, icon in h.get_allowed_view_types(resource, pkg_dict) -%}
@@ -17,8 +17,10 @@
     {% asset 'vendor/reorder' %}
 {%- endblock %}
 
+{% block page_primary_action %}{% endblock %}
+
 {% block primary_content_inner %}
-    {{ ui.heading(_('Edit Views'), level=1) }}
+    {{ ui.heading(_('Edit Views'), level=1, _extra_class="sr-only") }}
 
     {% if views %}
         {% snippet "package/snippets/resource_views_list.html", views=views, pkg=pkg, is_edit=true, extra_attributes='data-module = resource-view-reorder data-module-id=' + resource.id, extra_class='flex-column resource-view-list nav-pills nav-stacked' %}
