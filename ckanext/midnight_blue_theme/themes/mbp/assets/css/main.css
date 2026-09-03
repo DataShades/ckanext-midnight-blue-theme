@@ -8825,11 +8825,11 @@ color:#5e5e5e
 border:1px solid #2e759e;
 color:#2e759e
 }.badge[data-format*=json],.badge[data-format*=xml],.badge[data-format=json],.badge[data-format=xml]{
-border:1px solid #d63b00;
-color:#d63b00
+border:1px solid #cd3900;
+color:#cd3900
 }.badge[data-format*=text],.badge[data-format=text]{
-border:1px solid #1a7ea3;
-color:#1a7ea3
+border:1px solid #19779a;
+color:#19779a
 }.badge[data-format*=csv],.badge[data-format=csv]{
 border:1px solid #856a00;
 color:#856a00
@@ -8840,8 +8840,8 @@ color:#207e42
 border:1px solid #686868;
 color:#686868
 }.badge[data-format*=api],.badge[data-format=api]{
-border:1px solid #d22d81;
-color:#d22d81
+border:1px solid #cb2b7d;
+color:#cb2b7d
 }.badge[data-format*=pdf],.badge[data-format=pdf]{
 border:1px solid #e0051e;
 color:#e0051e
