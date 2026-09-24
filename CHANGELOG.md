@@ -1,6 +1,6 @@
 
-## [0.0.3](https://github.com/DataShades/ckanext-midnight-blue-theme/releases/tag/0.0.3) - 2026-09-24
-[Compare with v0.0.2](https://github.com/DataShades/ckanext-midnight-blue-theme/compare/v0.0.2..0.0.3)
+## [v0.0.3](https://github.com/DataShades/ckanext-midnight-blue-theme/releases/tag/v0.0.3) - 2026-09-24
+[Compare with v0.0.2](https://github.com/DataShades/ckanext-midnight-blue-theme/compare/v0.0.2..v0.0.3)
 
 ### 🚀 Features
 
